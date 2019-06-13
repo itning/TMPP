@@ -42,7 +42,7 @@
         <dependencies>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
-                <artifactId>common</artifactId>
+                <artifactId>tmpp-common</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -103,11 +103,10 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
-                <scope>test</scope>
+                <version>${spring-boot-version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
     <build>
         <plugins>

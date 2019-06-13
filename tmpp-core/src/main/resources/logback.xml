@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{35} - %msg %n</pattern>
+        </encoder>
+    </appender>
+    <!--日志文件配置-->
+    <!--    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>${catalina.home}/logs/log_error.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>${catalina.home}/logs/log_error%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+                <maxHistory>7</maxHistory>
+                <maxFileSize>100MB</maxFileSize>
+                <totalSizeCap>2GB</totalSizeCap>
+            </rollingPolicy>
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </layout>
+            <encoder>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            </encoder>
+        </appender>
+        <logger name="XXX" level="INFO">
+            <appender-ref ref="FILE"/>
+        </logger>
+        &lt;!&ndash;全局日志等级&ndash;&gt;-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <!--<appender-ref ref="FILE"/>-->
+    </root>
+
+</configuration>

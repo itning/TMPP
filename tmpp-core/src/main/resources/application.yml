@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    username: root
+    password: shulu
+    url: jdbc:mysql:///tmpp?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&connectTimeout=0&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+server:
+  port: 80
+logging:
+  level: debug
+  level.top: debug
+mybatis:
+  type-aliases-package: top.sl.tmpp.entity
+  mapper-locations: classpath:mappers/*.xml
