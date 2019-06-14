@@ -26,6 +26,11 @@ public class RestModel<T> implements Serializable {
         this.data = data;
     }
 
+    public RestModel(int code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
     public RestModel(T data) {
         this(HttpStatus.OK.value(), "查询成功", data);
     }
