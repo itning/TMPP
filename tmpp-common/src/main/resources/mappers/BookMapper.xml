@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.sl.tmpp.mapper.BookMapper">
-  <resultMap id="BaseResultMap" type="top.sl.tmpp.entity.Book">
+<mapper namespace="top.sl.tmpp.common.mapper.BookMapper">
+  <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.Book">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -87,7 +87,7 @@
     award_Information, publication_date, subscriber, subscriber_tel, is_book_purchase, 
     reason, course_id, discount_id, affairs_number, login_user_id, is_buy_book
   </sql>
-  <select id="selectByExample" parameterType="top.sl.tmpp.entity.BookExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.BookExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -111,13 +111,13 @@
     delete from book
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="top.sl.tmpp.entity.BookExample">
+  <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.BookExample">
     delete from book
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.sl.tmpp.entity.Book">
+  <insert id="insert" parameterType="top.sl.tmpp.common.entity.Book">
     insert into book (id, isbn, text_book_name, 
       text_book_category, press, author, 
       unit_price, teacher_book_number, award_Information, 
@@ -133,7 +133,7 @@
       #{discountId,jdbcType=VARCHAR}, #{affairsNumber,jdbcType=INTEGER}, #{loginUserId,jdbcType=VARCHAR}, 
       #{isBuyBook,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="top.sl.tmpp.entity.Book">
+  <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Book">
     insert into book
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -254,7 +254,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.sl.tmpp.entity.BookExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.sl.tmpp.common.entity.BookExample" resultType="java.lang.Long">
     select count(*) from book
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -350,7 +350,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.entity.Book">
+  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.Book">
     update book
     <set>
       <if test="isbn != null">
@@ -410,7 +410,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.entity.Book">
+  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.Book">
     update book
     set isbn = #{isbn,jdbcType=VARCHAR},
       text_book_name = #{textBookName,jdbcType=VARCHAR},

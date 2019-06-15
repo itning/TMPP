@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.sl.tmpp.mapper.LoginUserMapper">
-  <resultMap id="BaseResultMap" type="top.sl.tmpp.entity.LoginUser">
+<mapper namespace="top.sl.tmpp.common.mapper.LoginUserMapper">
+  <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.LoginUser">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List">
     id, name, user_type
   </sql>
-  <select id="selectByExample" parameterType="top.sl.tmpp.entity.LoginUserExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.LoginUserExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -93,19 +93,19 @@
     delete from login_user
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="top.sl.tmpp.entity.LoginUserExample">
+  <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.LoginUserExample">
     delete from login_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.sl.tmpp.entity.LoginUser">
+  <insert id="insert" parameterType="top.sl.tmpp.common.entity.LoginUser">
     insert into login_user (id, name, user_type
       )
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="top.sl.tmpp.entity.LoginUser">
+  <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.LoginUser">
     insert into login_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -130,7 +130,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.sl.tmpp.entity.LoginUserExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.sl.tmpp.common.entity.LoginUserExample" resultType="java.lang.Long">
     select count(*) from login_user
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -162,7 +162,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.entity.LoginUser">
+  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.LoginUser">
     update login_user
     <set>
       <if test="name != null">
@@ -174,7 +174,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.entity.LoginUser">
+  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.LoginUser">
     update login_user
     set name = #{name,jdbcType=VARCHAR},
       user_type = #{userType,jdbcType=VARCHAR}

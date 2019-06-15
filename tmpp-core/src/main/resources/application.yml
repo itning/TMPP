@@ -10,5 +10,5 @@ logging:
   level: debug
   level.top: debug
 mybatis:
-  type-aliases-package: top.sl.tmpp.entity
+  type-aliases-package: top.sl.tmpp.common.entity
   mapper-locations: classpath:mappers/*.xml

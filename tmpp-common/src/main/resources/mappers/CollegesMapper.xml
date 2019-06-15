@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.sl.tmpp.mapper.CollegesMapper">
-  <resultMap id="BaseResultMap" type="top.sl.tmpp.entity.Colleges">
+<mapper namespace="top.sl.tmpp.common.mapper.CollegesMapper">
+  <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.Colleges">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -68,7 +68,7 @@
   <sql id="Base_Column_List">
     id, name
   </sql>
-  <select id="selectByExample" parameterType="top.sl.tmpp.entity.CollegesExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.CollegesExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -92,17 +92,17 @@
     delete from colleges
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="top.sl.tmpp.entity.CollegesExample">
+  <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.CollegesExample">
     delete from colleges
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.sl.tmpp.entity.Colleges">
+  <insert id="insert" parameterType="top.sl.tmpp.common.entity.Colleges">
     insert into colleges (id, name)
     values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="top.sl.tmpp.entity.Colleges">
+  <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Colleges">
     insert into colleges
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -121,7 +121,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.sl.tmpp.entity.CollegesExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.sl.tmpp.common.entity.CollegesExample" resultType="java.lang.Long">
     select count(*) from colleges
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -149,7 +149,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.entity.Colleges">
+  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.Colleges">
     update colleges
     <set>
       <if test="name != null">
@@ -158,7 +158,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.entity.Colleges">
+  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.Colleges">
     update colleges
     set name = #{name,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
