@@ -2,6 +2,7 @@ package top.sl.tmpp.common.util;
 
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
@@ -31,8 +32,25 @@ public class RestModel<T> implements Serializable {
         this.msg = msg;
     }
 
+    public RestModel(HttpStatus status, String msg, T data) {
+        this(status.value(), msg, data);
+    }
+
     public RestModel(T data) {
         this(HttpStatus.OK.value(), "查询成功", data);
+    }
+
+
+    public static <T> ResponseEntity ok(T data) {
+        return ResponseEntity.ok(new RestModel<>(data));
+    }
+
+    public static <T> ResponseEntity created(String msg, T data) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(new RestModel<>(HttpStatus.CREATED, msg, data));
+    }
+
+    public static ResponseEntity noContent() {
+        return ResponseEntity.noContent().build();
     }
 
     public int getCode() {
