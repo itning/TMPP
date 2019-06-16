@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="top.sl.tmpp.mapper.PlanMapper">
-  <resultMap id="BaseResultMap" type="top.sl.tmpp.entity.Plan">
+<mapper namespace="top.sl.tmpp.common.mapper.PlanMapper">
+  <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.Plan">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="year" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -79,7 +79,7 @@
     id, year, term, level_id, college_id, department_id, course_major, course_type, use_school_year, 
     clazz, clazz_number, teacher
   </sql>
-  <select id="selectByExample" parameterType="top.sl.tmpp.entity.PlanExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.PlanExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
@@ -103,13 +103,13 @@
     delete from plan
     where id = #{id,jdbcType=VARCHAR}
   </delete>
-  <delete id="deleteByExample" parameterType="top.sl.tmpp.entity.PlanExample">
+  <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.PlanExample">
     delete from plan
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="top.sl.tmpp.entity.Plan">
+  <insert id="insert" parameterType="top.sl.tmpp.common.entity.Plan">
     insert into plan (id, year, term, 
       level_id, college_id, department_id, 
       course_major, course_type, use_school_year, 
@@ -121,7 +121,7 @@
       #{clazz,jdbcType=VARCHAR}, #{clazzNumber,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR}
       )
   </insert>
-  <insert id="insertSelective" parameterType="top.sl.tmpp.entity.Plan">
+  <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Plan">
     insert into plan
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -200,7 +200,7 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="top.sl.tmpp.entity.PlanExample" resultType="java.lang.Long">
+  <select id="countByExample" parameterType="top.sl.tmpp.common.entity.PlanExample" resultType="java.lang.Long">
     select count(*) from plan
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
@@ -268,7 +268,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.entity.Plan">
+  <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.Plan">
     update plan
     <set>
       <if test="year != null">
@@ -307,7 +307,7 @@
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
-  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.entity.Plan">
+  <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.Plan">
     update plan
     set year = #{year,jdbcType=VARCHAR},
       term = #{term,jdbcType=INTEGER},

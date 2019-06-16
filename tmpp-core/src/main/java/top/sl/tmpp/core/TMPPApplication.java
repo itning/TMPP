@@ -8,7 +8,7 @@ import org.mybatis.spring.annotation.MapperScan;
  * @author ShuLu
  */
 @SpringBootApplication(scanBasePackages = "top.sl.tmpp")
-@MapperScan("top.sl.tmpp.mapper")
+@MapperScan("top.sl.tmpp.common.mapper")
 public class TMPPApplication {
     public static void main(String[] args) {
         SpringApplication.run(TMPPApplication.class, args);
