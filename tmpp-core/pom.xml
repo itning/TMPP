@@ -15,12 +15,17 @@
         <dependency>
             <groupId>top.sl.tmpp</groupId>
             <artifactId>tmpp-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-security</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>top.sl.tmpp</groupId>
             <artifactId>tmpp-discounts</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
