@@ -35,6 +35,7 @@
         <mysql-driver-version>5.1.47</mysql-driver-version>
         <springfox.version>2.9.2</springfox.version>
         <modelmapper.version>2.3.2</modelmapper.version>
+        <jjwt.version>0.9.1</jjwt.version>
     </properties>
 
 
@@ -104,6 +105,12 @@
                 <groupId>org.modelmapper</groupId>
                 <artifactId>modelmapper</artifactId>
                 <version>${modelmapper.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt -->
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.github.pagehelper</groupId>

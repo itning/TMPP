@@ -1,4 +1,4 @@
-package top.sl.tmpp.security.cas;
+package top.sl.tmpp.security.cas.config;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
