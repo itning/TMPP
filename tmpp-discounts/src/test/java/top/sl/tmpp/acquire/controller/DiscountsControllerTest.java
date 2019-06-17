@@ -1,4 +1,4 @@
-package top.sl.tmpp.controller;
+package top.sl.tmpp.acquire.controller;
 
 import org.junit.Before;
 import org.junit.Test;

@@ -27,6 +27,16 @@
             <artifactId>tmpp-discounts</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-acquire</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-purchase</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

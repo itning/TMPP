@@ -1,5 +1,7 @@
 package top.sl.tmpp.common.entity;
 
+import java.util.Date;
+
 public class LoginUser {
     private String id;
 
@@ -7,10 +9,16 @@ public class LoginUser {
 
     private String userType;
 
-    public LoginUser(String id, String name, String userType) {
+    private Date gmtCreate;
+
+    private Date gmtModified;
+
+    public LoginUser(String id, String name, String userType, Date gmtCreate, Date gmtModified) {
         this.id = id;
         this.name = name;
         this.userType = userType;
+        this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public LoginUser() {
@@ -39,5 +47,21 @@ public class LoginUser {
 
     public void setUserType(String userType) {
         this.userType = userType == null ? null : userType.trim();
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

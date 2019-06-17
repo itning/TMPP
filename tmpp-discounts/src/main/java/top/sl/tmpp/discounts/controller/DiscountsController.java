@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.sl.tmpp.common.entity.Discounts;
-import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.discounts.service.DiscountsService;
 
@@ -14,7 +13,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * @author 11578
+ * @author ShuLu
  */
 @RestController
 public class DiscountsController {
@@ -46,7 +45,7 @@ public class DiscountsController {
      * @return {@link ResponseEntity} {@link RestModel}
      */
     @GetMapping("/discounts")
-    public ResponseEntity<?> getAllDiscount(LoginUser loginUser) {
+    public ResponseEntity<?> getAllDiscount() {
         List<Discounts> discounts = discountsService.getAllDiscount();
         logger.debug("查找所有折扣成功");
         return RestModel.ok(discounts);

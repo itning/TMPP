@@ -5,6 +5,8 @@
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -66,7 +68,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, status
+    id, status, gmt_modified, gmt_create
   </sql>
   <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.PlanStatusExample" resultMap="BaseResultMap">
     select
@@ -99,8 +101,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="top.sl.tmpp.common.entity.PlanStatus">
-    insert into plan_status (id, status)
-    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+    insert into plan_status (id, status, gmt_modified, 
+      gmt_create)
+    values (#{id,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.PlanStatus">
     insert into plan_status
@@ -111,6 +115,12 @@
       <if test="status != null">
         status,
       </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -118,6 +128,12 @@
       </if>
       <if test="status != null">
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -136,6 +152,12 @@
       <if test="record.status != null">
         status = #{record.status,jdbcType=INTEGER},
       </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -144,7 +166,9 @@
   <update id="updateByExample" parameterType="map">
     update plan_status
     set id = #{record.id,jdbcType=VARCHAR},
-      status = #{record.status,jdbcType=INTEGER}
+      status = #{record.status,jdbcType=INTEGER},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -155,12 +179,20 @@
       <if test="status != null">
         status = #{status,jdbcType=INTEGER},
       </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.PlanStatus">
     update plan_status
-    set status = #{status,jdbcType=INTEGER}
+    set status = #{status,jdbcType=INTEGER},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

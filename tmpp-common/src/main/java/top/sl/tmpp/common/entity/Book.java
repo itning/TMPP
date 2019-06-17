@@ -42,7 +42,11 @@ public class Book {
 
     private String isBuyBook;
 
-    public Book(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook) {
+    private Date gmtModified;
+
+    private Date gmtCreate;
+
+    public Book(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
@@ -62,6 +66,8 @@ public class Book {
         this.affairsNumber = affairsNumber;
         this.loginUserId = loginUserId;
         this.isBuyBook = isBuyBook;
+        this.gmtModified = gmtModified;
+        this.gmtCreate = gmtCreate;
     }
 
     public Book() {
@@ -218,5 +224,21 @@ public class Book {
 
     public void setIsBuyBook(String isBuyBook) {
         this.isBuyBook = isBuyBook == null ? null : isBuyBook.trim();
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 }

@@ -1,6 +1,7 @@
-package top.sl.tmpp.common.exception;
+package top.sl.tmpp.discounts.exception;
 
 import org.springframework.http.HttpStatus;
+import top.sl.tmpp.common.exception.BaseException;
 
 /**
  * @author 11578

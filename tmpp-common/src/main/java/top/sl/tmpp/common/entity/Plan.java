@@ -1,5 +1,7 @@
 package top.sl.tmpp.common.entity;
 
+import java.util.Date;
+
 public class Plan {
     private String id;
 
@@ -25,7 +27,11 @@ public class Plan {
 
     private String teacher;
 
-    public Plan(String id, String year, Integer term, String levelId, String collegeId, String departmentId, String courseMajor, Integer courseType, String useSchoolYear, String clazz, Integer clazzNumber, String teacher) {
+    private Date gmtModified;
+
+    private Date gmtCreate;
+
+    public Plan(String id, String year, Integer term, String levelId, String collegeId, String departmentId, String courseMajor, Integer courseType, String useSchoolYear, String clazz, Integer clazzNumber, String teacher, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.year = year;
         this.term = term;
@@ -38,6 +44,8 @@ public class Plan {
         this.clazz = clazz;
         this.clazzNumber = clazzNumber;
         this.teacher = teacher;
+        this.gmtModified = gmtModified;
+        this.gmtCreate = gmtCreate;
     }
 
     public Plan() {
@@ -138,5 +146,21 @@ public class Plan {
 
     public void setTeacher(String teacher) {
         this.teacher = teacher == null ? null : teacher.trim();
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
+    }
+
+    public Date getGmtCreate() {
+        return gmtCreate;
+    }
+
+    public void setGmtCreate(Date gmtCreate) {
+        this.gmtCreate = gmtCreate;
     }
 }

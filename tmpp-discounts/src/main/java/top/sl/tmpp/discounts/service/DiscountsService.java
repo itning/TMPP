@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * @author 11578
+ * @author ShuLu
  */
 public interface DiscountsService {
     /**
