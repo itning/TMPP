@@ -10,6 +10,23 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tmpp-purchase</artifactId>
+<dependencies>
+    <dependency>
+        <groupId>top.sl.tmpp</groupId>
+        <artifactId>tmpp-common</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+    <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+    <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>commons-fileupload</groupId>
+        <artifactId>commons-fileupload</artifactId>
+        <version>1.4</version>
+    </dependency>
 
+</dependencies>
 
 </project>

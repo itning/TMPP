@@ -22,6 +22,8 @@
       <arg column="affairs_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="is_buy_book" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -85,7 +87,8 @@
   <sql id="Base_Column_List">
     id, isbn, text_book_name, text_book_category, press, author, unit_price, teacher_book_number, 
     award_Information, publication_date, subscriber, subscriber_tel, is_book_purchase, 
-    reason, course_id, discount_id, affairs_number, login_user_id, is_buy_book
+    reason, course_id, discount_id, affairs_number, login_user_id, is_buy_book, gmt_modified, 
+    gmt_create
   </sql>
   <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.BookExample" resultMap="BaseResultMap">
     select
@@ -124,14 +127,16 @@
       publication_date, subscriber, subscriber_tel, 
       is_book_purchase, reason, course_id, 
       discount_id, affairs_number, login_user_id, 
-      is_buy_book)
+      is_buy_book, gmt_modified, gmt_create
+      )
     values (#{id,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{textBookName,jdbcType=VARCHAR}, 
       #{textBookCategory,jdbcType=INTEGER}, #{press,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
       #{unitPrice,jdbcType=DECIMAL}, #{teacherBookNumber,jdbcType=INTEGER}, #{awardInformation,jdbcType=VARCHAR}, 
       #{publicationDate,jdbcType=TIMESTAMP}, #{subscriber,jdbcType=VARCHAR}, #{subscriberTel,jdbcType=INTEGER}, 
       #{isBookPurchase,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, 
       #{discountId,jdbcType=VARCHAR}, #{affairsNumber,jdbcType=INTEGER}, #{loginUserId,jdbcType=VARCHAR}, 
-      #{isBuyBook,jdbcType=VARCHAR})
+      #{isBuyBook,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Book">
     insert into book
@@ -193,6 +198,12 @@
       <if test="isBuyBook != null">
         is_buy_book,
       </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -251,6 +262,12 @@
       </if>
       <if test="isBuyBook != null">
         #{isBuyBook,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -320,6 +337,12 @@
       <if test="record.isBuyBook != null">
         is_buy_book = #{record.isBuyBook,jdbcType=VARCHAR},
       </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -345,7 +368,9 @@
       discount_id = #{record.discountId,jdbcType=VARCHAR},
       affairs_number = #{record.affairsNumber,jdbcType=INTEGER},
       login_user_id = #{record.loginUserId,jdbcType=VARCHAR},
-      is_buy_book = #{record.isBuyBook,jdbcType=VARCHAR}
+      is_buy_book = #{record.isBuyBook,jdbcType=VARCHAR},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -407,6 +432,12 @@
       <if test="isBuyBook != null">
         is_buy_book = #{isBuyBook,jdbcType=VARCHAR},
       </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -429,7 +460,9 @@
       discount_id = #{discountId,jdbcType=VARCHAR},
       affairs_number = #{affairsNumber,jdbcType=INTEGER},
       login_user_id = #{loginUserId,jdbcType=VARCHAR},
-      is_buy_book = #{isBuyBook,jdbcType=VARCHAR}
+      is_buy_book = #{isBuyBook,jdbcType=VARCHAR},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

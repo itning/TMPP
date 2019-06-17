@@ -2,8 +2,8 @@ package top.sl.tmpp.common.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import top.sl.tmpp.common.entity.DepartmentExample;
 import top.sl.tmpp.common.entity.Department;
+import top.sl.tmpp.common.entity.DepartmentExample;
 
 public interface DepartmentMapper {
     long countByExample(DepartmentExample example);

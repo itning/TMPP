@@ -1,4 +1,4 @@
-package top.sl.tmpp.service;
+package top.sl.tmpp.acquire.service;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -6,6 +6,8 @@
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_type" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, name, user_type
+    id, name, user_type, gmt_create, gmt_modified
   </sql>
   <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.LoginUserExample" resultMap="BaseResultMap">
     select
@@ -100,10 +102,10 @@
     </if>
   </delete>
   <insert id="insert" parameterType="top.sl.tmpp.common.entity.LoginUser">
-    insert into login_user (id, name, user_type
-      )
-    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}
-      )
+    insert into login_user (id, name, user_type, 
+      gmt_create, gmt_modified)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{userType,jdbcType=VARCHAR}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.LoginUser">
     insert into login_user
@@ -117,6 +119,12 @@
       <if test="userType != null">
         user_type,
       </if>
+      <if test="gmtCreate != null">
+        gmt_create,
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -127,6 +135,12 @@
       </if>
       <if test="userType != null">
         #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="gmtCreate != null">
+        #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        #{gmtModified,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -148,6 +162,12 @@
       <if test="record.userType != null">
         user_type = #{record.userType,jdbcType=VARCHAR},
       </if>
+      <if test="record.gmtCreate != null">
+        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gmtModified != null">
+        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -157,7 +177,9 @@
     update login_user
     set id = #{record.id,jdbcType=VARCHAR},
       name = #{record.name,jdbcType=VARCHAR},
-      user_type = #{record.userType,jdbcType=VARCHAR}
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -171,13 +193,21 @@
       <if test="userType != null">
         user_type = #{userType,jdbcType=VARCHAR},
       </if>
+      <if test="gmtCreate != null">
+        gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gmtModified != null">
+        gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.LoginUser">
     update login_user
     set name = #{name,jdbcType=VARCHAR},
-      user_type = #{userType,jdbcType=VARCHAR}
+      user_type = #{userType,jdbcType=VARCHAR},
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      gmt_modified = #{gmtModified,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

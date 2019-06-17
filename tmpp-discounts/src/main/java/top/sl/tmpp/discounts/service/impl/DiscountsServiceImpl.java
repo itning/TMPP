@@ -8,16 +8,17 @@ import org.springframework.stereotype.Service;
 import top.sl.tmpp.discounts.service.DiscountsService;
 import top.sl.tmpp.common.entity.Discounts;
 import top.sl.tmpp.common.entity.DiscountsExample;
-import top.sl.tmpp.common.exception.DiscountsNullException;
-import top.sl.tmpp.common.exception.NoIdException;
+import top.sl.tmpp.discounts.exception.DiscountsNullException;
+import top.sl.tmpp.discounts.exception.NoIdException;
 import top.sl.tmpp.common.mapper.DiscountsMapper;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
 /**
- * @author 11578
+ * @author ShuLu
  */
 @Service
 public class DiscountsServiceImpl implements DiscountsService {
@@ -35,7 +36,7 @@ public class DiscountsServiceImpl implements DiscountsService {
             throw new DiscountsNullException("discount is null add discount failure", HttpStatus.BAD_REQUEST);
         }
         log.debug("添加折扣");
-        Discounts discounts = new Discounts(UUID.randomUUID().toString().replace("-", ""), discount);
+        Discounts discounts = new Discounts(UUID.randomUUID().toString().replace("-", ""), discount,null,new Date());
         discountsMapper.insert(discounts);
     }
 
@@ -60,11 +61,14 @@ public class DiscountsServiceImpl implements DiscountsService {
 
     @Override
     public void modify(String id, BigDecimal discount) {
-        if (discount == null || discountsMapper.selectByPrimaryKey(id) == null) {
+        Discounts modifyDiscount = discountsMapper.selectByPrimaryKey(id);
+        if (discount == null || modifyDiscount == null) {
             log.debug("修改折扣失败");
             throw new DiscountsNullException("discount is null add discount failure", HttpStatus.BAD_REQUEST);
         }
         log.debug("修改折扣");
-        discountsMapper.updateByPrimaryKey(new Discounts(id, discount));
+        modifyDiscount.setDiscount(discount);
+        modifyDiscount.setGmtModified(new Date());
+        discountsMapper.updateByPrimaryKey(modifyDiscount);
     }
 }
