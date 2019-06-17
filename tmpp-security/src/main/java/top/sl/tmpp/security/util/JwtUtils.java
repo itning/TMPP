@@ -1,11 +1,11 @@
-package top.sl.tmpp.security.cas.util;
+package top.sl.tmpp.security.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
 import org.springframework.http.HttpStatus;
 import top.sl.tmpp.common.entity.LoginUser;
-import top.sl.tmpp.security.cas.exception.CasException;
+import top.sl.tmpp.security.exception.CasException;
 
 import java.util.Date;
 

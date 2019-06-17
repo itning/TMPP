@@ -1,4 +1,4 @@
-package top.sl.tmpp.security.cas.exception;
+package top.sl.tmpp.security.exception;
 
 
 import org.springframework.http.HttpStatus;

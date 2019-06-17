@@ -1,6 +1,11 @@
 package top.sl.tmpp.common.entity;
 
 public class LoginUser {
+    /**
+     * 学生用户
+     */
+    public static final String STUDENT_USER = "99";
+
     private String id;
 
     private String name;
@@ -39,5 +44,14 @@ public class LoginUser {
 
     public void setUserType(String userType) {
         this.userType = userType == null ? null : userType.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "LoginUser{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", userType='" + userType + '\'' +
+                '}';
     }
 }

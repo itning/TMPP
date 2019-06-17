@@ -1,4 +1,4 @@
-package top.sl.tmpp.security.cas.config;
+package top.sl.tmpp.security.cas.callback;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -12,7 +12,7 @@ import top.itning.cas.callback.login.ILoginFailureCallBack;
 import top.itning.cas.callback.login.ILoginNeverCallBack;
 import top.itning.cas.callback.login.ILoginSuccessCallBack;
 import top.sl.tmpp.common.entity.LoginUser;
-import top.sl.tmpp.security.cas.util.JwtUtils;
+import top.sl.tmpp.security.util.JwtUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.*;
@@ -74,22 +73,9 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
      */
     private LoginUser map2userLoginEntity(Map<String, String> map) {
         LoginUser loginUser = new LoginUser();
-        Class<LoginUser> loginUserClass = LoginUser.class;
-        Arrays.stream(loginUserClass.getDeclaredFields()).forEach(field -> {
-            try {
-                field.setAccessible(true);
-                String name = field.getName();
-                String value = map.get(name);
-                if (LOGIN_NAME.equals(name)) {
-                    value = map.get("login_name");
-                }
-                if (value != null) {
-                    field.set(loginUser, value);
-                }
-            } catch (Exception e) {
-                logger.error("map2userLoginEntity error: ", e);
-            }
-        });
+        loginUser.setId(map.get("no"));
+        loginUser.setName(map.get("name"));
+        loginUser.setUserType(map.get("userType"));
         return loginUser;
     }
 
