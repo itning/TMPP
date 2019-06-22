@@ -1,8 +1,6 @@
 package top.sl.tmpp.security.cas.callback;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,7 +12,6 @@ import top.itning.cas.callback.login.ILoginSuccessCallBack;
 import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.security.util.JwtUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -31,9 +28,6 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @Component
 public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureCallBack, ILoginNeverCallBack {
-    private static final Logger logger = LoggerFactory.getLogger(JwtCasCallBackImpl.class);
-    private static final String LOGIN_NAME = "loginName";
-    private static final String STUDENT_USER_TYPE = "99";
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final CasProperties casProperties;
@@ -43,7 +37,7 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
     }
 
     @Override
-    public void onLoginSuccess(HttpServletResponse resp, HttpServletRequest req, Map<String, String> attributesMap) throws IOException, ServletException {
+    public void onLoginSuccess(HttpServletResponse resp, HttpServletRequest req, Map<String, String> attributesMap) throws IOException {
         if (attributesMap.isEmpty()) {
             sendRefresh2Response(resp);
             return;
@@ -55,12 +49,12 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
     }
 
     @Override
-    public void onLoginFailure(HttpServletResponse resp, HttpServletRequest req, Exception e) throws IOException, ServletException {
+    public void onLoginFailure(HttpServletResponse resp, HttpServletRequest req, Exception e) throws IOException {
         sendRefresh2Response(resp);
     }
 
     @Override
-    public void onNeverLogin(HttpServletResponse resp, HttpServletRequest req) throws IOException, ServletException {
+    public void onNeverLogin(HttpServletResponse resp, HttpServletRequest req) throws IOException {
         allowCors(resp, req);
         writeJson2Response(resp, HttpStatus.UNAUTHORIZED, "请先登录");
     }
@@ -121,6 +115,7 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
      * @param msg        消息
      * @throws IOException IOException
      */
+    @SuppressWarnings("SameParameterValue")
     private void writeJson2Response(HttpServletResponse resp, HttpStatus httpStatus, String msg) throws IOException {
         resp.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         resp.setStatus(httpStatus.value());

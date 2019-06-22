@@ -1,7 +1,5 @@
 package top.sl.tmpp.common.entity;
 
-import java.util.Date;
-
 public class LoginUser {
     /**
      * 学生用户

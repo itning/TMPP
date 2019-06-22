@@ -55,7 +55,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     public Object resolveArgument(@Nonnull MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
         LoginUser loginUser = JwtUtils.getLoginUser(authorization);
-        logger.info("get login user: {}", loginUser);
+        logger.debug("get login user: {}", loginUser);
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String requestUri = request.getRequestURI();
         String method = request.getMethod();
@@ -72,6 +72,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      */
     private void checkRole(LoginUser loginUser) {
         if (loginUser.getUserType().equals(LoginUser.STUDENT_USER)) {
+            logger.debug("CheckRole FORBIDDEN And LoginUser Type:{}", loginUser.getUserType());
             throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
         }
     }
@@ -92,6 +93,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
                 .filter(adminResource -> adminResource.getMethod().equals(method))
                 .count();
         if (admin == 0L) {
+            logger.debug("CheckPermission FORBIDDEN {}", loginUser);
             throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
         }
     }
