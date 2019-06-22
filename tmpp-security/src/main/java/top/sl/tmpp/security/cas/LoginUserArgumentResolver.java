@@ -18,6 +18,7 @@ import top.sl.tmpp.common.mapper.CasMapper;
 import top.sl.tmpp.security.exception.RoleException;
 import top.sl.tmpp.security.util.JwtUtils;
 
+import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -51,7 +52,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(@Nonnull MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
         LoginUser loginUser = JwtUtils.getLoginUser(authorization);
         logger.info("get login user: {}", loginUser);
