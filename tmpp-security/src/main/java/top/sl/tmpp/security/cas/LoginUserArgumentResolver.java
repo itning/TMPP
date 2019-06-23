@@ -30,6 +30,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
     private static final Logger logger = LoggerFactory.getLogger(LoginUserArgumentResolver.class);
+
+    private static final String STUDENT_USER = "99";
     private final LoadingCache<String, List<AdminResource>> loadingCache;
 
     public LoginUserArgumentResolver(CasMapper casMapper) {
@@ -71,7 +73,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      * @param loginUser 登录用户
      */
     private void checkRole(LoginUser loginUser) {
-        if (loginUser.getUserType().equals(LoginUser.STUDENT_USER)) {
+        if (loginUser.getUserType().equals(STUDENT_USER)) {
             logger.debug("CheckRole FORBIDDEN And LoginUser Type:{}", loginUser.getUserType());
             throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
         }
