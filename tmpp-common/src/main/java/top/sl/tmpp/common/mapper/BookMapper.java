@@ -1,11 +1,13 @@
 package top.sl.tmpp.common.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.BookExample;
 import top.sl.tmpp.common.pojo.AReview;
 import top.sl.tmpp.common.pojo.OReview;
+import top.sl.tmpp.common.pojo.TBook;
+
+import java.util.List;
 
 public interface BookMapper {
     long countByExample(BookExample example);
@@ -35,4 +37,6 @@ public interface BookMapper {
     List<AReview> selectAReviews(@Param("planId") String planId);
 
     List<OReview> selectStatusAndIdOReview(@Param("planId") String planId);
+
+    List<TBook> selectTBooks(@Param("planId") String planId, @Param("loginUserId") String loginUserId);
 }

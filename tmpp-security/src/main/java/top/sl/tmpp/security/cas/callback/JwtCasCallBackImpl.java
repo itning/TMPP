@@ -10,13 +10,17 @@ import top.itning.cas.callback.login.ILoginFailureCallBack;
 import top.itning.cas.callback.login.ILoginNeverCallBack;
 import top.itning.cas.callback.login.ILoginSuccessCallBack;
 import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.entity.LoginUserExample;
+import top.sl.tmpp.common.mapper.LoginUserMapper;
 import top.sl.tmpp.security.util.JwtUtils;
 
+import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.*;
@@ -31,9 +35,11 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final CasProperties casProperties;
+    private final LoginUserMapper loginUserMapper;
 
-    public JwtCasCallBackImpl(CasProperties casProperties) {
+    public JwtCasCallBackImpl(CasProperties casProperties, LoginUserMapper loginUserMapper) {
         this.casProperties = casProperties;
+        this.loginUserMapper = loginUserMapper;
     }
 
     @Override
@@ -44,6 +50,12 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
         }
         LoginUser loginUser = map2userLoginEntity(attributesMap);
         String jwt = JwtUtils.buildJwt(loginUser);
+        if (loginUserMapper.selectByPrimaryKey(loginUser.getId()) == null) {
+            Date date = new Date();
+            loginUser.setGmtCreate(date);
+            loginUser.setGmtModified(date);
+            loginUserMapper.insert(loginUser);
+        }
         //重定向到登陆成功需要跳转的地址
         resp.sendRedirect(casProperties.getLoginSuccessUrl().toString() + "/token/" + jwt);
     }

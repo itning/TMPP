@@ -64,4 +64,15 @@ public class LoginUser {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+    @Override
+    public String toString() {
+        return "LoginUser{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", userType='" + userType + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                '}';
+    }
 }

@@ -11,4 +11,14 @@
 
     <artifactId>tmpp-purchase</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>

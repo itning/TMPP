@@ -91,7 +91,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
         List<AdminResource> adminResourceList = loadingCache.get(loginId);
         long admin = adminResourceList
                 .stream()
-                .filter(adminResource -> adminResource.getUrl().equals(requestUri))
+                .filter(adminResource -> requestUri.startsWith(adminResource.getUrl()))
                 .filter(adminResource -> adminResource.getMethod().equals(method))
                 .count();
         if (admin == 0L) {
