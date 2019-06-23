@@ -94,7 +94,7 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public static List getBankListByExcel(InputStream in, String fileName) throws Exception {
+    public static List<List<String>> getBankListByExcel(InputStream in, String fileName) throws Exception {
         List list = new ArrayList<>();
         Workbook work = FileUtil.getWorkbook(in, fileName);
         if (null == work) {

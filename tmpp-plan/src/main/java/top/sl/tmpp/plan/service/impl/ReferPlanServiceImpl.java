@@ -12,6 +12,7 @@ import top.sl.tmpp.common.mapper.CollegesMapper;
 import top.sl.tmpp.common.mapper.ExecutePlanMapper;
 import top.sl.tmpp.common.mapper.PlanMapper;
 import top.sl.tmpp.plan.exception.AddPlanException;
+import top.sl.tmpp.plan.exception.NoPlanException;
 import top.sl.tmpp.plan.service.ReferPlanService;
 import top.sl.tmpp.plan.util.FileUtil;
 
@@ -47,7 +48,7 @@ public class ReferPlanServiceImpl implements ReferPlanService {
             InputStream in = new FileInputStream(excelFile);
             List<List<String>> list = FileUtil.getBankListByExcel(in, excelFile.getName());
             String id = UUID.randomUUID().toString().replace("-", "");
-            ExecutePlan executePlan = new ExecutePlan(id, year, term, educationalLevel, null, new Date(), teachingDepartment,fileId.split(".")[1], Files.readAllBytes(excelFile.toPath()));
+            ExecutePlan executePlan = new ExecutePlan(id, year, term, educationalLevel, null, new Date(), teachingDepartment,fileId.split("\\.")[1], Files.readAllBytes(excelFile.toPath()));
             executePlanMapper.insert(executePlan);
             logger.debug("添加执行计划成功");
             String collegesId = null;
@@ -86,6 +87,11 @@ public class ReferPlanServiceImpl implements ReferPlanService {
 
     @Override
     public ExecutePlan downloadExecutePlan(String id) {
-        return null;
+        if (id==null){
+            throw new NoPlanException("未查找到执行计划",HttpStatus.NOT_FOUND);
+        }
+        ExecutePlan executePlan = executePlanMapper.selectByPrimaryKey(id);
+        logger.debug("查询执行计划成功");
+        return executePlan;
     }
 }

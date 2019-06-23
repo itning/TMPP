@@ -34,7 +34,7 @@ public class FileController {
         } catch (Exception e) {
             throw new FileTypeException("上传文件类型有误", HttpStatus.ACCEPTED);
         }
-        return RestModel.created("上传成功",null);
+        return RestModel.created("上传成功",s);
     }
 
 }
