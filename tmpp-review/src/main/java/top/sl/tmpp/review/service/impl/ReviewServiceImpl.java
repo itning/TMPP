@@ -5,7 +5,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.mapper.BookMapper;
-import top.sl.tmpp.common.mapper.BookStatusMapper;
+import top.sl.tmpp.common.pojo.AReview;
 import top.sl.tmpp.common.pojo.OReview;
 import top.sl.tmpp.review.service.ReviewService;
 
@@ -16,12 +16,10 @@ import top.sl.tmpp.review.service.ReviewService;
 @Service
 public class ReviewServiceImpl implements ReviewService {
     private final BookMapper bookMapper;
-    private final BookStatusMapper bookStatusMapper;
 
     @Autowired
-    public ReviewServiceImpl(BookMapper bookMapper, BookStatusMapper bookStatusMapper) {
+    public ReviewServiceImpl(BookMapper bookMapper) {
         this.bookMapper = bookMapper;
-        this.bookStatusMapper = bookStatusMapper;
     }
 
     @Override
@@ -29,5 +27,12 @@ public class ReviewServiceImpl implements ReviewService {
         return PageHelper
                 .startPage(page, size)
                 .doSelectPageInfo(() -> bookMapper.selectOReviews(planId));
+    }
+
+    @Override
+    public PageInfo<AReview> getAReviews(String planId, int page, int size) {
+        return PageHelper
+                .startPage(page, size)
+                .doSelectPageInfo(() -> bookMapper.selectAReviews(planId));
     }
 }

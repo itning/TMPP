@@ -4,12 +4,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 办公室主任我的审核
+ * 教务处我的审核
  *
  * @author itning
  * @date 2019/6/23 11:40
  */
-public class OReview {
+public class AReview {
     private String id;
 
     private String isbn;
@@ -46,6 +46,8 @@ public class OReview {
 
     private String loginUserId;
 
+    private String isBuyBook;
+
     private Date gmtModified;
 
     private Date gmtCreate;
@@ -54,10 +56,10 @@ public class OReview {
 
     private Integer status;
 
-    public OReview() {
+    public AReview() {
     }
 
-    public OReview(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, Date gmtModified, Date gmtCreate, String planId, Integer status) {
+    public AReview(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook, Date gmtModified, Date gmtCreate, String planId, Integer status) {
         this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
@@ -76,6 +78,7 @@ public class OReview {
         this.discountId = discountId;
         this.affairsNumber = affairsNumber;
         this.loginUserId = loginUserId;
+        this.isBuyBook = isBuyBook;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
         this.planId = planId;
@@ -226,6 +229,14 @@ public class OReview {
         this.loginUserId = loginUserId;
     }
 
+    public String getIsBuyBook() {
+        return isBuyBook;
+    }
+
+    public void setIsBuyBook(String isBuyBook) {
+        this.isBuyBook = isBuyBook;
+    }
+
     public Date getGmtModified() {
         return gmtModified;
     }
@@ -279,6 +290,7 @@ public class OReview {
                 ", discountId='" + discountId + '\'' +
                 ", affairsNumber=" + affairsNumber +
                 ", loginUserId='" + loginUserId + '\'' +
+                ", isBuyBook='" + isBuyBook + '\'' +
                 ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +
                 ", planId='" + planId + '\'' +
