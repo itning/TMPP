@@ -32,6 +32,10 @@
             <groupId>top.sl.tmpp</groupId>
             <artifactId>tmpp-purchase</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-review</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

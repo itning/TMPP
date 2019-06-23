@@ -54,7 +54,36 @@ public class OReview {
 
     private String planId;
 
-    private int status;
+    private Integer status;
+
+    public OReview() {
+    }
+
+    public OReview(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook, Date gmtModified, Date gmtCreate, String planId, Integer status) {
+        this.id = id;
+        this.isbn = isbn;
+        this.textBookName = textBookName;
+        this.textBookCategory = textBookCategory;
+        this.press = press;
+        this.author = author;
+        this.unitPrice = unitPrice;
+        this.teacherBookNumber = teacherBookNumber;
+        this.awardInformation = awardInformation;
+        this.publicationDate = publicationDate;
+        this.subscriber = subscriber;
+        this.subscriberTel = subscriberTel;
+        this.isBookPurchase = isBookPurchase;
+        this.reason = reason;
+        this.courseId = courseId;
+        this.discountId = discountId;
+        this.affairsNumber = affairsNumber;
+        this.loginUserId = loginUserId;
+        this.isBuyBook = isBuyBook;
+        this.gmtModified = gmtModified;
+        this.gmtCreate = gmtCreate;
+        this.planId = planId;
+        this.status = status;
+    }
 
     public String getId() {
         return id;
@@ -232,11 +261,11 @@ public class OReview {
         this.planId = planId;
     }
 
-    public int getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(int status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 
