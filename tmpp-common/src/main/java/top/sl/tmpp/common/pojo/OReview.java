@@ -57,6 +57,12 @@ public class OReview {
     public OReview() {
     }
 
+
+    public OReview(String id, Integer status) {
+        this.id = id;
+        this.status = status;
+    }
+
     public OReview(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, Date gmtModified, Date gmtCreate, String planId, Integer status) {
         this.id = id;
         this.isbn = isbn;

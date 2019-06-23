@@ -39,7 +39,7 @@ public class ReviewController {
      */
     @PostMapping("/all_passed")
     public ResponseEntity allPassed(@RequestParam String planId) {
-
+        reviewService.oAllPassed(planId);
         return RestModel.created("办公室主任全部审核通过", null);
     }
 
@@ -51,7 +51,7 @@ public class ReviewController {
      */
     @PostMapping("/examination_passed")
     public ResponseEntity examinationPassed(@RequestParam String planId) {
-
+        reviewService.aAllPassed(planId);
         return RestModel.created("全部审核通过", null);
     }
 
@@ -63,7 +63,7 @@ public class ReviewController {
      */
     @PostMapping("/turn_down")
     public ResponseEntity turnDown(@RequestParam String id) {
-
+        reviewService.aTurnDown(id);
         return RestModel.created("驳回操作成功", null);
     }
 
@@ -75,7 +75,7 @@ public class ReviewController {
      */
     @PostMapping("/office_turn_down")
     public ResponseEntity officeTurnDown(@RequestParam String id) {
-
+        reviewService.oTurnDown(id);
         return RestModel.created("驳回操作成功", null);
     }
 
@@ -87,8 +87,8 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/buy_sample_book")
-    public ResponseEntity buySampleBook(@RequestParam String id, @RequestParam int isBuyBook) {
-
+    public ResponseEntity buySampleBook(@RequestParam String id, @RequestParam String isBuyBook) {
+        reviewService.isByBook(id, isBuyBook);
         return RestModel.created("操作成功", null);
     }
 

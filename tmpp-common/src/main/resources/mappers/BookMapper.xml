@@ -80,6 +80,12 @@
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
+    <resultMap id="ReviewIdAndStatusResultMap" type="top.sl.tmpp.common.pojo.OReview">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -607,6 +613,14 @@
                book_status.gmt_modified,
                book_status.gmt_create,
                book.plan_id,
+               book_status.status
+        FROM book,
+             book_status
+        WHERE book.plan_id = #{planId,jdbcType=VARCHAR}
+          AND book.id = book_status.id
+    </select>
+    <select id="selectStatusAndIdOReview" resultMap="ReviewIdAndStatusResultMap" parameterType="java.lang.String">
+        SELECT book.id,
                book_status.status
         FROM book,
              book_status

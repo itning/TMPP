@@ -33,4 +33,6 @@ public interface BookMapper {
     List<OReview> selectOReviews(@Param("planId") String planId);
 
     List<AReview> selectAReviews(@Param("planId") String planId);
+
+    List<OReview> selectStatusAndIdOReview(@Param("planId") String planId);
 }

@@ -29,4 +29,40 @@ public interface ReviewService {
      * @return {@link PageInfo}
      */
     PageInfo<AReview> getAReviews(String planId, int page, int size);
+
+    /**
+     * 是否购买样书
+     *
+     * @param id 购书计划id
+     * @param is 是1 否0
+     */
+    void isByBook(String id, String is);
+
+    /**
+     * 办公室主任全部审核通过
+     *
+     * @param planId 执行计划ID
+     */
+    void oAllPassed(String planId);
+
+    /**
+     * 教务处全部审核通过
+     *
+     * @param planId 执行计划ID
+     */
+    void aAllPassed(String planId);
+
+    /**
+     * 办公室主任驳回
+     *
+     * @param id 购书计划id
+     */
+    void oTurnDown(String id);
+
+    /**
+     * 教务处驳回
+     *
+     * @param id 购书计划id
+     */
+    void aTurnDown(String id);
 }
