@@ -4,11 +4,7 @@
   <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.Plan">
     <constructor>
       <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="year" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="term" javaType="java.lang.Integer" jdbcType="INTEGER" />
-      <arg column="level_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="college_id" javaType="java.lang.String" jdbcType="VARCHAR" />
-      <arg column="department_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="course_major" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="course_type" javaType="java.lang.Integer" jdbcType="INTEGER" />
       <arg column="use_school_year" javaType="java.lang.String" jdbcType="VARCHAR" />
@@ -17,6 +13,7 @@
       <arg column="teacher" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="execute_plan_id" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -78,8 +75,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, year, term, level_id, college_id, department_id, course_major, course_type, use_school_year, 
-    clazz, clazz_number, teacher, gmt_modified, gmt_create
+    id, college_id, course_major, course_type, use_school_year, clazz, clazz_number, 
+    teacher, gmt_modified, gmt_create, execute_plan_id
   </sql>
   <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.PlanExample" resultMap="BaseResultMap">
     select
@@ -112,16 +109,14 @@
     </if>
   </delete>
   <insert id="insert" parameterType="top.sl.tmpp.common.entity.Plan">
-    insert into plan (id, year, term, 
-      level_id, college_id, department_id, 
-      course_major, course_type, use_school_year, 
-      clazz, clazz_number, teacher, 
-      gmt_modified, gmt_create)
-    values (#{id,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{term,jdbcType=INTEGER}, 
-      #{levelId,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR}, #{departmentId,jdbcType=VARCHAR}, 
-      #{courseMajor,jdbcType=VARCHAR}, #{courseType,jdbcType=INTEGER}, #{useSchoolYear,jdbcType=VARCHAR}, 
-      #{clazz,jdbcType=VARCHAR}, #{clazzNumber,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR}, 
-      #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP})
+    insert into plan (id, college_id, course_major, 
+      course_type, use_school_year, clazz, 
+      clazz_number, teacher, gmt_modified, 
+      gmt_create, execute_plan_id)
+    values (#{id,jdbcType=VARCHAR}, #{collegeId,jdbcType=VARCHAR}, #{courseMajor,jdbcType=VARCHAR}, 
+      #{courseType,jdbcType=INTEGER}, #{useSchoolYear,jdbcType=VARCHAR}, #{clazz,jdbcType=VARCHAR}, 
+      #{clazzNumber,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, 
+      #{gmtCreate,jdbcType=TIMESTAMP}, #{executePlanId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Plan">
     insert into plan
@@ -129,20 +124,8 @@
       <if test="id != null">
         id,
       </if>
-      <if test="year != null">
-        year,
-      </if>
-      <if test="term != null">
-        term,
-      </if>
-      <if test="levelId != null">
-        level_id,
-      </if>
       <if test="collegeId != null">
         college_id,
-      </if>
-      <if test="departmentId != null">
-        department_id,
       </if>
       <if test="courseMajor != null">
         course_major,
@@ -168,25 +151,16 @@
       <if test="gmtCreate != null">
         gmt_create,
       </if>
+      <if test="executePlanId != null">
+        execute_plan_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
         #{id,jdbcType=VARCHAR},
       </if>
-      <if test="year != null">
-        #{year,jdbcType=VARCHAR},
-      </if>
-      <if test="term != null">
-        #{term,jdbcType=INTEGER},
-      </if>
-      <if test="levelId != null">
-        #{levelId,jdbcType=VARCHAR},
-      </if>
       <if test="collegeId != null">
         #{collegeId,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentId != null">
-        #{departmentId,jdbcType=VARCHAR},
       </if>
       <if test="courseMajor != null">
         #{courseMajor,jdbcType=VARCHAR},
@@ -212,6 +186,9 @@
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="executePlanId != null">
+        #{executePlanId,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
   <select id="countByExample" parameterType="top.sl.tmpp.common.entity.PlanExample" resultType="java.lang.Long">
@@ -226,20 +203,8 @@
       <if test="record.id != null">
         id = #{record.id,jdbcType=VARCHAR},
       </if>
-      <if test="record.year != null">
-        year = #{record.year,jdbcType=VARCHAR},
-      </if>
-      <if test="record.term != null">
-        term = #{record.term,jdbcType=INTEGER},
-      </if>
-      <if test="record.levelId != null">
-        level_id = #{record.levelId,jdbcType=VARCHAR},
-      </if>
       <if test="record.collegeId != null">
         college_id = #{record.collegeId,jdbcType=VARCHAR},
-      </if>
-      <if test="record.departmentId != null">
-        department_id = #{record.departmentId,jdbcType=VARCHAR},
       </if>
       <if test="record.courseMajor != null">
         course_major = #{record.courseMajor,jdbcType=VARCHAR},
@@ -265,6 +230,9 @@
       <if test="record.gmtCreate != null">
         gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.executePlanId != null">
+        execute_plan_id = #{record.executePlanId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -273,11 +241,7 @@
   <update id="updateByExample" parameterType="map">
     update plan
     set id = #{record.id,jdbcType=VARCHAR},
-      year = #{record.year,jdbcType=VARCHAR},
-      term = #{record.term,jdbcType=INTEGER},
-      level_id = #{record.levelId,jdbcType=VARCHAR},
       college_id = #{record.collegeId,jdbcType=VARCHAR},
-      department_id = #{record.departmentId,jdbcType=VARCHAR},
       course_major = #{record.courseMajor,jdbcType=VARCHAR},
       course_type = #{record.courseType,jdbcType=INTEGER},
       use_school_year = #{record.useSchoolYear,jdbcType=VARCHAR},
@@ -285,7 +249,8 @@
       clazz_number = #{record.clazzNumber,jdbcType=INTEGER},
       teacher = #{record.teacher,jdbcType=VARCHAR},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      execute_plan_id = #{record.executePlanId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -293,20 +258,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.Plan">
     update plan
     <set>
-      <if test="year != null">
-        year = #{year,jdbcType=VARCHAR},
-      </if>
-      <if test="term != null">
-        term = #{term,jdbcType=INTEGER},
-      </if>
-      <if test="levelId != null">
-        level_id = #{levelId,jdbcType=VARCHAR},
-      </if>
       <if test="collegeId != null">
         college_id = #{collegeId,jdbcType=VARCHAR},
-      </if>
-      <if test="departmentId != null">
-        department_id = #{departmentId,jdbcType=VARCHAR},
       </if>
       <if test="courseMajor != null">
         course_major = #{courseMajor,jdbcType=VARCHAR},
@@ -332,16 +285,15 @@
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="executePlanId != null">
+        execute_plan_id = #{executePlanId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.Plan">
     update plan
-    set year = #{year,jdbcType=VARCHAR},
-      term = #{term,jdbcType=INTEGER},
-      level_id = #{levelId,jdbcType=VARCHAR},
-      college_id = #{collegeId,jdbcType=VARCHAR},
-      department_id = #{departmentId,jdbcType=VARCHAR},
+    set college_id = #{collegeId,jdbcType=VARCHAR},
       course_major = #{courseMajor,jdbcType=VARCHAR},
       course_type = #{courseType,jdbcType=INTEGER},
       use_school_year = #{useSchoolYear,jdbcType=VARCHAR},
@@ -349,7 +301,8 @@
       clazz_number = #{clazzNumber,jdbcType=INTEGER},
       teacher = #{teacher,jdbcType=VARCHAR},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

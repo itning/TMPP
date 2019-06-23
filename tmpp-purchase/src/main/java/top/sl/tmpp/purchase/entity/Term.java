@@ -16,7 +16,7 @@ public enum Term {
     SECOND_SEMESTER(2);
 
     private int term;
-    private Term(int term){
+    Term(int term){
         this.term=term;
     }
 

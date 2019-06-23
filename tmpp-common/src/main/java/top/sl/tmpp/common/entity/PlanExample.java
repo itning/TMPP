@@ -175,206 +175,6 @@ public class PlanExample {
             return (Criteria) this;
         }
 
-        public Criteria andYearIsNull() {
-            addCriterion("year is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearIsNotNull() {
-            addCriterion("year is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearEqualTo(String value) {
-            addCriterion("year =", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearNotEqualTo(String value) {
-            addCriterion("year <>", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearGreaterThan(String value) {
-            addCriterion("year >", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearGreaterThanOrEqualTo(String value) {
-            addCriterion("year >=", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearLessThan(String value) {
-            addCriterion("year <", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearLessThanOrEqualTo(String value) {
-            addCriterion("year <=", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearLike(String value) {
-            addCriterion("year like", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearNotLike(String value) {
-            addCriterion("year not like", value, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearIn(List<String> values) {
-            addCriterion("year in", values, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearNotIn(List<String> values) {
-            addCriterion("year not in", values, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearBetween(String value1, String value2) {
-            addCriterion("year between", value1, value2, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andYearNotBetween(String value1, String value2) {
-            addCriterion("year not between", value1, value2, "year");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermIsNull() {
-            addCriterion("term is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermIsNotNull() {
-            addCriterion("term is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermEqualTo(Integer value) {
-            addCriterion("term =", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermNotEqualTo(Integer value) {
-            addCriterion("term <>", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermGreaterThan(Integer value) {
-            addCriterion("term >", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermGreaterThanOrEqualTo(Integer value) {
-            addCriterion("term >=", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermLessThan(Integer value) {
-            addCriterion("term <", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermLessThanOrEqualTo(Integer value) {
-            addCriterion("term <=", value, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermIn(List<Integer> values) {
-            addCriterion("term in", values, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermNotIn(List<Integer> values) {
-            addCriterion("term not in", values, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermBetween(Integer value1, Integer value2) {
-            addCriterion("term between", value1, value2, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andTermNotBetween(Integer value1, Integer value2) {
-            addCriterion("term not between", value1, value2, "term");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdIsNull() {
-            addCriterion("level_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdIsNotNull() {
-            addCriterion("level_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdEqualTo(String value) {
-            addCriterion("level_id =", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdNotEqualTo(String value) {
-            addCriterion("level_id <>", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdGreaterThan(String value) {
-            addCriterion("level_id >", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdGreaterThanOrEqualTo(String value) {
-            addCriterion("level_id >=", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdLessThan(String value) {
-            addCriterion("level_id <", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdLessThanOrEqualTo(String value) {
-            addCriterion("level_id <=", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdLike(String value) {
-            addCriterion("level_id like", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdNotLike(String value) {
-            addCriterion("level_id not like", value, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdIn(List<String> values) {
-            addCriterion("level_id in", values, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdNotIn(List<String> values) {
-            addCriterion("level_id not in", values, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdBetween(String value1, String value2) {
-            addCriterion("level_id between", value1, value2, "levelId");
-            return (Criteria) this;
-        }
-
-        public Criteria andLevelIdNotBetween(String value1, String value2) {
-            addCriterion("level_id not between", value1, value2, "levelId");
-            return (Criteria) this;
-        }
-
         public Criteria andCollegeIdIsNull() {
             addCriterion("college_id is null");
             return (Criteria) this;
@@ -442,76 +242,6 @@ public class PlanExample {
 
         public Criteria andCollegeIdNotBetween(String value1, String value2) {
             addCriterion("college_id not between", value1, value2, "collegeId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdIsNull() {
-            addCriterion("department_id is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdIsNotNull() {
-            addCriterion("department_id is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdEqualTo(String value) {
-            addCriterion("department_id =", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdNotEqualTo(String value) {
-            addCriterion("department_id <>", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdGreaterThan(String value) {
-            addCriterion("department_id >", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdGreaterThanOrEqualTo(String value) {
-            addCriterion("department_id >=", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdLessThan(String value) {
-            addCriterion("department_id <", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdLessThanOrEqualTo(String value) {
-            addCriterion("department_id <=", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdLike(String value) {
-            addCriterion("department_id like", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdNotLike(String value) {
-            addCriterion("department_id not like", value, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdIn(List<String> values) {
-            addCriterion("department_id in", values, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdNotIn(List<String> values) {
-            addCriterion("department_id not in", values, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdBetween(String value1, String value2) {
-            addCriterion("department_id between", value1, value2, "departmentId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDepartmentIdNotBetween(String value1, String value2) {
-            addCriterion("department_id not between", value1, value2, "departmentId");
             return (Criteria) this;
         }
 
@@ -1032,6 +762,76 @@ public class PlanExample {
 
         public Criteria andGmtCreateNotBetween(Date value1, Date value2) {
             addCriterion("gmt_create not between", value1, value2, "gmtCreate");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdIsNull() {
+            addCriterion("execute_plan_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdIsNotNull() {
+            addCriterion("execute_plan_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdEqualTo(String value) {
+            addCriterion("execute_plan_id =", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdNotEqualTo(String value) {
+            addCriterion("execute_plan_id <>", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdGreaterThan(String value) {
+            addCriterion("execute_plan_id >", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdGreaterThanOrEqualTo(String value) {
+            addCriterion("execute_plan_id >=", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdLessThan(String value) {
+            addCriterion("execute_plan_id <", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdLessThanOrEqualTo(String value) {
+            addCriterion("execute_plan_id <=", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdLike(String value) {
+            addCriterion("execute_plan_id like", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdNotLike(String value) {
+            addCriterion("execute_plan_id not like", value, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdIn(List<String> values) {
+            addCriterion("execute_plan_id in", values, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdNotIn(List<String> values) {
+            addCriterion("execute_plan_id not in", values, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdBetween(String value1, String value2) {
+            addCriterion("execute_plan_id between", value1, value2, "executePlanId");
+            return (Criteria) this;
+        }
+
+        public Criteria andExecutePlanIdNotBetween(String value1, String value2) {
+            addCriterion("execute_plan_id not between", value1, value2, "executePlanId");
             return (Criteria) this;
         }
     }

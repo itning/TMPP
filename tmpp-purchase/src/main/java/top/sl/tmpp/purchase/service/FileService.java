@@ -12,5 +12,5 @@ public interface FileService {
      * @param file
      * @return
      */
-    String fileUpload(MultipartFile file);
+    String fileUpload(MultipartFile file) throws Exception;
 }

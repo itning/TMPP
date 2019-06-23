@@ -2,12 +2,14 @@ package top.sl.tmpp.purchase.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import top.sl.tmpp.common.util.RestModel;
+import top.sl.tmpp.purchase.exception.FileTypeException;
 import top.sl.tmpp.purchase.service.FileService;
 import top.sl.tmpp.purchase.util.FileUtil;
 
@@ -26,7 +28,13 @@ public class FileController {
 
     @PostMapping("/plan_file")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file){
-        String s = fileService.fileUpload(file);
+        String s = null;
+        try {
+            s = fileService.fileUpload(file);
+        } catch (Exception e) {
+            throw new FileTypeException("上传文件类型有误", HttpStatus.ACCEPTED);
+        }
         return RestModel.ok(s);
     }
+
 }

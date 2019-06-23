@@ -5,15 +5,7 @@ import java.util.Date;
 public class Plan {
     private String id;
 
-    private String year;
-
-    private Integer term;
-
-    private String levelId;
-
     private String collegeId;
-
-    private String departmentId;
 
     private String courseMajor;
 
@@ -31,13 +23,11 @@ public class Plan {
 
     private Date gmtCreate;
 
-    public Plan(String id, String year, Integer term, String levelId, String collegeId, String departmentId, String courseMajor, Integer courseType, String useSchoolYear, String clazz, Integer clazzNumber, String teacher, Date gmtModified, Date gmtCreate) {
+    private String executePlanId;
+
+    public Plan(String id, String collegeId, String courseMajor, Integer courseType, String useSchoolYear, String clazz, Integer clazzNumber, String teacher, Date gmtModified, Date gmtCreate, String executePlanId) {
         this.id = id;
-        this.year = year;
-        this.term = term;
-        this.levelId = levelId;
         this.collegeId = collegeId;
-        this.departmentId = departmentId;
         this.courseMajor = courseMajor;
         this.courseType = courseType;
         this.useSchoolYear = useSchoolYear;
@@ -46,6 +36,7 @@ public class Plan {
         this.teacher = teacher;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
+        this.executePlanId = executePlanId;
     }
 
     public Plan() {
@@ -60,44 +51,12 @@ public class Plan {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getYear() {
-        return year;
-    }
-
-    public void setYear(String year) {
-        this.year = year == null ? null : year.trim();
-    }
-
-    public Integer getTerm() {
-        return term;
-    }
-
-    public void setTerm(Integer term) {
-        this.term = term;
-    }
-
-    public String getLevelId() {
-        return levelId;
-    }
-
-    public void setLevelId(String levelId) {
-        this.levelId = levelId == null ? null : levelId.trim();
-    }
-
     public String getCollegeId() {
         return collegeId;
     }
 
     public void setCollegeId(String collegeId) {
         this.collegeId = collegeId == null ? null : collegeId.trim();
-    }
-
-    public String getDepartmentId() {
-        return departmentId;
-    }
-
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
     }
 
     public String getCourseMajor() {
@@ -162,5 +121,13 @@ public class Plan {
 
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
+    }
+
+    public String getExecutePlanId() {
+        return executePlanId;
+    }
+
+    public void setExecutePlanId(String executePlanId) {
+        this.executePlanId = executePlanId == null ? null : executePlanId.trim();
     }
 }

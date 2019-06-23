@@ -2,35 +2,35 @@ package top.sl.tmpp.common.entity;
 
 import java.util.Date;
 
-public class LoginUser {
-    private String id;
+public class AdminUserRole {
+    private Integer id;
 
     private String name;
-
-    private String userType;
 
     private Date gmtCreate;
 
     private Date gmtModified;
 
-    public LoginUser(String id, String name, String userType, Date gmtCreate, Date gmtModified) {
+    private String type;
+
+    public AdminUserRole(Integer id, String name, Date gmtCreate, Date gmtModified, String type) {
         this.id = id;
         this.name = name;
-        this.userType = userType;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
+        this.type = type;
     }
 
-    public LoginUser() {
+    public AdminUserRole() {
         super();
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -39,14 +39,6 @@ public class LoginUser {
 
     public void setName(String name) {
         this.name = name == null ? null : name.trim();
-    }
-
-    public String getUserType() {
-        return userType;
-    }
-
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
     }
 
     public Date getGmtCreate() {
@@ -63,5 +55,13 @@ public class LoginUser {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 }

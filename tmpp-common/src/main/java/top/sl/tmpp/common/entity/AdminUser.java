@@ -2,26 +2,32 @@ package top.sl.tmpp.common.entity;
 
 import java.util.Date;
 
-public class LoginUser {
+public class AdminUser {
     private String id;
 
     private String name;
 
-    private String userType;
+    private String username;
+
+    private String password;
+
+    private String type;
 
     private Date gmtCreate;
 
     private Date gmtModified;
 
-    public LoginUser(String id, String name, String userType, Date gmtCreate, Date gmtModified) {
+    public AdminUser(String id, String name, String username, String password, String type, Date gmtCreate, Date gmtModified) {
         this.id = id;
         this.name = name;
-        this.userType = userType;
+        this.username = username;
+        this.password = password;
+        this.type = type;
         this.gmtCreate = gmtCreate;
         this.gmtModified = gmtModified;
     }
 
-    public LoginUser() {
+    public AdminUser() {
         super();
     }
 
@@ -41,12 +47,28 @@ public class LoginUser {
         this.name = name == null ? null : name.trim();
     }
 
-    public String getUserType() {
-        return userType;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
+    public void setUsername(String username) {
+        this.username = username == null ? null : username.trim();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password == null ? null : password.trim();
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
     }
 
     public Date getGmtCreate() {
