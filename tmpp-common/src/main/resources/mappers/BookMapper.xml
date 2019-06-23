@@ -24,6 +24,34 @@
       <arg column="is_buy_book" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="plan_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
+  <resultMap id="OReviewResultMap" type="top.sl.tmpp.common.pojo.OReview">
+    <constructor>
+      <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="text_book_category" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="press" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL" />
+      <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="subscriber_tel" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="is_book_purchase" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="discount_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="affairs_number" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_buy_book" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="plan_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -88,7 +116,7 @@
     id, isbn, text_book_name, text_book_category, press, author, unit_price, teacher_book_number, 
     award_Information, publication_date, subscriber, subscriber_tel, is_book_purchase, 
     reason, course_id, discount_id, affairs_number, login_user_id, is_buy_book, gmt_modified, 
-    gmt_create
+    gmt_create, plan_id
   </sql>
   <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.BookExample" resultMap="BaseResultMap">
     select
@@ -127,16 +155,16 @@
       publication_date, subscriber, subscriber_tel, 
       is_book_purchase, reason, course_id, 
       discount_id, affairs_number, login_user_id, 
-      is_buy_book, gmt_modified, gmt_create
-      )
+      is_buy_book, gmt_modified, gmt_create, 
+      plan_id)
     values (#{id,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR}, #{textBookName,jdbcType=VARCHAR}, 
       #{textBookCategory,jdbcType=INTEGER}, #{press,jdbcType=INTEGER}, #{author,jdbcType=VARCHAR}, 
       #{unitPrice,jdbcType=DECIMAL}, #{teacherBookNumber,jdbcType=INTEGER}, #{awardInformation,jdbcType=VARCHAR}, 
       #{publicationDate,jdbcType=TIMESTAMP}, #{subscriber,jdbcType=VARCHAR}, #{subscriberTel,jdbcType=INTEGER}, 
       #{isBookPurchase,jdbcType=INTEGER}, #{reason,jdbcType=VARCHAR}, #{courseId,jdbcType=VARCHAR}, 
       #{discountId,jdbcType=VARCHAR}, #{affairsNumber,jdbcType=INTEGER}, #{loginUserId,jdbcType=VARCHAR}, 
-      #{isBuyBook,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}
-      )
+      #{isBuyBook,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
+      #{planId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Book">
     insert into book
@@ -204,6 +232,9 @@
       <if test="gmtCreate != null">
         gmt_create,
       </if>
+      <if test="planId != null">
+        plan_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -268,6 +299,9 @@
       </if>
       <if test="gmtCreate != null">
         #{gmtCreate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="planId != null">
+        #{planId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -343,6 +377,9 @@
       <if test="record.gmtCreate != null">
         gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.planId != null">
+        plan_id = #{record.planId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -370,7 +407,8 @@
       login_user_id = #{record.loginUserId,jdbcType=VARCHAR},
       is_buy_book = #{record.isBuyBook,jdbcType=VARCHAR},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
+      gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
+      plan_id = #{record.planId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -438,6 +476,9 @@
       <if test="gmtCreate != null">
         gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       </if>
+      <if test="planId != null">
+        plan_id = #{planId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -462,7 +503,39 @@
       login_user_id = #{loginUserId,jdbcType=VARCHAR},
       is_buy_book = #{isBuyBook,jdbcType=VARCHAR},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
-      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP}
+      gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
+      plan_id = #{planId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+    <select id="selectOReviews" resultType="top.sl.tmpp.common.pojo.OReview">
+      SELECT
+        book.id,
+        isbn,
+        text_book_name,
+        text_book_category,
+        press,
+        author,
+        unit_price,
+        teacher_book_number,
+        award_Information,
+        publication_date,
+        subscriber,
+        subscriber_tel,
+        is_book_purchase,
+        reason,
+        course_id,
+        discount_id,
+        affairs_number,
+        login_user_id,
+        is_buy_book,
+        book_status.gmt_modified,
+        book_status.gmt_create,
+        plan_id
+      FROM
+        book,
+        book_status
+      WHERE
+        book.plan_id = #{planId,jdbcType=VARCHAR}
+        AND book.id = book_status.id
+    </select>
 </mapper>

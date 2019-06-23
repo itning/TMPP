@@ -4,6 +4,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.BookExample;
+import top.sl.tmpp.common.pojo.OReview;
 
 public interface BookMapper {
     long countByExample(BookExample example);
@@ -27,4 +28,6 @@ public interface BookMapper {
     int updateByPrimaryKeySelective(Book record);
 
     int updateByPrimaryKey(Book record);
+
+    List<OReview> selectOReviews(@Param("planId") String planId);
 }

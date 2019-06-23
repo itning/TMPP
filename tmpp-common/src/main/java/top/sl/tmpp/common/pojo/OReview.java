@@ -1,9 +1,15 @@
-package top.sl.tmpp.common.entity;
+package top.sl.tmpp.common.pojo;
 
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class Book {
+/**
+ * 办公室主任我的审核
+ *
+ * @author itning
+ * @date 2019/6/23 11:40
+ */
+public class OReview {
     private String id;
 
     private String isbn;
@@ -48,41 +54,14 @@ public class Book {
 
     private String planId;
 
-    public Book(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook, Date gmtModified, Date gmtCreate, String planId) {
-        this.id = id;
-        this.isbn = isbn;
-        this.textBookName = textBookName;
-        this.textBookCategory = textBookCategory;
-        this.press = press;
-        this.author = author;
-        this.unitPrice = unitPrice;
-        this.teacherBookNumber = teacherBookNumber;
-        this.awardInformation = awardInformation;
-        this.publicationDate = publicationDate;
-        this.subscriber = subscriber;
-        this.subscriberTel = subscriberTel;
-        this.isBookPurchase = isBookPurchase;
-        this.reason = reason;
-        this.courseId = courseId;
-        this.discountId = discountId;
-        this.affairsNumber = affairsNumber;
-        this.loginUserId = loginUserId;
-        this.isBuyBook = isBuyBook;
-        this.gmtModified = gmtModified;
-        this.gmtCreate = gmtCreate;
-        this.planId = planId;
-    }
-
-    public Book() {
-        super();
-    }
+    private int status;
 
     public String getId() {
         return id;
     }
 
     public void setId(String id) {
-        this.id = id == null ? null : id.trim();
+        this.id = id;
     }
 
     public String getIsbn() {
@@ -90,7 +69,7 @@ public class Book {
     }
 
     public void setIsbn(String isbn) {
-        this.isbn = isbn == null ? null : isbn.trim();
+        this.isbn = isbn;
     }
 
     public String getTextBookName() {
@@ -98,7 +77,7 @@ public class Book {
     }
 
     public void setTextBookName(String textBookName) {
-        this.textBookName = textBookName == null ? null : textBookName.trim();
+        this.textBookName = textBookName;
     }
 
     public Integer getTextBookCategory() {
@@ -122,7 +101,7 @@ public class Book {
     }
 
     public void setAuthor(String author) {
-        this.author = author == null ? null : author.trim();
+        this.author = author;
     }
 
     public BigDecimal getUnitPrice() {
@@ -146,7 +125,7 @@ public class Book {
     }
 
     public void setAwardInformation(String awardInformation) {
-        this.awardInformation = awardInformation == null ? null : awardInformation.trim();
+        this.awardInformation = awardInformation;
     }
 
     public Date getPublicationDate() {
@@ -162,7 +141,7 @@ public class Book {
     }
 
     public void setSubscriber(String subscriber) {
-        this.subscriber = subscriber == null ? null : subscriber.trim();
+        this.subscriber = subscriber;
     }
 
     public Integer getSubscriberTel() {
@@ -186,7 +165,7 @@ public class Book {
     }
 
     public void setReason(String reason) {
-        this.reason = reason == null ? null : reason.trim();
+        this.reason = reason;
     }
 
     public String getCourseId() {
@@ -194,7 +173,7 @@ public class Book {
     }
 
     public void setCourseId(String courseId) {
-        this.courseId = courseId == null ? null : courseId.trim();
+        this.courseId = courseId;
     }
 
     public String getDiscountId() {
@@ -202,7 +181,7 @@ public class Book {
     }
 
     public void setDiscountId(String discountId) {
-        this.discountId = discountId == null ? null : discountId.trim();
+        this.discountId = discountId;
     }
 
     public Integer getAffairsNumber() {
@@ -218,7 +197,7 @@ public class Book {
     }
 
     public void setLoginUserId(String loginUserId) {
-        this.loginUserId = loginUserId == null ? null : loginUserId.trim();
+        this.loginUserId = loginUserId;
     }
 
     public String getIsBuyBook() {
@@ -226,7 +205,7 @@ public class Book {
     }
 
     public void setIsBuyBook(String isBuyBook) {
-        this.isBuyBook = isBuyBook == null ? null : isBuyBook.trim();
+        this.isBuyBook = isBuyBook;
     }
 
     public Date getGmtModified() {
@@ -250,6 +229,43 @@ public class Book {
     }
 
     public void setPlanId(String planId) {
-        this.planId = planId == null ? null : planId.trim();
+        this.planId = planId;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "OReview{" +
+                "id='" + id + '\'' +
+                ", isbn='" + isbn + '\'' +
+                ", textBookName='" + textBookName + '\'' +
+                ", textBookCategory=" + textBookCategory +
+                ", press=" + press +
+                ", author='" + author + '\'' +
+                ", unitPrice=" + unitPrice +
+                ", teacherBookNumber=" + teacherBookNumber +
+                ", awardInformation='" + awardInformation + '\'' +
+                ", publicationDate=" + publicationDate +
+                ", subscriber='" + subscriber + '\'' +
+                ", subscriberTel=" + subscriberTel +
+                ", isBookPurchase=" + isBookPurchase +
+                ", reason='" + reason + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", discountId='" + discountId + '\'' +
+                ", affairsNumber=" + affairsNumber +
+                ", loginUserId='" + loginUserId + '\'' +
+                ", isBuyBook='" + isBuyBook + '\'' +
+                ", gmtModified=" + gmtModified +
+                ", gmtCreate=" + gmtCreate +
+                ", planId='" + planId + '\'' +
+                ", status=" + status +
+                '}';
     }
 }
