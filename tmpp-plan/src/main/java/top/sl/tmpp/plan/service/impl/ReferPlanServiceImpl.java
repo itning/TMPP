@@ -4,10 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import top.sl.tmpp.common.entity.Colleges;
-import top.sl.tmpp.common.entity.CollegesExample;
-import top.sl.tmpp.common.entity.ExecutePlan;
-import top.sl.tmpp.common.entity.Plan;
+import org.springframework.transaction.annotation.Transactional;
+import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.mapper.BookMapper;
 import top.sl.tmpp.common.mapper.CollegesMapper;
 import top.sl.tmpp.common.mapper.ExecutePlanMapper;
 import top.sl.tmpp.common.mapper.PlanMapper;
@@ -29,16 +28,19 @@ import java.util.UUID;
  * @date 2019/6/17 13:46
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class ReferPlanServiceImpl implements ReferPlanService {
     private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
     private final PlanMapper planMapper;
     private final ExecutePlanMapper executePlanMapper;
     private final CollegesMapper collegesMapper;
+    private final BookMapper bookMapper;
 
-    public ReferPlanServiceImpl(PlanMapper planMapper, ExecutePlanMapper executePlanMapper, CollegesMapper collegesMapper) {
+    public ReferPlanServiceImpl(PlanMapper planMapper, ExecutePlanMapper executePlanMapper, CollegesMapper collegesMapper, BookMapper bookMapper) {
         this.planMapper = planMapper;
         this.executePlanMapper = executePlanMapper;
         this.collegesMapper = collegesMapper;
+        this.bookMapper = bookMapper;
     }
 
     @Override
@@ -93,5 +95,26 @@ public class ReferPlanServiceImpl implements ReferPlanService {
         ExecutePlan executePlan = executePlanMapper.selectByPrimaryKey(id);
         logger.debug("查询执行计划成功");
         return executePlan;
+    }
+
+    @Override
+    public void removeExecutePlan(String id) {
+        if (id==null){
+            throw new NoPlanException("未查找到执行计划",HttpStatus.NOT_FOUND);
+        }
+        try {
+            PlanExample planExample = new PlanExample();
+            planExample.createCriteria().andExecutePlanIdEqualTo(id);
+            logger.debug("删除执行计划相关计划");
+            planMapper.deleteByExample(planExample);
+            logger.debug("删除执行计划相关书籍计划");
+            BookExample bookExample = new BookExample();
+            bookExample.createCriteria().andPlanIdEqualTo(id);
+            bookMapper.deleteByExample(bookExample);
+            logger.debug("删除执行计划");
+            executePlanMapper.deleteByPrimaryKey(id);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }

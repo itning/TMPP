@@ -19,8 +19,16 @@ public interface ReferPlanService {
     void referPlan(String year, int term, String teachingDepartment, String educationalLevel, String fileId);
 
     /**
-     * @param id 执行计划id
+     * 查询需下载的执行计划
+     * @param id 删除的执行计划id
      * @return
      */
     ExecutePlan downloadExecutePlan(String id);
+
+    /**
+     * 删除执行计划
+     * @param id 删除的执行计划id
+     */
+    void removeExecutePlan(String id);
+
 }
