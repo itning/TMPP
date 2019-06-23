@@ -47,7 +47,7 @@ public class ReferPlanServiceImpl implements ReferPlanService {
             InputStream in = new FileInputStream(excelFile);
             List<List<String>> list = FileUtil.getBankListByExcel(in, excelFile.getName());
             String id = UUID.randomUUID().toString().replace("-", "");
-            ExecutePlan executePlan = new ExecutePlan(id, year, term, educationalLevel, null, new Date(), teachingDepartment, Files.readAllBytes(excelFile.toPath()));
+            ExecutePlan executePlan = new ExecutePlan(id, year, term, educationalLevel, null, new Date(), teachingDepartment,fileId.split(".")[1], Files.readAllBytes(excelFile.toPath()));
             executePlanMapper.insert(executePlan);
             logger.debug("添加执行计划成功");
             String collegesId = null;
@@ -82,5 +82,10 @@ public class ReferPlanServiceImpl implements ReferPlanService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public ExecutePlan downloadExecutePlan(String id) {
+        return null;
     }
 }
