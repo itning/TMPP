@@ -10,6 +10,7 @@
       <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="department_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="file_type" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <resultMap id="ResultMapWithBLOBs" type="top.sl.tmpp.common.entity.ExecutePlan">
@@ -21,6 +22,7 @@
       <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="department_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="file_type" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="file" javaType="_byte[]" jdbcType="LONGVARBINARY" />
     </constructor>
   </resultMap>
@@ -83,7 +85,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, year, term, level_id, gmt_modified, gmt_create, department_id
+    id, year, term, level_id, gmt_modified, gmt_create, department_id, file_type
   </sql>
   <sql id="Blob_Column_List">
     file
@@ -139,10 +141,12 @@
   <insert id="insert" parameterType="top.sl.tmpp.common.entity.ExecutePlan">
     insert into execute_plan (id, year, term, 
       level_id, gmt_modified, gmt_create, 
-      department_id, file)
+      department_id, file_type, file
+      )
     values (#{id,jdbcType=VARCHAR}, #{year,jdbcType=VARCHAR}, #{term,jdbcType=INTEGER}, 
       #{levelId,jdbcType=VARCHAR}, #{gmtModified,jdbcType=TIMESTAMP}, #{gmtCreate,jdbcType=TIMESTAMP}, 
-      #{departmentId,jdbcType=VARCHAR}, #{file,jdbcType=LONGVARBINARY})
+      #{departmentId,jdbcType=VARCHAR}, #{fileType,jdbcType=VARCHAR}, #{file,jdbcType=LONGVARBINARY}
+      )
   </insert>
   <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.ExecutePlan">
     insert into execute_plan
@@ -167,6 +171,9 @@
       </if>
       <if test="departmentId != null">
         department_id,
+      </if>
+      <if test="fileType != null">
+        file_type,
       </if>
       <if test="file != null">
         file,
@@ -193,6 +200,9 @@
       </if>
       <if test="departmentId != null">
         #{departmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=VARCHAR},
       </if>
       <if test="file != null">
         #{file,jdbcType=LONGVARBINARY},
@@ -229,6 +239,9 @@
       <if test="record.departmentId != null">
         department_id = #{record.departmentId,jdbcType=VARCHAR},
       </if>
+      <if test="record.fileType != null">
+        file_type = #{record.fileType,jdbcType=VARCHAR},
+      </if>
       <if test="record.file != null">
         file = #{record.file,jdbcType=LONGVARBINARY},
       </if>
@@ -246,6 +259,7 @@
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
       department_id = #{record.departmentId,jdbcType=VARCHAR},
+      file_type = #{record.fileType,jdbcType=VARCHAR},
       file = #{record.file,jdbcType=LONGVARBINARY}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -259,7 +273,8 @@
       level_id = #{record.levelId,jdbcType=VARCHAR},
       gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
       gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-      department_id = #{record.departmentId,jdbcType=VARCHAR}
+      department_id = #{record.departmentId,jdbcType=VARCHAR},
+      file_type = #{record.fileType,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -285,6 +300,9 @@
       <if test="departmentId != null">
         department_id = #{departmentId,jdbcType=VARCHAR},
       </if>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=VARCHAR},
+      </if>
       <if test="file != null">
         file = #{file,jdbcType=LONGVARBINARY},
       </if>
@@ -299,6 +317,7 @@
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
       department_id = #{departmentId,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR},
       file = #{file,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=VARCHAR}
   </update>
@@ -309,7 +328,8 @@
       level_id = #{levelId,jdbcType=VARCHAR},
       gmt_modified = #{gmtModified,jdbcType=TIMESTAMP},
       gmt_create = #{gmtCreate,jdbcType=TIMESTAMP},
-      department_id = #{departmentId,jdbcType=VARCHAR}
+      department_id = #{departmentId,jdbcType=VARCHAR},
+      file_type = #{fileType,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -17,9 +17,11 @@ public class ExecutePlan {
 
     private String departmentId;
 
+    private String fileType;
+
     private byte[] file;
 
-    public ExecutePlan(String id, String year, Integer term, String levelId, Date gmtModified, Date gmtCreate, String departmentId) {
+    public ExecutePlan(String id, String year, Integer term, String levelId, Date gmtModified, Date gmtCreate, String departmentId, String fileType) {
         this.id = id;
         this.year = year;
         this.term = term;
@@ -27,9 +29,10 @@ public class ExecutePlan {
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
         this.departmentId = departmentId;
+        this.fileType = fileType;
     }
 
-    public ExecutePlan(String id, String year, Integer term, String levelId, Date gmtModified, Date gmtCreate, String departmentId, byte[] file) {
+    public ExecutePlan(String id, String year, Integer term, String levelId, Date gmtModified, Date gmtCreate, String departmentId, String fileType, byte[] file) {
         this.id = id;
         this.year = year;
         this.term = term;
@@ -37,6 +40,7 @@ public class ExecutePlan {
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
         this.departmentId = departmentId;
+        this.fileType = fileType;
         this.file = file;
     }
 
@@ -98,6 +102,14 @@ public class ExecutePlan {
 
     public void setDepartmentId(String departmentId) {
         this.departmentId = departmentId == null ? null : departmentId.trim();
+    }
+
+    public String getFileType() {
+        return fileType;
+    }
+
+    public void setFileType(String fileType) {
+        this.fileType = fileType == null ? null : fileType.trim();
     }
 
     public byte[] getFile() {
