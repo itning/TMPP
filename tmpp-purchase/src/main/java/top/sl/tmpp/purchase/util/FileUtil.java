@@ -116,7 +116,7 @@ public class FileUtil {
                 }
 
                 List<String> li = new ArrayList<>();
-                for (int y = 0; y < 16; y++) {
+                for (int y = 0; y < 15; y++) {
                     cell = row.getCell(y);
                     li.add(cell.toString());
                 }

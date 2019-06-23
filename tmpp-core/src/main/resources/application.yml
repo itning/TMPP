@@ -13,8 +13,8 @@ spring:
       enabled: true
 server:
   port: 8080
-  tomcat:
-    basedir: /file/tmp/
+  #tomcat:
+   # basedir: /file/tmp/
 logging:
   level: debug
   level.top: debug

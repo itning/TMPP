@@ -38,10 +38,10 @@ public class FileServiceImpl implements FileService {
         }
         try {
             byte[] bytes = multipartFile.getBytes();
-            multipartFile.transferTo(new File(FileUtil.getFileMD5(bytes)
+            multipartFile.transferTo(new File(System.getProperty("java.io.tmpdir")+File.separator+FileUtil.getFileMD5(bytes)
                     +FileUtil.getExtensionName(multipartFile)));
             logger.debug("You successfully uploaded");
-            return FileUtil.getFileMD5(bytes);
+            return FileUtil.getFileMD5(bytes)+FileUtil.getExtensionName(multipartFile);
         } catch (IOException e) {
             e.printStackTrace();
         }
