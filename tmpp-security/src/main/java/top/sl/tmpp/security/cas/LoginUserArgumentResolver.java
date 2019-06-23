@@ -73,10 +73,10 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      * @param loginUser 登录用户
      */
     private void checkRole(LoginUser loginUser) {
-        if (loginUser.getUserType().equals(STUDENT_USER)) {
+        /*if (loginUser.getUserType().equals(STUDENT_USER)) {
             logger.debug("CheckRole FORBIDDEN And LoginUser Type:{}", loginUser.getUserType());
             throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
-        }
+        }*/
     }
 
     /**

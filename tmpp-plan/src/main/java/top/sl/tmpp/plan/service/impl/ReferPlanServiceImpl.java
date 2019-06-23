@@ -1,7 +1,8 @@
-package top.sl.tmpp.purchase.service.impl;
+package top.sl.tmpp.plan.service.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Colleges;
 import top.sl.tmpp.common.entity.CollegesExample;
@@ -10,8 +11,9 @@ import top.sl.tmpp.common.entity.Plan;
 import top.sl.tmpp.common.mapper.CollegesMapper;
 import top.sl.tmpp.common.mapper.ExecutePlanMapper;
 import top.sl.tmpp.common.mapper.PlanMapper;
-import top.sl.tmpp.purchase.service.ReferPlanService;
-import top.sl.tmpp.purchase.util.FileUtil;
+import top.sl.tmpp.plan.exception.AddPlanException;
+import top.sl.tmpp.plan.service.ReferPlanService;
+import top.sl.tmpp.plan.util.FileUtil;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +43,6 @@ public class ReferPlanServiceImpl implements ReferPlanService {
     @Override
     public void referPlan(String year, int term, String teachingDepartment, String educationalLevel, String fileId) {
         File excelFile = new File(System.getProperty("java.io.tmpdir")+File.separator+fileId);
-        System.out.println(excelFile);
         try {
             InputStream in = new FileInputStream(excelFile);
             List<List<String>> list = FileUtil.getBankListByExcel(in, excelFile.getName());
@@ -51,27 +52,31 @@ public class ReferPlanServiceImpl implements ReferPlanService {
             logger.debug("添加执行计划成功");
             String collegesId = null;
             String useSchoolYear = null;
-            for (int i = 0; list.size() > i; i++) {
-                if (i == 0) {
-                    CollegesExample collegesExample = new CollegesExample();
-                    collegesExample.createCriteria().andNameEqualTo(list.get(i).get(13));
-                    List<Colleges> colleges = collegesMapper.selectByExample(collegesExample);
-                    collegesId = colleges.get(i).getId();
-                    useSchoolYear = list.get(i).get(4);
-                }else if (i > 1) {
-                    Plan plan = new Plan(UUID.randomUUID().toString().replace("-", "")
-                            , collegesId
-                            , teachingDepartment
-                            , list.get(i).get(5).equals("考试") ? 0 : 1
-                            , useSchoolYear
-                            , list.get(i).get(7)
-                            , Integer.parseInt(list.get(i).get(8).split("\\.")[0])
-                            , list.get(i).get(9)
-                            , null
-                            , new Date()
-                            , id);
-                    planMapper.insert(plan);
+            try {
+                for (int i = 0; list.size() > i; i++) {
+                    if (i == 0) {
+                        CollegesExample collegesExample = new CollegesExample();
+                        collegesExample.createCriteria().andNameEqualTo(list.get(i).get(13));
+                        List<Colleges> colleges = collegesMapper.selectByExample(collegesExample);
+                        collegesId = colleges.get(i).getId();
+                        useSchoolYear = list.get(i).get(4);
+                    }else if (i > 1) {
+                        Plan plan = new Plan(UUID.randomUUID().toString().replace("-", "")
+                                , collegesId
+                                , teachingDepartment
+                                , "考试".equals(list.get(i).get(5)) ? 0 : 1
+                                , useSchoolYear
+                                , list.get(i).get(7)
+                                , Integer.parseInt(list.get(i).get(8).split("\\.")[0])
+                                , list.get(i).get(9)
+                                , null
+                                , new Date()
+                                , id);
+                        planMapper.insert(plan);
+                    }
                 }
+            } catch (NumberFormatException e) {
+                throw new AddPlanException("添加计划异常", HttpStatus.ACCEPTED);
             }
         } catch (Exception e) {
             e.printStackTrace();

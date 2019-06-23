@@ -1,4 +1,4 @@
-package top.sl.tmpp.purchase.service;
+package top.sl.tmpp.plan.service;
 
 /**
  * @author ShuLu
@@ -13,5 +13,5 @@ public interface ReferPlanService {
      * @param educationalLevel
      * @param fileId
      */
-    void referPlan(String year,int term,String teachingDepartment,String educationalLevel,String fileId );
+    void referPlan(String year, int term, String teachingDepartment, String educationalLevel, String fileId);
 }

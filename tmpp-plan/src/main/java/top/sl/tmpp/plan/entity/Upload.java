@@ -1,4 +1,4 @@
-package top.sl.tmpp.purchase.entity;
+package top.sl.tmpp.plan.entity;
 
 /**
  * @author ShuLu

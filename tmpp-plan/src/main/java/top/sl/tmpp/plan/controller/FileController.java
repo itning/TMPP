@@ -1,4 +1,4 @@
-package top.sl.tmpp.purchase.controller;
+package top.sl.tmpp.plan.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import top.sl.tmpp.common.util.RestModel;
-import top.sl.tmpp.purchase.exception.FileTypeException;
-import top.sl.tmpp.purchase.service.FileService;
-import top.sl.tmpp.purchase.util.FileUtil;
+import top.sl.tmpp.plan.exception.FileTypeException;
+import top.sl.tmpp.plan.service.FileService;
+import top.sl.tmpp.plan.util.FileUtil;
 
 /**
  * @author ShuLu
@@ -34,7 +34,7 @@ public class FileController {
         } catch (Exception e) {
             throw new FileTypeException("上传文件类型有误", HttpStatus.ACCEPTED);
         }
-        return RestModel.ok(s);
+        return RestModel.created("上传成功",null);
     }
 
 }

@@ -1,4 +1,4 @@
-package top.sl.tmpp.purchase.exception;
+package top.sl.tmpp.plan.exception;
 
 import org.springframework.http.HttpStatus;
 import top.sl.tmpp.common.exception.BaseException;

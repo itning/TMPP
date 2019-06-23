@@ -36,6 +36,10 @@
             <groupId>top.sl.tmpp</groupId>
             <artifactId>tmpp-review</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-plan</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

@@ -1,4 +1,4 @@
-package top.sl.tmpp.purchase.controller;
+package top.sl.tmpp.plan.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -6,8 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.sl.tmpp.common.util.RestModel;
-import top.sl.tmpp.purchase.service.ReferPlanService;
-import top.sl.tmpp.purchase.util.FileUtil;
+import top.sl.tmpp.plan.service.ReferPlanService;
+import top.sl.tmpp.plan.util.FileUtil;
+
 
 /**
  * @author ShuLu
@@ -23,8 +24,8 @@ public class ReferPlanController {
     }
 
     @PostMapping("/plan")
-    public ResponseEntity<?> plan(String fileId) {
-        referPlanService.referPlan("1", 1, "1", "1", fileId);
-        return RestModel.ok(null);
+    public ResponseEntity<?> plan(String year, int term, String teachingDepartment, String educationalLevel, String fileId) {
+        referPlanService.referPlan(year, term, teachingDepartment, educationalLevel, fileId);
+        return RestModel.created("提交成功",null);
     }
 }
