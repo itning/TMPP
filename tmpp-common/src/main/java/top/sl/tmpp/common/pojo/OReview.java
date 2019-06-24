@@ -16,9 +16,9 @@ public class OReview {
 
     private String textBookName;
 
-    private Integer textBookCategory;
+    private Boolean textBookCategory;
 
-    private Integer press;
+    private String press;
 
     private String author;
 
@@ -26,67 +26,29 @@ public class OReview {
 
     private Integer teacherBookNumber;
 
+    private String discountId;
+
     private String awardInformation;
 
     private Date publicationDate;
 
     private String subscriber;
 
-    private Integer subscriberTel;
+    private String subscriberTel;
 
-    private Integer isBookPurchase;
+    private Boolean isBookPurchase;
 
     private String reason;
 
+    private String loginUserId;
+
     private String courseId;
 
-    private String discountId;
-
-    private Integer affairsNumber;
-
-    private String loginUserId;
+    private Integer status;
 
     private Date gmtModified;
 
     private Date gmtCreate;
-
-    private String planId;
-
-    private Integer status;
-
-    public OReview() {
-    }
-
-
-    public OReview(String id, Integer status) {
-        this.id = id;
-        this.status = status;
-    }
-
-    public OReview(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, Date gmtModified, Date gmtCreate, String planId, Integer status) {
-        this.id = id;
-        this.isbn = isbn;
-        this.textBookName = textBookName;
-        this.textBookCategory = textBookCategory;
-        this.press = press;
-        this.author = author;
-        this.unitPrice = unitPrice;
-        this.teacherBookNumber = teacherBookNumber;
-        this.awardInformation = awardInformation;
-        this.publicationDate = publicationDate;
-        this.subscriber = subscriber;
-        this.subscriberTel = subscriberTel;
-        this.isBookPurchase = isBookPurchase;
-        this.reason = reason;
-        this.courseId = courseId;
-        this.discountId = discountId;
-        this.affairsNumber = affairsNumber;
-        this.loginUserId = loginUserId;
-        this.gmtModified = gmtModified;
-        this.gmtCreate = gmtCreate;
-        this.planId = planId;
-        this.status = status;
-    }
 
     public String getId() {
         return id;
@@ -112,19 +74,19 @@ public class OReview {
         this.textBookName = textBookName;
     }
 
-    public Integer getTextBookCategory() {
+    public Boolean getTextBookCategory() {
         return textBookCategory;
     }
 
-    public void setTextBookCategory(Integer textBookCategory) {
+    public void setTextBookCategory(Boolean textBookCategory) {
         this.textBookCategory = textBookCategory;
     }
 
-    public Integer getPress() {
+    public String getPress() {
         return press;
     }
 
-    public void setPress(Integer press) {
+    public void setPress(String press) {
         this.press = press;
     }
 
@@ -152,6 +114,14 @@ public class OReview {
         this.teacherBookNumber = teacherBookNumber;
     }
 
+    public String getDiscountId() {
+        return discountId;
+    }
+
+    public void setDiscountId(String discountId) {
+        this.discountId = discountId;
+    }
+
     public String getAwardInformation() {
         return awardInformation;
     }
@@ -176,20 +146,20 @@ public class OReview {
         this.subscriber = subscriber;
     }
 
-    public Integer getSubscriberTel() {
+    public String getSubscriberTel() {
         return subscriberTel;
     }
 
-    public void setSubscriberTel(Integer subscriberTel) {
+    public void setSubscriberTel(String subscriberTel) {
         this.subscriberTel = subscriberTel;
     }
 
-    public Integer getIsBookPurchase() {
+    public Boolean getBookPurchase() {
         return isBookPurchase;
     }
 
-    public void setIsBookPurchase(Integer isBookPurchase) {
-        this.isBookPurchase = isBookPurchase;
+    public void setBookPurchase(Boolean bookPurchase) {
+        isBookPurchase = bookPurchase;
     }
 
     public String getReason() {
@@ -200,6 +170,14 @@ public class OReview {
         this.reason = reason;
     }
 
+    public String getLoginUserId() {
+        return loginUserId;
+    }
+
+    public void setLoginUserId(String loginUserId) {
+        this.loginUserId = loginUserId;
+    }
+
     public String getCourseId() {
         return courseId;
     }
@@ -208,28 +186,12 @@ public class OReview {
         this.courseId = courseId;
     }
 
-    public String getDiscountId() {
-        return discountId;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setDiscountId(String discountId) {
-        this.discountId = discountId;
-    }
-
-    public Integer getAffairsNumber() {
-        return affairsNumber;
-    }
-
-    public void setAffairsNumber(Integer affairsNumber) {
-        this.affairsNumber = affairsNumber;
-    }
-
-    public String getLoginUserId() {
-        return loginUserId;
-    }
-
-    public void setLoginUserId(String loginUserId) {
-        this.loginUserId = loginUserId;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getGmtModified() {
@@ -248,22 +210,6 @@ public class OReview {
         this.gmtCreate = gmtCreate;
     }
 
-    public String getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(String planId) {
-        this.planId = planId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "OReview{" +
@@ -271,24 +217,22 @@ public class OReview {
                 ", isbn='" + isbn + '\'' +
                 ", textBookName='" + textBookName + '\'' +
                 ", textBookCategory=" + textBookCategory +
-                ", press=" + press +
+                ", press='" + press + '\'' +
                 ", author='" + author + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", teacherBookNumber=" + teacherBookNumber +
+                ", discountId='" + discountId + '\'' +
                 ", awardInformation='" + awardInformation + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", subscriber='" + subscriber + '\'' +
-                ", subscriberTel=" + subscriberTel +
+                ", subscriberTel='" + subscriberTel + '\'' +
                 ", isBookPurchase=" + isBookPurchase +
                 ", reason='" + reason + '\'' +
-                ", courseId='" + courseId + '\'' +
-                ", discountId='" + discountId + '\'' +
-                ", affairsNumber=" + affairsNumber +
                 ", loginUserId='" + loginUserId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                ", status=" + status +
                 ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +
-                ", planId='" + planId + '\'' +
-                ", status=" + status +
                 '}';
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.sl.tmpp.common.pojo.AReview;
+import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.pojo.OReview;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.review.service.ReviewService;
@@ -34,24 +34,24 @@ public class ReviewController {
     /**
      * 办公室主任全部审核通过
      *
-     * @param planId 执行计划id
+     * @param executePlanId 执行计划id
      * @return ResponseEntity
      */
     @PostMapping("/all_passed")
-    public ResponseEntity<?> allPassed(@RequestParam String planId) {
-        reviewService.oAllPassed(planId);
+    public ResponseEntity<?> allPassed(@RequestParam String executePlanId) {
+        reviewService.oAllPassed(executePlanId);
         return RestModel.created("办公室主任全部审核通过", null);
     }
 
     /**
      * 教务处全部审核通过
      *
-     * @param planId 执行计划id
+     * @param executePlanId 执行计划id
      * @return ResponseEntity
      */
     @PostMapping("/examination_passed")
-    public ResponseEntity<?> examinationPassed(@RequestParam String planId) {
-        reviewService.aAllPassed(planId);
+    public ResponseEntity<?> examinationPassed(@RequestParam String executePlanId) {
+        reviewService.aAllPassed(executePlanId);
         return RestModel.created("全部审核通过", null);
     }
 
@@ -87,7 +87,7 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/buy_sample_book")
-    public ResponseEntity<?> buySampleBook(@RequestParam String id, @RequestParam String isBuyBook) {
+    public ResponseEntity<?> buySampleBook(@RequestParam String id, @RequestParam boolean isBuyBook) {
         reviewService.isByBook(id, isBuyBook);
         return RestModel.created("操作成功", null);
     }
@@ -95,34 +95,34 @@ public class ReviewController {
     /**
      * 教务处我的审核
      *
-     * @param planId 执行计划id
-     * @param page   页码
-     * @param size   数量
+     * @param executePlanId 执行计划id
+     * @param page          页码
+     * @param size          数量
      * @return ResponseEntity
      */
     @GetMapping("/my_review")
-    public ResponseEntity<?> myReview(@RequestParam String planId,
-                                   @RequestParam(required = false, defaultValue = "1") int page,
-                                   @RequestParam(required = false, defaultValue = "50") int size) {
-        logger.debug("my_review params: {} {} {}", planId, page, size);
-        PageInfo<AReview> oReviews = reviewService.getAReviews(planId, page, size);
-        return RestModel.ok(oReviews);
+    public ResponseEntity<?> myReview(@RequestParam String executePlanId,
+                                      @RequestParam(required = false, defaultValue = "1") int page,
+                                      @RequestParam(required = false, defaultValue = "50") int size) {
+        logger.debug("my_review params: {} {} {}", executePlanId, page, size);
+        PageInfo<Book> bookPageInfo = reviewService.getAReviews(executePlanId, page, size);
+        return RestModel.ok(bookPageInfo);
     }
 
     /**
      * 办公室主任我的审核
      *
-     * @param planId 执行计划id
-     * @param page   页码
-     * @param size   数量
+     * @param executePlanId 执行计划id
+     * @param page          页码
+     * @param size          数量
      * @return ResponseEntity
      */
     @GetMapping("/director_review")
-    public ResponseEntity<?> directorReview(@RequestParam String planId,
-                                         @RequestParam(required = false, defaultValue = "1") int page,
-                                         @RequestParam(required = false, defaultValue = "50") int size) {
-        logger.debug("director_review params: {} {} {}", planId, page, size);
-        PageInfo<OReview> oReviews = reviewService.getOReviews(planId, page, size);
+    public ResponseEntity<?> directorReview(@RequestParam String executePlanId,
+                                            @RequestParam(required = false, defaultValue = "1") int page,
+                                            @RequestParam(required = false, defaultValue = "50") int size) {
+        logger.debug("director_review params: {} {} {}", executePlanId, page, size);
+        PageInfo<OReview> oReviews = reviewService.getOReviews(executePlanId, page, size);
         return RestModel.ok(oReviews);
     }
 }

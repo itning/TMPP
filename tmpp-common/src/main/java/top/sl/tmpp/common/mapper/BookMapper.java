@@ -3,6 +3,8 @@ package top.sl.tmpp.common.mapper;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.BookExample;
+import top.sl.tmpp.common.pojo.OReview;
+import top.sl.tmpp.common.pojo.TBook;
 
 import java.util.List;
 
@@ -30,4 +32,12 @@ public interface BookMapper {
     int updateByPrimaryKey(Book record);
 
     List<Book> selectMyBook(@Param("loginUserId") String loginUserId, @Param("executePlanId") String executePlanId);
+
+    List<OReview> selectOReviews(@Param("executePlanId") String executePlanId);
+
+    List<Book> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
+
+    List<Book> selectIdAndStatus(@Param("executePlanId") String executePlanId);
+
+    List<TBook> selectTBooks(@Param("executePlanId") String executePlanId, @Param("loginUserId") String loginUserId);
 }

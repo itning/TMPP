@@ -26,6 +26,30 @@
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="OReviewResultMap" type="top.sl.tmpp.common.pojo.OReview">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_category" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_book_purchase" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -503,5 +527,67 @@
         WHERE
         login_user_id = #{loginUserId,jdbcType=VARCHAR}
         AND a.id = book.course_id
+    </select>
+    <select id="selectOReviews" resultMap="OReviewResultMap">
+        SELECT book.id,
+               book.isbn,
+               book.text_book_name,
+               book.text_book_category,
+               book.press,
+               book.author,
+               book.unit_price,
+               book.teacher_book_number,
+               book.discount_id,
+               book.award_Information,
+               book.publication_date,
+               book.subscriber,
+               book.subscriber_tel,
+               book.is_book_purchase,
+               book.reason,
+               book.login_user_id,
+               book.course_id,
+               book.status,
+               book.gmt_modified,
+               book.gmt_create
+        FROM book,
+             (
+                 SELECT course.id
+                 FROM course
+                          INNER JOIN plan ON plan.course_id = course.id
+                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                 GROUP BY course.`code`
+             ) AS a
+        WHERE a.id = book.course_id
+    </select>
+    <select id="selectAllByExecutePlanId" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        book,
+        (
+        SELECT
+        course.id
+        FROM
+        course
+        INNER JOIN plan ON plan.course_id = course.id
+        WHERE
+        plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        GROUP BY
+        course.`code`
+        ) AS a
+        WHERE a.id = book.course_id
+    </select>
+    <select id="selectIdAndStatus" resultMap="BaseResultMap">
+        SELECT book.id,
+               book.status
+        FROM book,
+             (
+                 SELECT course.id
+                 FROM course
+                          INNER JOIN plan ON plan.course_id = course.id
+                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                 GROUP BY course.`code`
+             ) AS a
+        WHERE a.id = book.course_id
     </select>
 </mapper>
