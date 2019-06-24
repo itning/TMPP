@@ -916,52 +916,62 @@ public class BookExample {
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelEqualTo(Integer value) {
+        public Criteria andSubscriberTelEqualTo(String value) {
             addCriterion("subscriber_tel =", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelNotEqualTo(Integer value) {
+        public Criteria andSubscriberTelNotEqualTo(String value) {
             addCriterion("subscriber_tel <>", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelGreaterThan(Integer value) {
+        public Criteria andSubscriberTelGreaterThan(String value) {
             addCriterion("subscriber_tel >", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelGreaterThanOrEqualTo(Integer value) {
+        public Criteria andSubscriberTelGreaterThanOrEqualTo(String value) {
             addCriterion("subscriber_tel >=", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelLessThan(Integer value) {
+        public Criteria andSubscriberTelLessThan(String value) {
             addCriterion("subscriber_tel <", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelLessThanOrEqualTo(Integer value) {
+        public Criteria andSubscriberTelLessThanOrEqualTo(String value) {
             addCriterion("subscriber_tel <=", value, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelIn(List<Integer> values) {
+        public Criteria andSubscriberTelLike(String value) {
+            addCriterion("subscriber_tel like", value, "subscriberTel");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubscriberTelNotLike(String value) {
+            addCriterion("subscriber_tel not like", value, "subscriberTel");
+            return (Criteria) this;
+        }
+
+        public Criteria andSubscriberTelIn(List<String> values) {
             addCriterion("subscriber_tel in", values, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelNotIn(List<Integer> values) {
+        public Criteria andSubscriberTelNotIn(List<String> values) {
             addCriterion("subscriber_tel not in", values, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelBetween(Integer value1, Integer value2) {
+        public Criteria andSubscriberTelBetween(String value1, String value2) {
             addCriterion("subscriber_tel between", value1, value2, "subscriberTel");
             return (Criteria) this;
         }
 
-        public Criteria andSubscriberTelNotBetween(Integer value1, Integer value2) {
+        public Criteria andSubscriberTelNotBetween(String value1, String value2) {
             addCriterion("subscriber_tel not between", value1, value2, "subscriberTel");
             return (Criteria) this;
         }

@@ -28,7 +28,7 @@ public class Book {
 
     private String subscriber;
 
-    private Integer subscriberTel;
+    private String subscriberTel;
 
     private Boolean isBookPurchase;
 
@@ -46,7 +46,7 @@ public class Book {
 
     private Date gmtCreate;
 
-    public Book(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String discountId, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
+    public Book(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String discountId, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
@@ -170,12 +170,12 @@ public class Book {
         this.subscriber = subscriber == null ? null : subscriber.trim();
     }
 
-    public Integer getSubscriberTel() {
+    public String getSubscriberTel() {
         return subscriberTel;
     }
 
-    public void setSubscriberTel(Integer subscriberTel) {
-        this.subscriberTel = subscriberTel;
+    public void setSubscriberTel(String subscriberTel) {
+        this.subscriberTel = subscriberTel == null ? null : subscriberTel.trim();
     }
 
     public Boolean getIsBookPurchase() {
