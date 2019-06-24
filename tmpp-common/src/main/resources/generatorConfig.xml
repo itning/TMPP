@@ -68,6 +68,6 @@
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <table tableName="execute_plan" />
+        <table tableName="%"/>
     </context>
 </generatorConfiguration>
