@@ -1,9 +1,10 @@
 package top.sl.tmpp.common.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.BookExample;
+
+import java.util.List;
 
 public interface BookMapper {
     long countByExample(BookExample example);
@@ -27,4 +28,6 @@ public interface BookMapper {
     int updateByPrimaryKeySelective(Book record);
 
     int updateByPrimaryKey(Book record);
+
+    List<Book> selectMyBook(@Param("loginUserId") String loginUserId, @Param("executePlanId") String executePlanId);
 }

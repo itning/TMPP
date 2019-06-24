@@ -19,11 +19,13 @@ public interface PurchaseService {
     /**
      * 根据执行计划ID获取教师购书
      *
-     * @param loginUserId 用户ID
-     * @param planId      执行计划ID
+     * @param loginUserId   用户ID
+     * @param executePlanId 执行计划ID
+     * @param page          页数
+     * @param size          数量
      * @return 教师购书
      */
-    PageInfo<TBook> getAllTeacherBooks(String loginUserId, String planId, int page, int size);
+    PageInfo<TBook> getAllTeacherBooks(String loginUserId, String executePlanId, int page, int size);
 
     /**
      * 修改购书

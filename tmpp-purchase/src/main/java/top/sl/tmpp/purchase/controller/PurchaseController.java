@@ -48,18 +48,18 @@ public class PurchaseController {
     /**
      * 我的购书
      *
-     * @param loginUser 登录的用户
-     * @param planId    执行计划ID
-     * @param page      页码
-     * @param size      数量
+     * @param loginUser     登录的用户
+     * @param executePlanId 执行计划ID
+     * @param page          页码
+     * @param size          数量
      * @return ResponseEntity
      */
-    @GetMapping("/purchase_book/{planId}")
+    @GetMapping("/purchase_book/{executePlanId}")
     public ResponseEntity<?> purchaseBook(LoginUser loginUser,
-                                          @PathVariable String planId,
+                                          @PathVariable String executePlanId,
                                           @RequestParam(required = false, defaultValue = "1") int page,
                                           @RequestParam(required = false, defaultValue = "50") int size) {
-        PageInfo<TBook> books = purchaseService.getAllTeacherBooks(loginUser.getId(), planId, page, size);
+        PageInfo<TBook> books = purchaseService.getAllTeacherBooks(loginUser.getId(), executePlanId, page, size);
         return RestModel.ok(books);
     }
 
