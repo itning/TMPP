@@ -28,4 +28,6 @@ public interface DiscountsMapper {
     int updateByPrimaryKeySelective(Discounts record);
 
     int updateByPrimaryKey(Discounts record);
+
+    List<Discounts> selectAll();
 }

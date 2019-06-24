@@ -5,12 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import top.sl.tmpp.discounts.service.DiscountsService;
 import top.sl.tmpp.common.entity.Discounts;
-import top.sl.tmpp.common.entity.DiscountsExample;
+import top.sl.tmpp.common.mapper.DiscountsMapper;
 import top.sl.tmpp.discounts.exception.DiscountsNullException;
 import top.sl.tmpp.discounts.exception.NoIdException;
-import top.sl.tmpp.common.mapper.DiscountsMapper;
+import top.sl.tmpp.discounts.service.DiscountsService;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -36,15 +35,14 @@ public class DiscountsServiceImpl implements DiscountsService {
             throw new DiscountsNullException("discount is null add discount failure", HttpStatus.BAD_REQUEST);
         }
         log.debug("添加折扣");
-        Discounts discounts = new Discounts(UUID.randomUUID().toString().replace("-", ""), discount,null,new Date());
+        Date date = new Date();
+        Discounts discounts = new Discounts(UUID.randomUUID().toString().replace("-", ""), discount, date, date);
         discountsMapper.insert(discounts);
     }
 
     @Override
     public List<Discounts> getAllDiscount() {
-        DiscountsExample discountsExample = new DiscountsExample();
-        discountsExample.createCriteria().andIdIsNotNull();
-        List<Discounts> discounts = discountsMapper.selectByExample(discountsExample);
+        List<Discounts> discounts = discountsMapper.selectAll();
         log.debug("查找全部折扣");
         return discounts;
     }
@@ -53,7 +51,7 @@ public class DiscountsServiceImpl implements DiscountsService {
     public void remove(String id) {
         if (StringUtils.isEmpty(id) || discountsMapper.selectByPrimaryKey(id) == null) {
             log.debug("删除失败");
-            throw new NoIdException("没有折扣id，无法删除", HttpStatus.INTERNAL_SERVER_ERROR);
+            throw new NoIdException("没有折扣id，无法删除", HttpStatus.BAD_REQUEST);
         }
         log.debug("删除折扣");
         discountsMapper.deleteByPrimaryKey(id);
