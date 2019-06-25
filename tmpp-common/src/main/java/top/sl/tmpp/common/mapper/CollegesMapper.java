@@ -30,4 +30,6 @@ public interface CollegesMapper {
     int updateByPrimaryKey(Colleges record);
 
     List<Colleges> selectAll();
+
+    String selectIdByName(@Param("name") String name);
 }

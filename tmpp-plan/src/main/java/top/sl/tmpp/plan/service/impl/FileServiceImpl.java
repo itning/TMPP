@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import top.sl.tmpp.common.mapper.ExecutePlanMapper;
 import top.sl.tmpp.plan.exception.FileIsNullException;
 import top.sl.tmpp.plan.exception.FileTypeException;
 import top.sl.tmpp.plan.service.FileService;
@@ -20,31 +19,26 @@ import java.io.IOException;
  */
 @Service
 public class FileServiceImpl implements FileService {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
-    private final ExecutePlanMapper executePlanMapper;
-
-    public FileServiceImpl(ExecutePlanMapper executePlanMapper) {
-        this.executePlanMapper = executePlanMapper;
-    }
+    private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
-    public String fileUpload(MultipartFile multipartFile) throws Exception {
+    public String fileUpload(MultipartFile multipartFile) {
         logger.debug("upload multipartFile: {} {} ", multipartFile.getContentType(), multipartFile.getSize());
         if (multipartFile.isEmpty()) {
-            throw new FileIsNullException("上传文件为空", HttpStatus.ACCEPTED);
+            throw new FileIsNullException("上传文件为空", HttpStatus.BAD_REQUEST);
         }
-        if (!FileUtil.isExcelType(multipartFile)){
-            throw new FileTypeException("上传文件类型有误",HttpStatus.ACCEPTED);
+        if (!FileUtil.isExcelType(multipartFile)) {
+            throw new FileTypeException("上传文件类型有误", HttpStatus.BAD_REQUEST);
         }
         try {
             byte[] bytes = multipartFile.getBytes();
-            multipartFile.transferTo(new File(System.getProperty("java.io.tmpdir")+File.separator+FileUtil.getFileMD5(bytes)
-                    +FileUtil.getExtensionName(multipartFile)));
+            String fileName = FileUtil.getFileMD5(bytes) + FileUtil.getExtensionName(multipartFile);
+            File newFile = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
+            multipartFile.transferTo(newFile);
             logger.debug("You successfully uploaded");
-            return FileUtil.getFileMD5(bytes)+FileUtil.getExtensionName(multipartFile);
+            return fileName;
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new FileIsNullException("上传文件失败:" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        throw new FileIsNullException("上传文件失败", HttpStatus.ACCEPTED);
     }
 }

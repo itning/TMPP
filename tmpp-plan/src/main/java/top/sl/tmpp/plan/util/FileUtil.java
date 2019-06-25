@@ -8,9 +8,12 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
+import top.sl.tmpp.plan.exception.FileException;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,16 +59,16 @@ public class FileUtil {
                 return null;
         }
     }
-    public  static boolean isExcelType(MultipartFile file) throws Exception {
+
+    public static boolean isExcelType(MultipartFile file) {
         String fileType = FileUtil.getExtensionName(file);
         if (".xls".equals(fileType)) {
-           return true;
-        } else if (".xlsx".equals(fileType)) {
             return true;
         } else {
-            return false;
+            return ".xlsx".equals(fileType);
         }
     }
+
     /**
      * 判断文件格式
      *
@@ -74,18 +77,19 @@ public class FileUtil {
      * @return
      * @throws Exception
      */
-    public  static Workbook getWorkbook(InputStream inStr, String fileName) throws Exception {
-        Workbook workbook = null;
+    public static Workbook getWorkbook(InputStream inStr, String fileName) throws IOException {
+        Workbook workbook;
         String fileType = fileName.substring(fileName.lastIndexOf("."));
         if (".xls".equals(fileType)) {
             workbook = new HSSFWorkbook(inStr);
         } else if (".xlsx".equals(fileType)) {
             workbook = new XSSFWorkbook(inStr);
         } else {
-            throw new Exception("请上传excel文件！");
+            throw new FileException("文件格式不正确", HttpStatus.BAD_REQUEST);
         }
         return workbook;
     }
+
     /**
      * 处理上传的文件
      *
@@ -126,6 +130,7 @@ public class FileUtil {
         work.close();
         return list;
     }
+
     public static String getFileMD5(byte[] bytes) {
         return DigestUtils.md5DigestAsHex(bytes);
     }

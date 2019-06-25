@@ -206,4 +206,9 @@
         <include refid="Base_Column_List"/>
         from colleges
     </select>
+    <select id="selectIdByName" resultType="java.lang.String">
+        select id
+        from colleges
+        where name = #{name,jdbcType=VARCHAR}
+    </select>
 </mapper>

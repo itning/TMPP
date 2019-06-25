@@ -233,4 +233,9 @@
         <include refid="Base_Column_List"/>
         from course
     </select>
+    <select id="selectIdByCourseCode" resultType="java.lang.String">
+        select id
+        from course
+        where code = #{courseCode,jdbcType=VARCHAR}
+    </select>
 </mapper>

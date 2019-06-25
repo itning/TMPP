@@ -32,4 +32,6 @@ public interface CourseMapper {
     List<Course> selectAllFromExecutePlanId(@Param("execute_plan_id") String executePlanId);
 
     List<Course> selectAll();
+
+    String selectIdByCourseCode(@Param("courseCode") String courseCode);
 }

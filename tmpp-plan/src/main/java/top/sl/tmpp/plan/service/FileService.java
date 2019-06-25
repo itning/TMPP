@@ -9,8 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileService {
     /**
      * 上传执行计划文件
-     * @param file
-     * @return
+     *
+     * @param file {@link MultipartFile}
+     * @return 文件名
      */
-    String fileUpload(MultipartFile file) throws Exception;
+    String fileUpload(MultipartFile file);
 }
