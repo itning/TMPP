@@ -40,6 +40,10 @@
             <groupId>top.sl.tmpp</groupId>
             <artifactId>tmpp-plan</artifactId>
         </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-export</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

@@ -11,5 +11,10 @@
 
     <artifactId>tmpp-export</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-common</artifactId>
+        </dependency>
+    </dependencies>
 </project>
