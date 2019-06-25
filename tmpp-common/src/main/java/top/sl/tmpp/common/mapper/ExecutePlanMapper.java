@@ -40,4 +40,6 @@ public interface ExecutePlanMapper {
     List<String> selectDistinctYear();
 
     List<Integer> selectTermByYear(@Param("year") String year);
+
+    ExecutePlan selectFileById(@Param("id") String id);
 }

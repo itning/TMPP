@@ -25,6 +25,11 @@ public class ExecutePlan {
 
     private byte[] file;
 
+    public ExecutePlan(String fileType, byte[] file) {
+        this.fileType = fileType;
+        this.file = file;
+    }
+
     public ExecutePlan(String id, String year, Boolean term, Integer grade, Boolean status, String fileType, String levelId, String departmentId, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.year = year;

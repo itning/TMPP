@@ -17,7 +17,6 @@ import top.sl.tmpp.common.mapper.*;
 import top.sl.tmpp.common.util.ObjectUtils;
 import top.sl.tmpp.plan.exception.ExcelReadException;
 import top.sl.tmpp.plan.exception.FileException;
-import top.sl.tmpp.plan.exception.NoPlanException;
 import top.sl.tmpp.plan.service.ReferPlanService;
 import top.sl.tmpp.plan.util.FileUtil;
 
@@ -135,10 +134,7 @@ public class ReferPlanServiceImpl implements ReferPlanService {
 
     @Override
     public ExecutePlan downloadExecutePlan(String id) {
-        if (id == null) {
-            throw new NoPlanException("未查找到执行计划", HttpStatus.NOT_FOUND);
-        }
-        ExecutePlan executePlan = executePlanMapper.selectByPrimaryKey(id);
+        ExecutePlan executePlan = executePlanMapper.selectFileById(id);
         logger.debug("查询执行计划成功");
         return executePlan;
     }

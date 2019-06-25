@@ -13,7 +13,7 @@ import top.sl.tmpp.plan.service.ReferPlanService;
 import top.sl.tmpp.plan.util.FileUtil;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
 
 
@@ -50,26 +50,26 @@ public class ReferPlanController {
         return RestModel.created("提交成功", null);
     }
 
-    @GetMapping("/down_executeplan")
-    public void downPlan(String id, HttpServletResponse response) throws Exception {
-        if (id == null || "".equals(id)) {
-            throw new FileException("下载失败：参数为空！", HttpStatus.NOT_FOUND);
-        }
+    /**
+     * 下载执行计划
+     *
+     * @param id       执行计划ID
+     * @param response {@link HttpServletResponse}
+     */
+    @GetMapping("/down_execute_plan")
+    public void downPlan(@RequestParam String id, HttpServletResponse response) {
         ExecutePlan executePlan = referPlanService.downloadExecutePlan(id);
         byte[] file = executePlan.getFile();
-        InputStream inputStream = new ByteArrayInputStream(file);
+        String fileName = "执行计划." + executePlan.getFileType();
         response.setHeader("Accept-Ranges", "bytes");
-        response.setHeader("Content-Disposition"
-                , "attachment;filename="
-                        + new String(("执行计划." + executePlan.getFileType()).getBytes(), StandardCharsets.ISO_8859_1));
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.setHeader("Content-Length", file.length + "");
         response.setContentType(FileUtil.getContentTypeByExtensionName(executePlan.getFileType()));
-        try (OutputStream toClient = new BufferedOutputStream(response.getOutputStream());
-             InputStream fis = new BufferedInputStream(inputStream)) {
-            IOUtils.copy(fis, toClient);
-            toClient.flush();
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(file)) {
+            IOUtils.copy(bis, response.getOutputStream());
         } catch (Exception e) {
             if (!e.getMessage().contains("连接")) {
-                throw e;
+                throw new FileException("下载失败：" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     }

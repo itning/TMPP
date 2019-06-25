@@ -21,7 +21,7 @@ public interface ReferPlanService {
     /**
      * 查询需下载的执行计划
      *
-     * @param id 删除的执行计划id
+     * @param id 执行计划id
      * @return
      */
     ExecutePlan downloadExecutePlan(String id);

@@ -30,6 +30,12 @@
             <arg column="file" javaType="_byte[]" jdbcType="LONGVARBINARY"/>
         </constructor>
     </resultMap>
+    <resultMap id="ResultMapWithBLOBsAndFileType" type="top.sl.tmpp.common.entity.ExecutePlan">
+        <constructor>
+            <arg column="file_type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="file" javaType="_byte[]" jdbcType="LONGVARBINARY"/>
+        </constructor>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -395,5 +401,11 @@
         select distinct term
         from execute_plan
         where year = #{year,jdbcType=VARCHAR}
+    </select>
+    <select id="selectFileById" resultMap="ResultMapWithBLOBsAndFileType">
+        select file_type,
+               file
+        from execute_plan
+        where id = #{id,jdbcType=VARCHAR}
     </select>
 </mapper>
