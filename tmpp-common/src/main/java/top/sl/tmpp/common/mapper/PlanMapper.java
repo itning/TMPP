@@ -1,9 +1,10 @@
 package top.sl.tmpp.common.mapper;
 
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Plan;
 import top.sl.tmpp.common.entity.PlanExample;
+
+import java.util.List;
 
 public interface PlanMapper {
     long countByExample(PlanExample example);
@@ -27,4 +28,6 @@ public interface PlanMapper {
     int updateByPrimaryKeySelective(Plan record);
 
     int updateByPrimaryKey(Plan record);
+
+    long countByCourseId(@Param("courseId") String courseId);
 }

@@ -10,9 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.sl.tmpp.common.entity.Course;
-import top.sl.tmpp.common.entity.ExecutePlan;
-import top.sl.tmpp.common.entity.Plan;
+import top.sl.tmpp.common.entity.*;
 import top.sl.tmpp.common.mapper.*;
 import top.sl.tmpp.common.util.ObjectUtils;
 import top.sl.tmpp.plan.exception.ExcelReadException;
@@ -25,6 +23,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static top.sl.tmpp.common.util.ObjectUtils.checkNotNull;
 
@@ -141,26 +140,29 @@ public class ReferPlanServiceImpl implements ReferPlanService {
 
     @Override
     public void removeExecutePlan(String id) {
-       /* if (id==null){
-            throw new NoPlanException("未查找到执行计划",HttpStatus.NOT_FOUND);
-        }
-        try {
-            logger.debug("删除执行计划相关计划");
-            PlanExample planExample = new PlanExample();
-            planExample.createCriteria().andExecutePlanIdEqualTo(id);
-            List<Plan> plans = planMapper.selectByExample(planExample);
-            plans.forEach(plan -> {
-                logger.debug("删除执行计划相关书籍计划");
-                BookExample bookExample = new BookExample();
-                bookExample.createCriteria().andPlanIdEqualTo(plan.getId());
-                bookMapper.deleteByExample(bookExample);
-            });
-            planMapper.deleteByExample(planExample);
-            logger.debug("删除执行计划");
-            executePlanMapper.deleteByPrimaryKey(id);
-        } catch (Exception e) {
-            throw e;
-        }*/
+        logger.debug("删除执行计划相关计划");
+        PlanExample planExample = new PlanExample();
+        planExample.createCriteria().andExecutePlanIdEqualTo(id);
+        List<Plan> planList = planMapper.selectByExample(planExample);
+        List<Book> bookList = planList
+                .parallelStream().map(plan -> bookMapper.selectByPlanId(plan.getId()))
+                .flatMap(Collection::stream).collect(Collectors.toList());
+        List<Course> courseList = planList
+                .parallelStream().map(plan -> courseMapper.selectAllByCourseId(plan.getCourseId()))
+                .flatMap(Collection::stream).collect(Collectors.toList());
+
+        //删除Book
+        bookList.forEach(book -> bookMapper.deleteByPrimaryKey(book.getId()));
+        //删除plan
+        planList.forEach(plan -> planMapper.deleteByPrimaryKey(plan.getId()));
+        //删除course
+        courseList
+                .stream()
+                //判断plan是否有course
+                .filter(course -> planMapper.countByCourseId(course.getId()) == 0L)
+                .forEach(course -> courseMapper.deleteByPrimaryKey(course.getId()));
+        //删除executePlan
+        executePlanMapper.deleteByPrimaryKey(id);
     }
 
     /**

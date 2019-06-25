@@ -37,4 +37,6 @@ public interface BookMapper {
     List<Book> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
 
     List<Book> selectIdAndStatus(@Param("executePlanId") String executePlanId);
+
+    List<Book> selectByPlanId(@Param("planId") String planId);
 }

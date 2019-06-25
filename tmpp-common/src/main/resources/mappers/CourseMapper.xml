@@ -238,4 +238,9 @@
         from course
         where code = #{courseCode,jdbcType=VARCHAR}
     </select>
+    <select id="selectAllByCourseId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from course where id = #{courseId}
+    </select>
 </mapper>

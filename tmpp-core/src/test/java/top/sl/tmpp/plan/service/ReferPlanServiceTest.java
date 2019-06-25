@@ -19,7 +19,7 @@ public class ReferPlanServiceTest {
 
     @Test
     public void referPlan() {
-        referPlanService.referPlan("2018-2019", true, "1", "1", "执行计划模板.xlsx");
+        referPlanService.referPlan("2017-2018", false, "1", "1", "执行计划模板.xlsx");
     }
 
     @Test
@@ -28,7 +28,7 @@ public class ReferPlanServiceTest {
 
     @Test
     public void removeExecutePlan() {
-
+        referPlanService.removeExecutePlan("f6f495bdfa644609ab9a33a6c6ce66e8");
     }
 
 }

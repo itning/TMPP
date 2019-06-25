@@ -34,4 +34,6 @@ public interface CourseMapper {
     List<Course> selectAll();
 
     String selectIdByCourseCode(@Param("courseCode") String courseCode);
+
+    List<Course> selectAllByCourseId(@Param("courseId") String courseId);
 }

@@ -74,8 +74,14 @@ public class ReferPlanController {
         }
     }
 
-    @DeleteMapping("/executeplan")
-    public ResponseEntity<?> removeExecutePlan(String id) {
+    /**
+     * 删除执行计划
+     *
+     * @param id 执行计划ID
+     * @return ResponseEntity
+     */
+    @DeleteMapping("/execute_plan")
+    public ResponseEntity<?> removeExecutePlan(@RequestParam String id) {
         referPlanService.removeExecutePlan(id);
         return RestModel.noContent();
     }

@@ -595,4 +595,9 @@
                  INNER JOIN plan ON plan.id = book.plan_id
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
+    <select id="selectByPlanId" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from book where plan_id = #{planId,jdbcType=VARCHAR}
+    </select>
 </mapper>
