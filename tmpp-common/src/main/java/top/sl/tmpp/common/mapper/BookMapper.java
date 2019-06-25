@@ -4,7 +4,6 @@ import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.BookExample;
 import top.sl.tmpp.common.pojo.OReview;
-import top.sl.tmpp.common.pojo.TBook;
 
 import java.util.List;
 
@@ -38,6 +37,4 @@ public interface BookMapper {
     List<Book> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
 
     List<Book> selectIdAndStatus(@Param("executePlanId") String executePlanId);
-
-    List<TBook> selectTBooks(@Param("executePlanId") String executePlanId, @Param("loginUserId") String loginUserId);
 }

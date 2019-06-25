@@ -6,6 +6,8 @@ import java.util.Date;
 public class Book {
     private String id;
 
+    private String planId;
+
     private String isbn;
 
     private String textBookName;
@@ -46,8 +48,9 @@ public class Book {
 
     private Date gmtCreate;
 
-    public Book(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String discountId, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
+    public Book(String id, String planId, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String discountId, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
+        this.planId = planId;
         this.isbn = isbn;
         this.textBookName = textBookName;
         this.textBookCategory = textBookCategory;
@@ -80,6 +83,14 @@ public class Book {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
+    }
+
+    public String getPlanId() {
+        return planId;
+    }
+
+    public void setPlanId(String planId) {
+        this.planId = planId == null ? null : planId.trim();
     }
 
     public String getIsbn() {
