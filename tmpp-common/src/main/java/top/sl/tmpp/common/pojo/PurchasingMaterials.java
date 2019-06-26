@@ -40,7 +40,7 @@ public class PurchasingMaterials {
     /**
      * 教务处是否购书
      */
-    private Boolean isBuyBook;
+    private Byte isBuyBook;
     /**
      * 购书总数
      */
@@ -49,7 +49,7 @@ public class PurchasingMaterials {
     public PurchasingMaterials() {
     }
 
-    public PurchasingMaterials(String textBookName, String press, String author, String isbn, BigDecimal unitPrice, Integer clazzNumber, Integer teacherBookNumber, Boolean isBuyBook, Integer total) {
+    public PurchasingMaterials(String textBookName, String press, String author, String isbn, BigDecimal unitPrice, Integer clazzNumber, Integer teacherBookNumber, Byte isBuyBook, Integer total) {
         this.textBookName = textBookName;
         this.press = press;
         this.author = author;
@@ -117,11 +117,11 @@ public class PurchasingMaterials {
         this.teacherBookNumber = teacherBookNumber;
     }
 
-    public Boolean getBuyBook() {
+    public Byte getBuyBook() {
         return isBuyBook;
     }
 
-    public void setBuyBook(Boolean buyBook) {
+    public void setBuyBook(Byte buyBook) {
         isBuyBook = buyBook;
     }
 

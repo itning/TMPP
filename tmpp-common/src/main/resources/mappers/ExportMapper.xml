@@ -10,7 +10,7 @@
             <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="clazz_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="is_buy_book" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="is_buy_book" javaType="java.lang.Byte" jdbcType="BIT"/>
             <arg column="clazzNumber" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
