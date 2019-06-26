@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.sl.tmpp.common.mapper.ExportMapper">
+    <resultMap id="PurchasingMaterialsMap" type="top.sl.tmpp.common.pojo.PurchasingMaterials">
+        <constructor>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="clazz_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="is_buy_book" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="clazzNumber" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="StudentReceiveBookMap" type="top.sl.tmpp.common.pojo.StudentReceiveBook">
+        <constructor>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="clazz" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="clazz_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+        </constructor>
+    </resultMap>
+
+    <!--    <select id="getPurchasingMaterials" resultType="top.sl.tmpp.common.pojo.PurchasingMaterials">
+            SELECT text_book_name,
+            press,
+            author,
+            isbn,
+            unit_price,
+            clazz_number,
+            teacher_book_number,
+            is_buy_book,
+            SUM(plan.clazz_number + book.teacher_book_number + book.is_buy_book) AS clazzNumber
+            FROM book
+            INNER JOIN plan ON plan.id = book.plan_id
+            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+            GROUP BY book.id
+        </select>-->
+    <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
+        SELECT text_book_name,
+               press,
+               author,
+               isbn,
+               unit_price,
+               clazz_number,
+               teacher_book_number,
+               is_buy_book,
+               SUM(plan.clazz_number + book.teacher_book_number + book.is_buy_book) AS clazzNumber
+        FROM book
+                 INNER JOIN plan ON plan.id = book.plan_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        GROUP BY book.id
+    </select>
+    <select id="selectYear" resultType="java.lang.String">
+        select year
+        from execute_plan
+        where id = #{executePlanId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectTerm" resultType="java.lang.String">
+        select term
+        from execute_plan
+        where id = #{executePlanId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectClazz" resultType="java.lang.String">
+        SELECT DISTINCT clazz
+        FROM plan
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectStudentReceiveBooks" resultMap="StudentReceiveBookMap">
+        SELECT name,
+               clazz,
+               isbn,
+               text_book_name,
+               press,
+               unit_price,
+               clazz_number,
+               discount
+        FROM colleges
+                 INNER JOIN (
+            SELECT colleges_id,
+                   clazz,
+                   isbn,
+                   text_book_name,
+                   press,
+                   unit_price,
+                   clazz_number,
+                   discount
+            FROM discounts
+                     INNER JOIN (
+                SELECT colleges_id,
+                       clazz,
+                       isbn,
+                       text_book_name,
+                       press,
+                       unit_price,
+                       clazz_number,
+                       discount_id
+                FROM book
+                         INNER JOIN plan ON plan.id = book.plan_id
+                WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
+                GROUP BY book.id
+            ) AS b ON discounts.id = b.discount_id
+        ) AS c ON colleges.id = c.colleges_id
+
+    </select>
+</mapper>

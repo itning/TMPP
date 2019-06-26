@@ -3,6 +3,11 @@ package top.sl.tmpp.export.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import top.sl.tmpp.export.service.ExportService;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 /**
  * @author ShuLu
@@ -10,14 +15,24 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class ExportController {
+    private final ExportService exportService;
+
+    public ExportController(ExportService exportService) {
+        this.exportService = exportService;
+    }
+
+
     /**
      * 导出采购教材汇总表
      *
      * @param executePlanId 执行计划id
      */
     @GetMapping("/procurement_table")
-    public void procurementTable(@RequestParam("execute_plan_id") String executePlanId) {
-
+    public void procurementTable(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+        String fileName = "采购教材汇总表" + ".xlsx";
+        response.setHeader("Content-Disposition", "attachment;filename=" +  new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.setContentType("application/octet-stream");
+        exportService.procurementTable(executePlanId, response.getOutputStream());
     }
 
     /**
@@ -92,7 +107,10 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/student_textbook")
-    public void studentTextbook(@RequestParam("execute_plan_id") String executePlanId) {
-
+    public void studentTextbook(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+        String fileName = "班级领取教材反馈表" + ".xlsx";
+        response.setHeader("Content-Disposition", "attachment;filename=" +  new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.setContentType("application/octet-stream");
+        exportService.studentClassBookTable(executePlanId, response.getOutputStream());
     }
 }
