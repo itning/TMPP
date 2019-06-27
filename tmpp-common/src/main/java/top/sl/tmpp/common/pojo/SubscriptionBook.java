@@ -1,5 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
+import java.math.BigDecimal;
+
 /**
  * 征订教材样书统计表
  *
@@ -50,19 +52,15 @@ public class SubscriptionBook {
     /**
      * 单价
      */
-    private String unitPprice;
+    private BigDecimal unitPrice;
     /**
      * 使用年级
      */
     private String grade;
     /**
-     * 使用班级
+     * 教务处样书
      */
-    private String clazz;
-    /**
-     * 教师样书数量
-     */
-    private String teacherBookNumber;
+    private Byte is_buy_book;
     /**
      * 征订人
      */
@@ -79,7 +77,7 @@ public class SubscriptionBook {
     public SubscriptionBook() {
     }
 
-    public SubscriptionBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, String unitPprice, String grade, String clazz, String teacherBookNumber, String subscriber, String subscriberTel, String remark) {
+    public SubscriptionBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, BigDecimal unitPrice, String grade, Byte is_buy_book, String subscriber, String subscriberTel, String remark) {
         this.departmentName = departmentName;
         this.courseName = courseName;
         this.type = type;
@@ -90,10 +88,9 @@ public class SubscriptionBook {
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.awardInformation = awardInformation;
-        this.unitPprice = unitPprice;
+        this.unitPrice = unitPrice;
         this.grade = grade;
-        this.clazz = clazz;
-        this.teacherBookNumber = teacherBookNumber;
+        this.is_buy_book = is_buy_book;
         this.subscriber = subscriber;
         this.subscriberTel = subscriberTel;
         this.remark = remark;
@@ -179,12 +176,12 @@ public class SubscriptionBook {
         this.awardInformation = awardInformation;
     }
 
-    public String getUnitPprice() {
-        return unitPprice;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnitPprice(String unitPprice) {
-        this.unitPprice = unitPprice;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public String getGrade() {
@@ -193,22 +190,6 @@ public class SubscriptionBook {
 
     public void setGrade(String grade) {
         this.grade = grade;
-    }
-
-    public String getClazz() {
-        return clazz;
-    }
-
-    public void setClazz(String clazz) {
-        this.clazz = clazz;
-    }
-
-    public String getTeacherBookNumber() {
-        return teacherBookNumber;
-    }
-
-    public void setTeacherBookNumber(String teacherBookNumber) {
-        this.teacherBookNumber = teacherBookNumber;
     }
 
     public String getSubscriber() {
@@ -233,5 +214,13 @@ public class SubscriptionBook {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public Byte getIs_buy_book() {
+        return is_buy_book;
+    }
+
+    public void setIs_buy_book(Byte is_buy_book) {
+        this.is_buy_book = is_buy_book;
     }
 }

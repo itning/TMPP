@@ -28,4 +28,8 @@ public class ExportServiceTest {
     public void publishingHouseStatistics(){
         //exportService.publishingHouseStatistics("ccf4c148bcef4d7592b34ca0a3bcd586");
     }
+    @Test
+    public void subscriptionBook(){
+        //exportService.subscriptionBook("ccf4c148bcef4d7592b34ca0a3bcd586");
+    }
 }

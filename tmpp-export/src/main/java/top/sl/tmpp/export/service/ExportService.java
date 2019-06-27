@@ -35,4 +35,5 @@ public interface ExportService {
      */
     void publishingHouseStatistics(String executePlanId, OutputStream outputStream) throws IOException;
 
+    void subscriptionBook(String executePlanId, OutputStream outputStream) throws IOException;
 }

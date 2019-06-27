@@ -10,6 +10,7 @@ import top.sl.tmpp.common.mapper.ExportMapper;
 import top.sl.tmpp.common.pojo.PublisherStatistics;
 import top.sl.tmpp.common.pojo.PurchasingMaterials;
 import top.sl.tmpp.common.pojo.StudentReceiveBook;
+import top.sl.tmpp.common.pojo.SubscriptionBook;
 import top.sl.tmpp.export.service.ExportService;
 import top.sl.tmpp.export.util.Tuple;
 
@@ -41,7 +42,6 @@ public class ExportServiceImpl implements ExportService {
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("导出采购教材汇总表");
 
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 9));
         XSSFRow row = sheet.createRow(0);
         final String[] headerStrArray = {"序号", "教材名称", "出版社", "作者", "书号isbn", "单价", "学生用书", "教师用书", "教务处用书", "购书总数"};
 
@@ -137,6 +137,31 @@ public class ExportServiceImpl implements ExportService {
 
             }
         }
+        wb.write(outputStream);
+    }
+
+    @Override
+    public void subscriptionBook(String executePlanId, OutputStream outputStream) throws IOException {
+        List<SubscriptionBook> subscriptionBooks = exportMapper.selectSubscriptionBook(executePlanId);
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("教材样书统计表");
+
+        XSSFRow row = sheet.createRow(0);
+
+        final String[] headerStrArray = {"序号", "授课部门名称", "课程名称", "课程类型"
+                , "专业", "教材名称", "作者"
+                , "出版社", "书籍编号", "出版日期"
+                , "获奖信息", "单价", "使用年级"
+                , "教务处样书", "征订人", "征订人电话", "备注"};
+
+        mergeCells(sheet, headerStrArray.length - 1);
+        XSSFCell cell = getCellWithStyle(wb, row);
+        cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
+                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "学期征订教材样书表");
+        row = sheet.createRow(1);
+        information(headerStrArray, row, 0);
+        getSheetByList(subscriptionBooks, sheet);
         wb.write(outputStream);
     }
 

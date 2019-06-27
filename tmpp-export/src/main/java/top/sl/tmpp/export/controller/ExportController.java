@@ -90,8 +90,11 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/subscription_book")
-    public void subscriptionBook(@RequestParam("execute_plan_id") String executePlanId) {
-
+    public void subscriptionBook(@RequestParam("execute_plan_id") String executePlanId,HttpServletResponse response) throws IOException {
+        String fileName = "征订教材样书统计表" + ".xlsx";
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.setContentType("application/octet-stream");
+        exportService.subscriptionBook(executePlanId, response.getOutputStream());
     }
 
     /**

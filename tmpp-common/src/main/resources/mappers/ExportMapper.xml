@@ -33,6 +33,26 @@
             <arg column="total" javaType="java.lang.Integer" jdbcType="INTEGER"/>
         </constructor>
     </resultMap>
+    <resultMap id="SubscriptionBookMap" type="top.sl.tmpp.common.pojo.SubscriptionBook">
+        <constructor>
+            <arg column="department_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="start_pro" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="grade" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_buy_book" javaType="java.lang.Byte" jdbcType="BIT"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
         SELECT text_book_name,
                press,
@@ -101,28 +121,68 @@
 
     </select>
     <select id="selectPublishingHouseStatistics" resultMap="PublisherStatisticsMap">
-        SELECT
-            name,
-            press,
-            SUM(clazz_number + teacher_book_number + is_buy_book ) AS total
-        FROM
-            colleges
+        SELECT name,
+               press,
+               SUM(clazz_number + teacher_book_number + is_buy_book) AS total
+        FROM colleges
 
-                INNER JOIN
-            (
-                SELECT
-                    colleges_id,
-                    plan.clazz_number,
-                    book.press,
-                    is_buy_book,
-                    teacher_book_number
-                FROM
-                    book
-                        INNER JOIN plan ON plan.id = book.plan_id
-                WHERE
-                    plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-                GROUP BY
-                    book.id
-            ) AS a ON colleges.id = a.colleges_id GROUP BY press
+                 INNER JOIN
+             (
+                 SELECT colleges_id,
+                        plan.clazz_number,
+                        book.press,
+                        is_buy_book,
+                        teacher_book_number
+                 FROM book
+                          INNER JOIN plan ON plan.id = book.plan_id
+                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                 GROUP BY book.id
+             ) AS a ON colleges.id = a.colleges_id
+        GROUP BY press
+    </select>
+    <select id="selectSubscriptionBook" resultMap="SubscriptionBookMap">
+        SELECT department_name,
+               name,
+               if(type = 0, "考试", "考察") AS type,
+               start_pro,
+               text_book_name,
+               author,
+               press,
+               isbn,
+               publication_date,
+               award_Information,
+               unit_price,
+               grade,
+               is_buy_book,
+               subscriber,
+               subscriber_tel,
+               reason
+        FROM course
+                 INNER JOIN (
+            SELECT plan.course_id,
+                   plan.clazz_number,
+                   plan.type,
+                   plan.start_pro,
+                   book.text_book_name,
+                   book.author,
+                   book.press,
+                   book.isbn,
+                   book.publication_date,
+                   book.award_Information,
+                   book.unit_price,
+                   book.is_buy_book,
+                   book.subscriber,
+                   book.subscriber_tel,
+                   book.reason,
+                   department.NAME AS department_name,
+                   execute_plan.grade
+            FROM execute_plan,
+                 department,
+                 book
+                     INNER JOIN plan ON plan.id = book.plan_id
+            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+              AND book.is_buy_book = "1"
+            GROUP BY book.id
+        ) AS a ON course.id = a.course_id
     </select>
 </mapper>
