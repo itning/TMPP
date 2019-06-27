@@ -13,7 +13,7 @@ public interface ExportService {
      *
      * @param outputStream  输出流
      * @param executePlanId 执行计划ID
-     * @throws IOException
+     * @throws IOException IOException
      */
     void procurementTable(String executePlanId, OutputStream outputStream) throws IOException;
 
