@@ -22,11 +22,17 @@ public interface ExportService {
      *
      * @param executePlanId 执行计划ID
      * @param outputStream  输出流
-     * @throws IOException
+     * @throws IOException IOException
      */
     void studentClassBookTable(String executePlanId, OutputStream outputStream) throws IOException;
 
-
+    /**
+     * 出版社统计数量表
+     *
+     * @param executePlanId 执行计划ID
+     * @param outputStream  输出流
+     * @throws IOException IOException
+     */
     void publishingHouseStatistics(String executePlanId, OutputStream outputStream) throws IOException;
 
 }
