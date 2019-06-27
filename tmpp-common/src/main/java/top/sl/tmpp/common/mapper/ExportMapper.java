@@ -1,5 +1,6 @@
 package top.sl.tmpp.common.mapper;
 
+import top.sl.tmpp.common.pojo.PublisherStatistics;
 import top.sl.tmpp.common.pojo.PurchasingMaterials;
 import top.sl.tmpp.common.pojo.StudentReceiveBook;
 
@@ -24,4 +25,6 @@ public interface ExportMapper {
     List<String> selectClazz(String executePlanId);
 
     List<StudentReceiveBook> selectStudentReceiveBooks(String clazz);
+
+    List<PublisherStatistics> selectPublishingHouseStatistics(String executePlanId);
 }

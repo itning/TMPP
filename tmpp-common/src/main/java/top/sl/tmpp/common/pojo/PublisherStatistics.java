@@ -18,12 +18,12 @@ public class PublisherStatistics {
     /**
      * 总数
      */
-    private int total;
+    private Integer total;
 
     public PublisherStatistics() {
     }
 
-    public PublisherStatistics(String collegesName, String press, int total) {
+    public PublisherStatistics(String collegesName, String press, Integer total) {
         this.collegesName = collegesName;
         this.press = press;
         this.total = total;
@@ -45,11 +45,11 @@ public class PublisherStatistics {
         this.press = press;
     }
 
-    public int getTotal() {
+    public Integer getTotal() {
         return total;
     }
 
-    public void setTotal(int total) {
+    public void setTotal(Integer total) {
         this.total = total;
     }
 }

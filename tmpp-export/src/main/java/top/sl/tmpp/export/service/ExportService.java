@@ -11,12 +11,22 @@ public interface ExportService {
     /**
      * 导出采购教材汇总表
      *
-     * @param outputStream 输出流
+     * @param outputStream  输出流
      * @param executePlanId 执行计划ID
      * @throws IOException
      */
     void procurementTable(String executePlanId, OutputStream outputStream) throws IOException;
 
+    /**
+     * 导出学生班级教材信息表
+     *
+     * @param executePlanId 执行计划ID
+     * @param outputStream  输出流
+     * @throws IOException
+     */
     void studentClassBookTable(String executePlanId, OutputStream outputStream) throws IOException;
+
+
+    void publishingHouseStatistics(String executePlanId, OutputStream outputStream) throws IOException;
 
 }

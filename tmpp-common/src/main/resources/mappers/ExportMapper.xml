@@ -26,6 +26,13 @@
             <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
         </constructor>
     </resultMap>
+    <resultMap id="PublisherStatisticsMap" type="top.sl.tmpp.common.pojo.PublisherStatistics">
+        <constructor>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="total" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+        </constructor>
+    </resultMap>
     <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
         SELECT text_book_name,
                press,
@@ -92,5 +99,30 @@
             ) AS b ON discounts.id = b.discount_id
         ) AS c ON colleges.id = c.colleges_id
 
+    </select>
+    <select id="selectPublishingHouseStatistics" resultMap="PublisherStatisticsMap">
+        SELECT
+            name,
+            press,
+            SUM(clazz_number + teacher_book_number + is_buy_book ) AS total
+        FROM
+            colleges
+
+                INNER JOIN
+            (
+                SELECT
+                    colleges_id,
+                    plan.clazz_number,
+                    book.press,
+                    is_buy_book,
+                    teacher_book_number
+                FROM
+                    book
+                        INNER JOIN plan ON plan.id = book.plan_id
+                WHERE
+                    plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                GROUP BY
+                    book.id
+            ) AS a ON colleges.id = a.colleges_id GROUP BY press
     </select>
 </mapper>

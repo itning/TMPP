@@ -24,4 +24,8 @@ public class ExportServiceTest {
     public void studentClassBookTable()  {
         //exportService.studentClassBookTable("ccf4c148bcef4d7592b34ca0a3bcd586");
     }
+    @Test
+    public void publishingHouseStatistics(){
+        //exportService.publishingHouseStatistics("ccf4c148bcef4d7592b34ca0a3bcd586");
+    }
 }
