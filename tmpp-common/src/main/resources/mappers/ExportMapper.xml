@@ -26,22 +26,6 @@
             <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
         </constructor>
     </resultMap>
-
-    <!--    <select id="getPurchasingMaterials" resultType="top.sl.tmpp.common.pojo.PurchasingMaterials">
-            SELECT text_book_name,
-            press,
-            author,
-            isbn,
-            unit_price,
-            clazz_number,
-            teacher_book_number,
-            is_buy_book,
-            SUM(plan.clazz_number + book.teacher_book_number + book.is_buy_book) AS clazzNumber
-            FROM book
-            INNER JOIN plan ON plan.id = book.plan_id
-            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-            GROUP BY book.id
-        </select>-->
     <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
         SELECT text_book_name,
                press,
