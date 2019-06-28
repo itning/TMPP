@@ -7,10 +7,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.mapper.ExportMapper;
-import top.sl.tmpp.common.pojo.PublisherStatistics;
-import top.sl.tmpp.common.pojo.PurchasingMaterials;
-import top.sl.tmpp.common.pojo.StudentReceiveBook;
-import top.sl.tmpp.common.pojo.SubscriptionBook;
+import top.sl.tmpp.common.pojo.*;
 import top.sl.tmpp.export.service.ExportService;
 import top.sl.tmpp.export.util.Tuple;
 
@@ -162,6 +159,30 @@ public class ExportServiceImpl implements ExportService {
         row = sheet.createRow(1);
         information(headerStrArray, row, 0);
         getSheetByList(subscriptionBooks, sheet);
+        wb.write(outputStream);
+    }
+
+    @Override
+    public void TeacherReceiveBook(String executePlanId, OutputStream outputStream) throws IOException {
+        List<TeacherReceiveBook> teacherReceiveBooks = exportMapper.selectTeacherReceiveBook(executePlanId);
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("教师领取教材汇总表");
+
+        XSSFRow row = sheet.createRow(0);
+        final String[] headerStrArray = {"序号", "授课部门名称", "课程名称", "课程类型"
+                , "专业", "教材名称", "作者", "出版社", "书号isbn"
+                , "出版日期", "获奖信息", "单价", "使用年级"
+                , "使用班级", "教师样书数量","征订人","领取教材签字"};
+
+        mergeCells(sheet, headerStrArray.length - 1);
+
+        XSSFCell cell = getCellWithStyle(wb, row);
+        cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
+                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "教师领取教材汇总表");
+        row = sheet.createRow(1);
+        information(headerStrArray, row, 0);
+        getSheetByList(teacherReceiveBooks, sheet);
         wb.write(outputStream);
     }
 

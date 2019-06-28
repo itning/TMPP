@@ -53,6 +53,25 @@
             <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
+    <resultMap id="TeacherReceiveBookMap" type="top.sl.tmpp.common.pojo.TeacherReceiveBook">
+        <constructor>
+            <arg column="department_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="start_pro" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="grade" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="clazz" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
         SELECT text_book_name,
                press,
@@ -182,6 +201,49 @@
                      INNER JOIN plan ON plan.id = book.plan_id
             WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
               AND book.is_buy_book = "1"
+            GROUP BY book.id
+        ) AS a ON course.id = a.course_id
+    </select>
+    <select id="selectTeacherReceiveBook" resultMap="TeacherReceiveBookMap">
+        SELECT department_name,
+               name,
+               if(type = 0, "考试", "考察") AS type,
+               start_pro,
+               text_book_name,
+               author,
+               press,
+               isbn,
+               publication_date,
+               award_Information,
+               unit_price,
+               grade,
+               teacher_book_number,
+               clazz,
+               subscriber
+        FROM course
+                 INNER JOIN (
+            SELECT plan.course_id,
+                   plan.clazz_number,
+                   book.teacher_book_number,
+                   plan.type,
+                   plan.start_pro,
+                   plan.clazz,
+                   book.text_book_name,
+                   book.author,
+                   book.press,
+                   book.isbn,
+                   book.publication_date,
+                   book.award_Information,
+                   book.unit_price,
+                   book.subscriber,
+                   department.NAME AS department_name,
+                   execute_plan.grade
+            FROM execute_plan,
+                 department,
+                 book
+                     INNER JOIN plan ON plan.id = book.plan_id
+            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+              AND book.teacher_book_number > 0
             GROUP BY book.id
         ) AS a ON course.id = a.course_id
     </select>

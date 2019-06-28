@@ -35,5 +35,14 @@ public interface ExportService {
      */
     void publishingHouseStatistics(String executePlanId, OutputStream outputStream) throws IOException;
 
+    /**
+     * 教材样书统计表
+     *
+     * @param executePlanId 执行计划ID
+     * @param outputStream  输出流
+     * @throws IOException IOException
+     */
     void subscriptionBook(String executePlanId, OutputStream outputStream) throws IOException;
+
+    void TeacherReceiveBook(String executePlanId, OutputStream outputStream) throws IOException;
 }

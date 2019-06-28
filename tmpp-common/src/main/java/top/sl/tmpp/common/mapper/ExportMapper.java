@@ -1,9 +1,6 @@
 package top.sl.tmpp.common.mapper;
 
-import top.sl.tmpp.common.pojo.PublisherStatistics;
-import top.sl.tmpp.common.pojo.PurchasingMaterials;
-import top.sl.tmpp.common.pojo.StudentReceiveBook;
-import top.sl.tmpp.common.pojo.SubscriptionBook;
+import top.sl.tmpp.common.pojo.*;
 
 import java.util.List;
 
@@ -30,4 +27,6 @@ public interface ExportMapper {
     List<PublisherStatistics> selectPublishingHouseStatistics(String executePlanId);
 
     List<SubscriptionBook> selectSubscriptionBook(String executePlanId);
+
+    List<TeacherReceiveBook> selectTeacherReceiveBook(String executePlanId);
 }

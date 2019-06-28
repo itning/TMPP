@@ -1,5 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
+import java.math.BigDecimal;
+
 /**
  * 教师领取教材汇总表
  *
@@ -36,7 +38,7 @@ public class TeacherReceiveBook {
      */
     private String press;
     /**
-     * 书籍编号
+     * 书号isbn
      */
     private String isbn;
     /**
@@ -50,7 +52,7 @@ public class TeacherReceiveBook {
     /**
      * 单价
      */
-    private String unitPprice;
+    private BigDecimal unitPrice;
     /**
      * 使用年级
      */
@@ -62,7 +64,7 @@ public class TeacherReceiveBook {
     /**
      * 教师样书数量
      */
-    private String teacherBookNumber;
+    private Integer teacherBookNumber;
     /**
      * 征订人
      */
@@ -71,7 +73,7 @@ public class TeacherReceiveBook {
     public TeacherReceiveBook() {
     }
 
-    public TeacherReceiveBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, String unitPprice, String grade, String clazz, String teacherBookNumber, String subscriber) {
+    public TeacherReceiveBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, BigDecimal unitPrice, String grade, String clazz, Integer teacherBookNumber, String subscriber) {
         this.departmentName = departmentName;
         this.courseName = courseName;
         this.type = type;
@@ -82,7 +84,7 @@ public class TeacherReceiveBook {
         this.isbn = isbn;
         this.publicationDate = publicationDate;
         this.awardInformation = awardInformation;
-        this.unitPprice = unitPprice;
+        this.unitPrice = unitPrice;
         this.grade = grade;
         this.clazz = clazz;
         this.teacherBookNumber = teacherBookNumber;
@@ -169,12 +171,12 @@ public class TeacherReceiveBook {
         this.awardInformation = awardInformation;
     }
 
-    public String getUnitPprice() {
-        return unitPprice;
+    public BigDecimal getUnitPrice() {
+        return unitPrice;
     }
 
-    public void setUnitPprice(String unitPprice) {
-        this.unitPprice = unitPprice;
+    public void setUnitPrice(BigDecimal unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public String getGrade() {
@@ -193,11 +195,11 @@ public class TeacherReceiveBook {
         this.clazz = clazz;
     }
 
-    public String getTeacherBookNumber() {
+    public Integer getTeacherBookNumber() {
         return teacherBookNumber;
     }
 
-    public void setTeacherBookNumber(String teacherBookNumber) {
+    public void setTeacherBookNumber(Integer teacherBookNumber) {
         this.teacherBookNumber = teacherBookNumber;
     }
 
