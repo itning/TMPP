@@ -163,7 +163,7 @@ public class ExportServiceImpl implements ExportService {
     }
 
     @Override
-    public void TeacherReceiveBook(String executePlanId, OutputStream outputStream) throws IOException {
+    public void teacherReceiveBook(String executePlanId, OutputStream outputStream) throws IOException {
         List<TeacherReceiveBook> teacherReceiveBooks = exportMapper.selectTeacherReceiveBook(executePlanId);
 
         XSSFWorkbook wb = new XSSFWorkbook();
@@ -183,6 +183,30 @@ public class ExportServiceImpl implements ExportService {
         row = sheet.createRow(1);
         information(headerStrArray, row, 0);
         getSheetByList(teacherReceiveBooks, sheet);
+        wb.write(outputStream);
+    }
+
+    @Override
+    public void subscriptionBookPlan(String executePlanId, OutputStream outputStream) throws IOException {
+        List<SubscriptionBookPlan> subscriptionBookPlans = exportMapper.selectSubscriptionBookPlan(executePlanId);
+
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("征订教材计划统计表");
+
+        XSSFRow row = sheet.createRow(0);
+        final String[] headerStrArray = {"序号", "课程代码", "课程名称", "书号isbn"
+                , "教材名称", "教材类别", "出版社", "作者", "单价"
+                , "教师样书数量", "折扣", "获奖信息", "出版日期"
+                , "征订人", "征订人电话","是否购书","备注"};
+
+        mergeCells(sheet, headerStrArray.length - 1);
+
+        XSSFCell cell = getCellWithStyle(wb, row);
+        cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
+                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "征订教材计划统计表");
+        row = sheet.createRow(1);
+        information(headerStrArray, row, 0);
+        getSheetByList(subscriptionBookPlans, sheet);
         wb.write(outputStream);
     }
 

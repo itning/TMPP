@@ -72,6 +72,26 @@
             <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
         </constructor>
     </resultMap>
+    <resultMap id="SubscriptionBookPlanMap" type="top.sl.tmpp.common.pojo.SubscriptionBookPlan">
+        <constructor>
+            <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_category" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_book_purchase" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <select id="getPurchasingMaterials" resultMap="PurchasingMaterialsMap">
         SELECT text_book_name,
                press,
@@ -247,4 +267,64 @@
             GROUP BY book.id
         ) AS a ON course.id = a.course_id
     </select>
+    <select id="selectSubscriptionBookPlan" resultMap="SubscriptionBookPlanMap">
+        SELECT code,
+               name,
+               isbn,
+               text_book_name,
+               if(text_book_category = 0, "出版", "自编") AS text_book_category,
+               press,
+               author,
+               unit_price,
+               teacher_book_number,
+               discount,
+               award_Information,
+               publication_date,
+               subscriber,
+               subscriber_tel,
+               if(is_book_purchase = 0, "否", "是")     AS is_book_purchase,
+               reason
+        FROM (
+                 SELECT CODE
+                         ,
+                        NAME,
+                        isbn,
+                        text_book_name,
+                        text_book_category,
+                        press,
+                        author,
+                        unit_price,
+                        teacher_book_number,
+                        discount_id,
+                        award_Information,
+                        publication_date,
+                        subscriber,
+                        subscriber_tel,
+                        is_book_purchase,
+                        reason
+                 FROM (
+                          SELECT book.course_id,
+                                 isbn,
+                                 text_book_name,
+                                 text_book_category,
+                                 press,
+                                 author,
+                                 unit_price,
+                                 teacher_book_number,
+                                 discount_id,
+                                 award_Information,
+                                 publication_date,
+                                 subscriber,
+                                 subscriber_tel,
+                                 is_book_purchase,
+                                 reason
+                          FROM book
+                                   INNER JOIN plan ON plan.id = book.plan_id
+                          WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                      ) AS t
+                          INNER JOIN course ON course.id = t.course_id
+             ) AS a
+                 INNER JOIN discounts ON discounts.id = a.discount_id
+    </select>
+
 </mapper>

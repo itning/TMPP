@@ -29,4 +29,6 @@ public interface ExportMapper {
     List<SubscriptionBook> selectSubscriptionBook(String executePlanId);
 
     List<TeacherReceiveBook> selectTeacherReceiveBook(String executePlanId);
+
+    List<SubscriptionBookPlan> selectSubscriptionBookPlan(String executePlanId);
 }
