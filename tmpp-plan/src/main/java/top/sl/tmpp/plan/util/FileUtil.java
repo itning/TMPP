@@ -1,13 +1,8 @@
 package top.sl.tmpp.plan.util;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,21 +10,17 @@ import top.sl.tmpp.plan.exception.FileException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author ShuLu
  * @date 2019/6/17 13:59
  */
 public class FileUtil {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
-
     /**
      * 获取文件扩展名
      *
-     * @param file
-     * @return
+     * @param file {@link MultipartFile}
+     * @return 文件扩展名
      */
     public static String getExtensionName(MultipartFile file) {
         String originalFilename = file.getOriginalFilename();
@@ -60,6 +51,12 @@ public class FileUtil {
         }
     }
 
+    /**
+     * 检查改文件是否是Excel文件
+     *
+     * @param file {@link MultipartFile}
+     * @return 是返回真
+     */
     public static boolean isExcelType(MultipartFile file) {
         String fileType = FileUtil.getExtensionName(file);
         if (".xls".equals(fileType)) {
@@ -72,10 +69,10 @@ public class FileUtil {
     /**
      * 判断文件格式
      *
-     * @param inStr
-     * @param fileName
-     * @return
-     * @throws Exception
+     * @param inStr    {@link InputStream}
+     * @param fileName 文件名
+     * @return {@link Workbook}
+     * @throws IOException IOException
      */
     public static Workbook getWorkbook(InputStream inStr, String fileName) throws IOException {
         Workbook workbook;
@@ -90,48 +87,7 @@ public class FileUtil {
         return workbook;
     }
 
-    /**
-     * 处理上传的文件
-     *
-     * @param in
-     * @param fileName
-     * @return
-     * @throws Exception
-     */
-    public static List<List<String>> getBankListByExcel(InputStream in, String fileName) throws Exception {
-        List list = new ArrayList<>();
-        Workbook work = FileUtil.getWorkbook(in, fileName);
-        if (null == work) {
-            throw new Exception("创建Excel工作薄为空！");
-        }
-        Sheet sheet = null;
-        Row row = null;
-        Cell cell = null;
-        for (int i = 0; i < work.getNumberOfSheets(); i++) {
-            sheet = work.getSheetAt(i);
-            if (sheet == null) {
-                continue;
-            }
-
-            for (int j = sheet.getFirstRowNum(); j <= sheet.getLastRowNum(); j++) {
-                row = sheet.getRow(j);
-                if (row == null || row.getFirstCellNum() == j) {
-                    continue;
-                }
-
-                List<String> li = new ArrayList<>();
-                for (int y = 0; y < 15; y++) {
-                    cell = row.getCell(y);
-                    li.add(cell.toString());
-                }
-                list.add(li);
-            }
-        }
-        work.close();
-        return list;
-    }
-
-    public static String getFileMD5(byte[] bytes) {
+    public static String getFileMd5(byte[] bytes) {
         return DigestUtils.md5DigestAsHex(bytes);
     }
 }

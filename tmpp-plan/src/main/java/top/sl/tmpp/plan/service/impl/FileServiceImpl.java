@@ -32,7 +32,7 @@ public class FileServiceImpl implements FileService {
         }
         try {
             byte[] bytes = multipartFile.getBytes();
-            String fileName = FileUtil.getFileMD5(bytes) + FileUtil.getExtensionName(multipartFile);
+            String fileName = FileUtil.getFileMd5(bytes) + FileUtil.getExtensionName(multipartFile);
             File newFile = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
             multipartFile.transferTo(newFile);
             logger.debug("You successfully uploaded");

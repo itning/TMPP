@@ -13,16 +13,14 @@ spring:
       enabled: true
 server:
   port: 8080
-  #tomcat:
-   # basedir: /file/tmp/
 logging:
   level: debug
   level.top: debug
 mybatis:
-  type-aliases-package: top.sl.tmpp.common.entity
+  type-aliases-package: top.sl.tmpp.common.entity,top.sl.tmpp.common.pojo
   mapper-locations: classpath:mappers/*.xml
 cas:
-  enabled: false
+  enabled: true
   debug: true
   server-url: http://login.greathiit.com
   login-url: http://login.greathiit.com/login

@@ -10,11 +10,9 @@ import top.itning.cas.callback.login.ILoginFailureCallBack;
 import top.itning.cas.callback.login.ILoginNeverCallBack;
 import top.itning.cas.callback.login.ILoginSuccessCallBack;
 import top.sl.tmpp.common.entity.LoginUser;
-import top.sl.tmpp.common.entity.LoginUserExample;
 import top.sl.tmpp.common.mapper.LoginUserMapper;
 import top.sl.tmpp.security.util.JwtUtils;
 
-import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;

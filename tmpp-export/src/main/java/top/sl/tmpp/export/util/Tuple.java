@@ -5,8 +5,8 @@ package top.sl.tmpp.export.util;
  * @date 2019/6/27 14:00
  */
 public class Tuple<T1, T2> {
-    private T1 t1;
-    private T2 t2;
+    private final T1 t1;
+    private final T2 t2;
 
     public Tuple(T1 t1, T2 t2) {
         this.t1 = t1;
