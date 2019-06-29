@@ -1,6 +1,8 @@
 package top.sl.tmpp.security.cas.callback;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,9 @@ import top.itning.cas.RestModel;
 import top.itning.cas.callback.login.ILoginFailureCallBack;
 import top.itning.cas.callback.login.ILoginNeverCallBack;
 import top.itning.cas.callback.login.ILoginSuccessCallBack;
+import top.sl.tmpp.common.entity.AdminUser;
 import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.mapper.CasMapper;
 import top.sl.tmpp.common.mapper.LoginUserMapper;
 import top.sl.tmpp.security.util.JwtUtils;
 
@@ -30,14 +34,18 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @Component
 public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureCallBack, ILoginNeverCallBack {
+    private final Logger logger = LoggerFactory.getLogger(JwtCasCallBackImpl.class);
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final CasProperties casProperties;
     private final LoginUserMapper loginUserMapper;
+    private final CasMapper casMapper;
 
-    public JwtCasCallBackImpl(CasProperties casProperties, LoginUserMapper loginUserMapper) {
+    public JwtCasCallBackImpl(CasProperties casProperties, LoginUserMapper loginUserMapper, CasMapper casMapper) {
         this.casProperties = casProperties;
         this.loginUserMapper = loginUserMapper;
+        this.casMapper = casMapper;
     }
 
     @Override
@@ -47,6 +55,13 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
             return;
         }
         LoginUser loginUser = map2userLoginEntity(attributesMap);
+
+        AdminUser adminUser = casMapper.selectByUserName(loginUser.getId());
+        if (adminUser != null) {
+            loginUser.setUserType(adminUser.getType());
+        } else {
+            logger.debug("username {} not found", loginUser.getId());
+        }
         String jwt = JwtUtils.buildJwt(loginUser);
         if (loginUserMapper.selectByPrimaryKey(loginUser.getId()) == null) {
             Date date = new Date();

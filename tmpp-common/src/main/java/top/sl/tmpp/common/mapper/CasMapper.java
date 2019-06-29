@@ -2,6 +2,7 @@ package top.sl.tmpp.common.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.AdminResource;
+import top.sl.tmpp.common.entity.AdminUser;
 
 import java.util.List;
 
@@ -11,4 +12,6 @@ import java.util.List;
  */
 public interface CasMapper {
     List<AdminResource> getResourcesByUserName(@Param("username") String username);
+
+    AdminUser selectByUserName(@Param("username") String username);
 }

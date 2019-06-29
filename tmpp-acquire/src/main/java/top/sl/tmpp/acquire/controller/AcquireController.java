@@ -77,7 +77,8 @@ public class AcquireController {
      */
     @GetMapping("/execute_plans")
     public ResponseEntity<?> plan(@RequestParam(required = false, defaultValue = "1") int page,
-                                  @RequestParam(required = false, defaultValue = "50") int size) {
+                                  @RequestParam(required = false, defaultValue = "50") int size,
+                                  LoginUser loginUser) {
         PageInfo<ExecutePlan> allExecutePlan = acquireService.getAllExecutePlan(page, size);
         return RestModel.ok(allExecutePlan);
     }

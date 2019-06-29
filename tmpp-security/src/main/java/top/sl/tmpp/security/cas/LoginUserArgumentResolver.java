@@ -96,6 +96,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
                 .count();
         if (admin == 0L) {
             logger.debug("CheckPermission FORBIDDEN {}", loginUser);
+            logger.debug("request uri {}", requestUri);
             throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
         }
     }

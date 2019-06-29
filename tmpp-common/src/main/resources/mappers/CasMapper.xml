@@ -25,4 +25,9 @@
                                                                      WHERE username = #{username,jdbcType=VARCHAR}))
           AND admin_resource.id = admin_user_role_resource.resource_id;
     </select>
+    <select id="selectByUserName" resultType="top.sl.tmpp.common.entity.AdminUser">
+        select id, name, username, password, type, gmt_create, gmt_modified
+        from admin_user
+        WHERE username = #{username,jdbcType=VARCHAR}
+    </select>
 </mapper>
