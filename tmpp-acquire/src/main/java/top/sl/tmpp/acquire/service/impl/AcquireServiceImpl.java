@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import top.sl.tmpp.acquire.service.AcquireService;
 import top.sl.tmpp.common.entity.*;
 import top.sl.tmpp.common.mapper.*;
+import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
 import java.util.List;
 
@@ -56,7 +57,7 @@ public class AcquireServiceImpl implements AcquireService {
     }
 
     @Override
-    public PageInfo<ExecutePlan> getAllExecutePlan(int page, int size) {
+    public PageInfo<ExecutePlanDTO> getAllExecutePlan(int page, int size) {
         return PageHelper
                 .startPage(page, size)
                 .doSelectPageInfo(executePlanMapper::selectAll);

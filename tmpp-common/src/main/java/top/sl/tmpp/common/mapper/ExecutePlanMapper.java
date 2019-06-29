@@ -3,6 +3,7 @@ package top.sl.tmpp.common.mapper;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.ExecutePlan;
 import top.sl.tmpp.common.entity.ExecutePlanExample;
+import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
 import java.util.List;
 
@@ -35,7 +36,7 @@ public interface ExecutePlanMapper {
 
     int updateByPrimaryKey(ExecutePlan record);
 
-    List<ExecutePlan> selectAll();
+    List<ExecutePlanDTO> selectAll();
 
     List<String> selectDistinctYear();
 

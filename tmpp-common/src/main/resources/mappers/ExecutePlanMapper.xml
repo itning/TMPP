@@ -36,6 +36,19 @@
             <arg column="file" javaType="_byte[]" jdbcType="LONGVARBINARY"/>
         </constructor>
     </resultMap>
+    <resultMap id="ExecutePlanDTOResultMap" type="top.sl.tmpp.common.pojo.ExecutePlanDTO">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="year" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="term" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="grade" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="status" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="level" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="department" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="gmt_finished" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -388,10 +401,19 @@
             gmt_create    = #{gmtCreate,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <select id="selectAll" resultMap="BaseResultMap">
-        select
-        <include refid="Base_Column_List"/>
+    <select id="selectAll" resultMap="ExecutePlanDTOResultMap">
+        select execute_plan.id,
+               execute_plan.year,
+               execute_plan.term,
+               execute_plan.grade,
+               execute_plan.status,
+               level.educational_level   as level,
+               department.name           as department,
+               execute_plan.gmt_modified as gmt_finished,
+               execute_plan.gmt_create
         from execute_plan
+                 inner join level on level.id = execute_plan.level_id
+                 inner join department on department.id = execute_plan.department_id
     </select>
     <select id="selectDistinctYear" resultType="java.lang.String">
         select DISTINCT year

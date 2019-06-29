@@ -33,8 +33,10 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
 
     private static final String STUDENT_USER = "99";
     private final LoadingCache<String, List<AdminResource>> loadingCache;
+    private final CasMapper casMapper;
 
     public LoginUserArgumentResolver(CasMapper casMapper) {
+        this.casMapper = casMapper;
         loadingCache = CacheBuilder.newBuilder()
                 //软引用
                 .softValues()
@@ -88,7 +90,8 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      */
     private void checkPermission(LoginUser loginUser, String requestUri, String method) throws ExecutionException {
         String loginId = loginUser.getId();
-        List<AdminResource> adminResourceList = loadingCache.get(loginId);
+        List<AdminResource> adminResourceList //= loadingCache.get(loginId);
+                = casMapper.getResourcesByUserName(loginId);
         long admin = adminResourceList
                 .stream()
                 .filter(adminResource -> requestUri.startsWith(adminResource.getUrl()))

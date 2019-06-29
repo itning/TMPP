@@ -1,6 +1,5 @@
 package top.sl.tmpp.acquire.controller;
 
-import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,8 +78,7 @@ public class AcquireController {
     public ResponseEntity<?> plan(@RequestParam(required = false, defaultValue = "1") int page,
                                   @RequestParam(required = false, defaultValue = "50") int size,
                                   LoginUser loginUser) {
-        PageInfo<ExecutePlan> allExecutePlan = acquireService.getAllExecutePlan(page, size);
-        return RestModel.ok(allExecutePlan);
+        return RestModel.ok(acquireService.getAllExecutePlan(page, size));
     }
 
     /**

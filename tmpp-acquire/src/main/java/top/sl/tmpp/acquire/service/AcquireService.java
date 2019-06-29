@@ -2,6 +2,7 @@ package top.sl.tmpp.acquire.service;
 
 import com.github.pagehelper.PageInfo;
 import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public interface AcquireService {
      * @param size 数量
      * @return 执行计划集合
      */
-    PageInfo<ExecutePlan> getAllExecutePlan(int page, int size);
+    PageInfo<ExecutePlanDTO> getAllExecutePlan(int page, int size);
 
     /**
      * 获取所有层次
