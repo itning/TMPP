@@ -326,11 +326,6 @@
              ) AS a
                  INNER JOIN discounts ON discounts.id = a.discount_id
     </select>
-    <select id="selectType" resultType="java.lang.String">
-        SELECT DISTINCT if(type = 0, "考试", "考察") AS type
-        FROM plan
-        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-    </select>
     <select id="selectTheTotalCourses" resultType="java.lang.String">
         SELECT course_id
         FROM plan
@@ -369,5 +364,52 @@
                  INNER JOIN execute_plan ON `level`.id = execute_plan.level_id
         WHERE execute_plan.id = #{executePlanId,jdbcType=VARCHAR}
     </select>
-
+    <select id="selectBookMaterials" resultType="top.sl.tmpp.common.pojo.BookMaterials">
+        SELECT
+        department.NAME AS departmentName,
+        colleges.NAME AS collegesName,
+        plan.start_pro AS startPro,
+        course.`code` AS courseCode,
+        course.`name` AS courseName,
+        book.text_book_name AS textBookName,
+        book.isbn AS isbn,
+        book.text_book_category AS textBookCategory,
+        book.press AS press,
+        book.author AS author,
+        book.unit_price AS unitPrice,
+        book.award_Information AS awardInformation,
+        book.publication_date AS publicationDate,
+        execute_plan.grade AS grade,
+        plan.clazz AS clazz,
+        plan.clazz_number AS clazzNumber,
+        book.teacher_book_number AS teacherBookNumber,
+        book.is_buy_book AS isBuyBook,
+        book.subscriber AS subscriber,
+        book.subscriber_tel AS subscriberTel,
+        book.status AS status,
+        book.is_book_purchase AS isBookPurchase,
+        book.reason AS reason,
+        plan.remark AS remark
+        FROM
+        plan
+        INNER JOIN book ON plan.id = book.plan_id
+        INNER JOIN execute_plan ON execute_plan.id = plan.execute_plan_id
+        INNER JOIN department ON department.id = execute_plan.department_id
+        INNER JOIN colleges ON plan.colleges_id = colleges.id
+        INNER JOIN course ON course.id = plan.course_id
+        <where>
+            <if test="college != null">
+                plan.colleges_id = #{college,jdbcType=VARCHAR}
+            </if>
+            <if test="teachingDepartment != null">
+                and execute_plan.department_id = #{teachingDepartment,jdbcType=VARCHAR}
+            </if>
+            <if test="year != null">
+                and execute_plan.`year` = #{year,jdbcType=VARCHAR}
+            </if>
+            <if test="term != null">
+                and execute_plan.term = #{term,jdbcType=BIT}
+            </if>
+        </where>
+    </select>
 </mapper>

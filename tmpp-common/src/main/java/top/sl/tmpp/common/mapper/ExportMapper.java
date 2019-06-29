@@ -1,5 +1,6 @@
 package top.sl.tmpp.common.mapper;
 
+import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.pojo.*;
 
 import java.util.List;
@@ -32,13 +33,8 @@ public interface ExportMapper {
 
     List<SubscriptionBookPlan> selectSubscriptionBookPlan(String executePlanId);
 
-    /**
-     * 考试/考察 type
-     *
-     * @param executePlanId 执行计划ID
-     * @return list
-     */
-    List<String> selectType(String executePlanId);
+    List<BookMaterials> selectBookMaterials(@Param("year") String year, @Param("college") String college,
+                                            @Param("teachingDepartment") String teachingDepartment, @Param("term") Boolean term);
 
     /**
      * 考试课 课程总门数
@@ -74,6 +70,7 @@ public interface ExportMapper {
 
     /**
      * 查找教育层次
+     *
      * @param executePlanId 执行计划ID
      * @return
      */

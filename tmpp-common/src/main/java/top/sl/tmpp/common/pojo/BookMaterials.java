@@ -78,7 +78,7 @@ public class BookMaterials {
     /**
      * 教务处是否购书
      */
-    private boolean isBuyBook;
+    private Integer isBuyBook;
     /**
      * 征订人
      */
@@ -107,7 +107,7 @@ public class BookMaterials {
     public BookMaterials() {
     }
 
-    public BookMaterials(String departmentName, String collegesName, String startPro, String courseCode, String courseName, String textBookName, String isbn, String textBookCategory, String press, String author, String unitPrice, String awardInformation, String publicationDate, String grade, String clazz, String clazzNumber, String teacherBookNumber, boolean isBuyBook, String subscriber, String subscriberTel, String status, String isBookPurchase, String reason, String remark) {
+    public BookMaterials(String departmentName, String collegesName, String startPro, String courseCode, String courseName, String textBookName, String isbn, String textBookCategory, String press, String author, String unitPrice, String awardInformation, String publicationDate, String grade, String clazz, String clazzNumber, String teacherBookNumber, Integer isBuyBook, String subscriber, String subscriberTel, String status, String isBookPurchase, String reason, String remark) {
         this.departmentName = departmentName;
         this.collegesName = collegesName;
         this.startPro = startPro;
@@ -270,11 +270,11 @@ public class BookMaterials {
         this.teacherBookNumber = teacherBookNumber;
     }
 
-    public boolean isBuyBook() {
+    public Integer isBuyBook() {
         return isBuyBook;
     }
 
-    public void setBuyBook(boolean buyBook) {
+    public void setBuyBook(Integer buyBook) {
         isBuyBook = buyBook;
     }
 

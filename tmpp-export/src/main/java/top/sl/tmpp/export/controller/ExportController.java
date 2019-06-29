@@ -44,11 +44,15 @@ public class ExportController {
      * @param term               学期
      */
     @GetMapping("/down_book_materials")
-    public void downBookMaterials(@RequestParam() String year,
+    public void downBookMaterials(@RequestParam String year,
                                   @RequestParam String college,
                                   @RequestParam String teachingDepartment,
-                                  @RequestParam String term) {
-
+                                  @RequestParam Boolean term,
+                                  HttpServletResponse response) throws IOException {
+        String fileName = "征订教材汇总表.xlsx";
+        response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
+        response.setContentType("application/octet-stream");
+        exportService.downBookMaterials(year, college, teachingDepartment, term, response.getOutputStream());
     }
 
     /**
@@ -57,7 +61,7 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/summary_table")
-    public void summaryTable(@RequestParam("execute_plan_id") String executePlanId,HttpServletResponse response) throws IOException {
+    public void summaryTable(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         String fileName = "考试-考察-总体订书率表.xlsx";
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.setContentType("application/octet-stream");
@@ -70,7 +74,7 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/textbook_plan_statistics")
-    public void textbookPlanStatistics(@RequestParam("execute_plan_id") String executePlanId,HttpServletResponse response) throws IOException {
+    public void textbookPlanStatistics(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         String fileName = "征订教材计划统计表.xlsx";
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.setContentType("application/octet-stream");
@@ -83,7 +87,7 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/publishing_house_statistics")
-    public void publishingHouseStatistics(@RequestParam("execute_plan_id") String executePlanId,HttpServletResponse response) throws IOException {
+    public void publishingHouseStatistics(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         String fileName = "出版社统计数量表.xlsx";
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.setContentType("application/octet-stream");
@@ -96,7 +100,7 @@ public class ExportController {
      * @param executePlanId 执行计划id
      */
     @GetMapping("/subscription_book")
-    public void subscriptionBook(@RequestParam("execute_plan_id") String executePlanId,HttpServletResponse response) throws IOException {
+    public void subscriptionBook(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         String fileName = "征订教材样书统计表.xlsx";
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
         response.setContentType("application/octet-stream");

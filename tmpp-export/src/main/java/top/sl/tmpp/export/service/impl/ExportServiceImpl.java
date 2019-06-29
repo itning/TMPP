@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ShuLu
@@ -103,7 +104,7 @@ public class ExportServiceImpl implements ExportService {
         XSSFSheet sheet = wb.createSheet("出版社统计数量表");
 
         List<PublisherStatistics> publisherStatistics = exportMapper.selectPublishingHouseStatistics(executePlanId);
-        HashMap<String, List<PublisherStatistics>> map = new HashMap<>();
+        HashMap<String, List<PublisherStatistics>> map = new HashMap<>(publisherStatistics.size());
         LinkedList<String> strings = new LinkedList<>();
         publisherStatistics.forEach(p -> {
             if (map.get(p.getCollegesName()) != null) {
@@ -259,6 +260,44 @@ public class ExportServiceImpl implements ExportService {
         wb.write(outputStream);
 
 
+    }
+
+    @Override
+    public void downBookMaterials(String year, String college, String teachingDepartment, Boolean term, OutputStream outputStream) throws IOException {
+        final String[] headerStrArray = {"序号", "授课部门名称", "开课院系", "专业", "课程号", "课程名称", "教材名称"
+                , "书籍编号", "教材类别", "出版社", "作者", "单价", "获奖信息",
+                "出版日期", "使用年级", "使用班级", "使用班级人数", "教师样书数量", "教务处是否购书",
+                "征订人", "征订人电话", "状态", "是否购书", "原因", "备注",};
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("征订教材汇总表");
+        mergeCells(sheet, headerStrArray.length - 1);
+        XSSFRow row0 = sheet.createRow(0);
+        XSSFCell cell = getCellWithStyle(wb, row0);
+        cell.setCellValue(year + "学年第" + (term ? "一" : "二") + "征订教材汇总表");
+        XSSFRow row = sheet.createRow(1);
+        information(headerStrArray, row, 0);
+
+        List<BookMaterials> bookMaterialsList = exportMapper.selectBookMaterials(year, college, teachingDepartment, term).stream().peek(bookMaterials -> {
+            switch (bookMaterials.getStatus()) {
+                case "1":
+                    bookMaterials.setStatus("办公室主任审核通过");
+                    break;
+                case "2":
+                    bookMaterials.setStatus("教务处审核通过");
+                    break;
+                case "3":
+                    bookMaterials.setStatus("办公室主任驳回");
+                    break;
+                case "4":
+                    bookMaterials.setStatus("教务处驳回");
+                    break;
+                default:
+                    bookMaterials.setStatus("未审核");
+            }
+            bookMaterials.setIsBookPurchase("1".equals(bookMaterials.getIsBookPurchase()) ? "是" : "否");
+        }).collect(Collectors.toList());
+        getSheetByList(bookMaterialsList, sheet);
+        wb.write(outputStream);
     }
 
     private XSSFCell getCellWithStyle(XSSFWorkbook wb, XSSFRow row) {

@@ -67,7 +67,19 @@ public interface ExportService {
      *
      * @param executePlanId 执行计划ID
      * @param outputStream  输出流
+     * @throws IOException IOException
      */
     void summaryTable(String executePlanId, OutputStream outputStream) throws IOException;
 
+    /**
+     * 征订教材汇总表格
+     *
+     * @param year               年
+     * @param college            学院
+     * @param teachingDepartment 授课部门
+     * @param term               学期
+     * @param outputStream       输出流
+     * @throws IOException IOException
+     */
+    void downBookMaterials(String year, String college, String teachingDepartment, Boolean term, OutputStream outputStream) throws IOException;
 }
