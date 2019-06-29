@@ -31,4 +31,51 @@ public interface ExportMapper {
     List<TeacherReceiveBook> selectTeacherReceiveBook(String executePlanId);
 
     List<SubscriptionBookPlan> selectSubscriptionBookPlan(String executePlanId);
+
+    /**
+     * 考试/考察 type
+     *
+     * @param executePlanId 执行计划ID
+     * @return list
+     */
+    List<String> selectType(String executePlanId);
+
+    /**
+     * 考试课 课程总门数
+     *
+     * @param executePlanId 执行计划ID
+     * @return list
+     */
+    List<String> selectTheTotalCourses(String executePlanId);
+
+    /**
+     * 考察课 课程总门数
+     *
+     * @param executePlanId 执行计划ID
+     * @return list
+     */
+    List<String> selectTheStudyCourses(String executePlanId);
+
+    /**
+     * 考试课 订购教材课程门数
+     *
+     * @param executePlanId 执行计划ID
+     * @return list
+     */
+    List<String> selectExaminationCourse(String executePlanId);
+
+    /**
+     * 考查课 订购教材课程门数
+     *
+     * @param executePlanId 执行计划ID
+     * @return list
+     */
+    List<String> selectStudyClass(String executePlanId);
+
+    /**
+     * 查找教育层次
+     * @param executePlanId 执行计划ID
+     * @return
+     */
+    String selectLevel(String executePlanId);
 }

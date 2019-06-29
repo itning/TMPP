@@ -326,5 +326,48 @@
              ) AS a
                  INNER JOIN discounts ON discounts.id = a.discount_id
     </select>
+    <select id="selectType" resultType="java.lang.String">
+        SELECT DISTINCT if(type = 0, "考试", "考察") AS type
+        FROM plan
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+    </select>
+    <select id="selectTheTotalCourses" resultType="java.lang.String">
+        SELECT course_id
+        FROM plan
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND type = 0
+        GROUP BY course_id;
+    </select>
+    <select id="selectTheStudyCourses" resultType="java.lang.String">
+        SELECT course_id
+        FROM plan
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND type = 1
+        GROUP BY course_id;
+    </select>
+    <select id="selectExaminationCourse" resultType="java.lang.String">
+        SELECT book.course_id
+        FROM book
+                 INNER JOIN plan ON plan.id = book.plan_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND book.is_book_purchase = 1
+          AND plan.type = 0
+        GROUP BY book.course_id
+    </select>
+    <select id="selectStudyClass" resultType="java.lang.String">
+        SELECT book.course_id
+        FROM book
+                 INNER JOIN plan ON plan.id = book.plan_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND book.is_book_purchase = 1
+          AND plan.type = 1
+        GROUP BY book.course_id;
+    </select>
+    <select id="selectLevel" resultType="java.lang.String">
+        SELECT educational_level
+        FROM level
+                 INNER JOIN execute_plan ON `level`.id = execute_plan.level_id
+        WHERE execute_plan.id = #{executePlanId,jdbcType=VARCHAR}
+    </select>
 
 </mapper>

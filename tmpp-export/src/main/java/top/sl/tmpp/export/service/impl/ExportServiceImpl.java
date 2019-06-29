@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -173,7 +174,7 @@ public class ExportServiceImpl implements ExportService {
         final String[] headerStrArray = {"序号", "授课部门名称", "课程名称", "课程类型"
                 , "专业", "教材名称", "作者", "出版社", "书号isbn"
                 , "出版日期", "获奖信息", "单价", "使用年级"
-                , "使用班级", "教师样书数量","征订人","领取教材签字"};
+                , "使用班级", "教师样书数量", "征订人", "领取教材签字"};
 
         mergeCells(sheet, headerStrArray.length - 1);
 
@@ -197,7 +198,7 @@ public class ExportServiceImpl implements ExportService {
         final String[] headerStrArray = {"序号", "课程代码", "课程名称", "书号isbn"
                 , "教材名称", "教材类别", "出版社", "作者", "单价"
                 , "教师样书数量", "折扣", "获奖信息", "出版日期"
-                , "征订人", "征订人电话","是否购书","备注"};
+                , "征订人", "征订人电话", "是否购书", "备注"};
 
         mergeCells(sheet, headerStrArray.length - 1);
 
@@ -208,6 +209,56 @@ public class ExportServiceImpl implements ExportService {
         information(headerStrArray, row, 0);
         getSheetByList(subscriptionBookPlans, sheet);
         wb.write(outputStream);
+    }
+
+    @Override
+    public void summaryTable(String executePlanId, OutputStream outputStream) throws IOException {
+        String s = exportMapper.selectLevel(executePlanId);
+        int examinationClass = exportMapper.selectExaminationCourse(executePlanId).size();
+        int totalCourses = exportMapper.selectTheStudyCourses(executePlanId).size();
+        int studyCourses = exportMapper.selectTheStudyCourses(executePlanId).size();
+        int studyClass = exportMapper.selectStudyClass(executePlanId).size();
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet sheet = wb.createSheet("考试-考察-总体订书率表");
+
+        CellRangeAddress r1 = new CellRangeAddress(0, 0, 1, 3);
+        CellRangeAddress r2 = new CellRangeAddress(0, 0, 4, 6);
+        CellRangeAddress r3 = new CellRangeAddress(0, 0, 7, 9);
+        sheet.addMergedRegion(r1);
+        sheet.addMergedRegion(r2);
+        sheet.addMergedRegion(r3);
+
+        XSSFRow row = sheet.createRow(0);
+        row.createCell(0).setCellValue("");
+        row.createCell(1).setCellValue("考试课");
+        row.createCell(4).setCellValue("考察课");
+        row.createCell(7).setCellValue("合计");
+        getCellWithStyle(wb, row);
+
+        final String[] headerStrArray = {"", "订购教材课程门数", "课程总门数", "定书率"
+                , "订购教材课程门数", "课程总门数", "定书率"
+                , "订购教材课程门数", "课程总门数", "定书率"};
+        row = sheet.createRow(1);
+        information(headerStrArray, row, 0);
+        row = sheet.createRow(2);
+        DecimalFormat decimalFormat = new DecimalFormat("0.00%");
+        row.createCell(0).setCellValue(s);
+        row.createCell(1).setCellValue(examinationClass);
+        row.createCell(2).setCellValue(totalCourses);
+        String i3 = decimalFormat.format((double) examinationClass / (double) totalCourses);
+        row.createCell(3).setCellValue(i3);
+        row.createCell(4).setCellValue(studyClass);
+        row.createCell(5).setCellValue(studyCourses);
+        String i6 = decimalFormat.format((double) studyClass / (double) studyCourses);
+        row.createCell(6).setCellValue(i6);
+        row.createCell(7).setCellValue(studyClass + examinationClass);
+        row.createCell(8).setCellValue(studyCourses + totalCourses);
+        String i9 = decimalFormat.format(((double) studyClass + examinationClass) / ((double) studyCourses + totalCourses));
+        row.createCell(9).setCellValue(i9);
+
+        wb.write(outputStream);
+
+
     }
 
     private XSSFCell getCellWithStyle(XSSFWorkbook wb, XSSFRow row) {

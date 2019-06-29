@@ -36,4 +36,9 @@ public class ExportServiceTest {
     public void TeacherReceiveBook(){
         //exportService.TeacherReceiveBook("ccf4c148bcef4d7592b34ca0a3bcd586");
     }
+
+    @Test
+    public void SummaryTable(){
+        //exportService.summaryTable("ccf4c148bcef4d7592b34ca0a3bcd586");
+    }
 }

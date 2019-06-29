@@ -1,5 +1,8 @@
 package top.sl.tmpp.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -25,7 +28,8 @@ public class Book {
     private String discountId;
 
     private String awardInformation;
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date publicationDate;
 
     private String subscriber;
