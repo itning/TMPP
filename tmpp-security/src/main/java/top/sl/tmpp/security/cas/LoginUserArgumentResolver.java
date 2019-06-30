@@ -13,6 +13,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import top.sl.tmpp.common.entity.AdminResource;
+import top.sl.tmpp.common.entity.AdminUser;
 import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.mapper.CasMapper;
 import top.sl.tmpp.security.exception.RoleException;
@@ -90,6 +91,21 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      */
     private void checkPermission(LoginUser loginUser, String requestUri, String method) throws ExecutionException {
         String loginId = loginUser.getId();
+        AdminUser adminUser = casMapper.selectByUserName(loginId);
+        if (adminUser == null) {
+            //普通教师角色
+            long teacherCount = casMapper.getResourcesByUserTypeIsTeacher()
+                    .stream()
+                    .filter(adminResource -> requestUri.startsWith(adminResource.getUrl()))
+                    .filter(adminResource -> adminResource.getMethod().equals(method))
+                    .count();
+            if (teacherCount == 0L) {
+                logger.debug("CheckPermission FORBIDDEN {}", loginUser);
+                logger.debug("request uri {}", requestUri);
+                throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
+            }
+            return;
+        }
         List<AdminResource> adminResourceList //= loadingCache.get(loginId);
                 = casMapper.getResourcesByUserName(loginId);
         long admin = adminResourceList

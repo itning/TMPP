@@ -28,7 +28,7 @@ public class Book {
     private BigDecimal discount;
 
     private String awardInformation;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM")
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date publicationDate;
 

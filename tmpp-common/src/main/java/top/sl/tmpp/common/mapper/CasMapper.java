@@ -14,4 +14,6 @@ public interface CasMapper {
     List<AdminResource> getResourcesByUserName(@Param("username") String username);
 
     AdminUser selectByUserName(@Param("username") String username);
+
+    List<AdminResource> getResourcesByUserTypeIsTeacher();
 }

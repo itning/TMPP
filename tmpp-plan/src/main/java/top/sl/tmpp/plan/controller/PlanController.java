@@ -69,12 +69,12 @@ public class PlanController {
     /**
      * 下载执行计划
      *
-     * @param id       执行计划ID
-     * @param response {@link HttpServletResponse}
+     * @param executePlanId 执行计划ID
+     * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/down_execute_plan")
-    public void downPlan(@RequestParam String id, HttpServletResponse response) {
-        ExecutePlan executePlan = referPlanService.downloadExecutePlan(id);
+    public void downPlan(@RequestParam String executePlanId, HttpServletResponse response) {
+        ExecutePlan executePlan = referPlanService.downloadExecutePlan(executePlanId);
         byte[] file = executePlan.getFile();
         String fileName = "执行计划." + executePlan.getFileType();
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));

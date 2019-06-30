@@ -60,7 +60,8 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
         if (adminUser != null) {
             loginUser.setUserType(adminUser.getType());
         } else {
-            logger.debug("username {} not found", loginUser.getId());
+            loginUser.setUserType("T");
+            logger.debug("username {} is teacher", loginUser.getId());
         }
         String jwt = JwtUtils.buildJwt(loginUser);
         if (loginUserMapper.selectByPrimaryKey(loginUser.getId()) == null) {

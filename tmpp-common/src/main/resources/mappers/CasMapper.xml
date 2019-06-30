@@ -30,4 +30,14 @@
         from admin_user
         WHERE username = #{username,jdbcType=VARCHAR}
     </select>
+    <select id="getResourcesByUserTypeIsTeacher" resultMap="AdminResourceMap">
+        SELECT admin_resource.id,
+               admin_resource.url,
+               admin_resource.method,
+               admin_resource.gmt_create,
+               admin_resource.gmt_modified
+        FROM admin_resource
+                 INNER JOIN admin_user_role_resource ON admin_user_role_resource.resource_id = admin_resource.id
+        WHERE admin_user_role_resource.user_role_id = 4
+    </select>
 </mapper>
