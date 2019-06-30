@@ -16,9 +16,9 @@ public class TBook {
 
     private String textBookName;
 
-    private Integer textBookCategory;
+    private Boolean textBookCategory;
 
-    private Integer press;
+    private String press;
 
     private String author;
 
@@ -26,44 +26,36 @@ public class TBook {
 
     private Integer teacherBookNumber;
 
+    private BigDecimal discount;
+
     private String awardInformation;
 
     private Date publicationDate;
 
     private String subscriber;
 
-    private Integer subscriberTel;
+    private String subscriberTel;
 
-    private Integer isBookPurchase;
+    private Boolean isBookPurchase;
 
     private String reason;
 
-    private String courseId;
-
-    private String discountId;
-
-    private Integer affairsNumber;
-
     private String loginUserId;
+
+    private String courseCode;
+
+    private String courseName;
+
+    private Integer status;
 
     private Date gmtModified;
 
     private Date gmtCreate;
 
-    private String planId;
-
-    private Integer status;
-
     public TBook() {
     }
 
-
-    public TBook(String id, Integer status) {
-        this.id = id;
-        this.status = status;
-    }
-
-    public TBook(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, Date gmtModified, Date gmtCreate, String planId, Integer status) {
+    public TBook(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, String courseCode, String courseName, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
@@ -72,20 +64,19 @@ public class TBook {
         this.author = author;
         this.unitPrice = unitPrice;
         this.teacherBookNumber = teacherBookNumber;
+        this.discount = discount;
         this.awardInformation = awardInformation;
         this.publicationDate = publicationDate;
         this.subscriber = subscriber;
         this.subscriberTel = subscriberTel;
         this.isBookPurchase = isBookPurchase;
         this.reason = reason;
-        this.courseId = courseId;
-        this.discountId = discountId;
-        this.affairsNumber = affairsNumber;
         this.loginUserId = loginUserId;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.status = status;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
-        this.planId = planId;
-        this.status = status;
     }
 
     public String getId() {
@@ -112,19 +103,19 @@ public class TBook {
         this.textBookName = textBookName;
     }
 
-    public Integer getTextBookCategory() {
+    public Boolean getTextBookCategory() {
         return textBookCategory;
     }
 
-    public void setTextBookCategory(Integer textBookCategory) {
+    public void setTextBookCategory(Boolean textBookCategory) {
         this.textBookCategory = textBookCategory;
     }
 
-    public Integer getPress() {
+    public String getPress() {
         return press;
     }
 
-    public void setPress(Integer press) {
+    public void setPress(String press) {
         this.press = press;
     }
 
@@ -152,6 +143,14 @@ public class TBook {
         this.teacherBookNumber = teacherBookNumber;
     }
 
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
     public String getAwardInformation() {
         return awardInformation;
     }
@@ -176,20 +175,20 @@ public class TBook {
         this.subscriber = subscriber;
     }
 
-    public Integer getSubscriberTel() {
+    public String getSubscriberTel() {
         return subscriberTel;
     }
 
-    public void setSubscriberTel(Integer subscriberTel) {
+    public void setSubscriberTel(String subscriberTel) {
         this.subscriberTel = subscriberTel;
     }
 
-    public Integer getIsBookPurchase() {
+    public Boolean getBookPurchase() {
         return isBookPurchase;
     }
 
-    public void setIsBookPurchase(Integer isBookPurchase) {
-        this.isBookPurchase = isBookPurchase;
+    public void setBookPurchase(Boolean bookPurchase) {
+        isBookPurchase = bookPurchase;
     }
 
     public String getReason() {
@@ -200,36 +199,36 @@ public class TBook {
         this.reason = reason;
     }
 
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(String discountId) {
-        this.discountId = discountId;
-    }
-
-    public Integer getAffairsNumber() {
-        return affairsNumber;
-    }
-
-    public void setAffairsNumber(Integer affairsNumber) {
-        this.affairsNumber = affairsNumber;
-    }
-
     public String getLoginUserId() {
         return loginUserId;
     }
 
     public void setLoginUserId(String loginUserId) {
         this.loginUserId = loginUserId;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getGmtModified() {
@@ -248,22 +247,6 @@ public class TBook {
         this.gmtCreate = gmtCreate;
     }
 
-    public String getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(String planId) {
-        this.planId = planId;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
-    }
-
     @Override
     public String toString() {
         return "TBook{" +
@@ -271,24 +254,23 @@ public class TBook {
                 ", isbn='" + isbn + '\'' +
                 ", textBookName='" + textBookName + '\'' +
                 ", textBookCategory=" + textBookCategory +
-                ", press=" + press +
+                ", press='" + press + '\'' +
                 ", author='" + author + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", teacherBookNumber=" + teacherBookNumber +
+                ", discount=" + discount +
                 ", awardInformation='" + awardInformation + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", subscriber='" + subscriber + '\'' +
-                ", subscriberTel=" + subscriberTel +
+                ", subscriberTel='" + subscriberTel + '\'' +
                 ", isBookPurchase=" + isBookPurchase +
                 ", reason='" + reason + '\'' +
-                ", courseId='" + courseId + '\'' +
-                ", discountId='" + discountId + '\'' +
-                ", affairsNumber=" + affairsNumber +
                 ", loginUserId='" + loginUserId + '\'' +
+                ", courseCode='" + courseCode + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", status=" + status +
                 ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +
-                ", planId='" + planId + '\'' +
-                ", status=" + status +
                 '}';
     }
 }

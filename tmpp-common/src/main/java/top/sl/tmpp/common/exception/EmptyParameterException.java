@@ -1,7 +1,6 @@
-package top.sl.tmpp.purchase.exception;
+package top.sl.tmpp.common.exception;
 
 import org.springframework.http.HttpStatus;
-import top.sl.tmpp.common.exception.BaseException;
 
 /**
  * 所需不为空的参数为空

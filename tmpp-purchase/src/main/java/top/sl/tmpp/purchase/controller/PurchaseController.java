@@ -72,7 +72,7 @@ public class PurchaseController {
      */
     @PatchMapping("/purchase")
     public ResponseEntity<?> purchase(LoginUser loginUser, Book book) {
-        purchaseService.upTeacherBook(book);
+        purchaseService.upTeacherBook(book, loginUser);
         return RestModel.noContent();
     }
 }

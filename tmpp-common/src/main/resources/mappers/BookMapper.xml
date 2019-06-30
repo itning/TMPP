@@ -12,7 +12,7 @@
             <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="discount_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -22,6 +22,32 @@
             <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="is_buy_book" javaType="java.lang.Boolean" jdbcType="BIT"/>
             <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
+    <resultMap id="TBookResultMap" type="top.sl.tmpp.common.pojo.TBook">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="plan_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_category" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_book_purchase" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -38,7 +64,7 @@
             <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
-            <arg column="discount_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -46,7 +72,8 @@
             <arg column="is_book_purchase" javaType="java.lang.Boolean" jdbcType="BIT"/>
             <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
@@ -123,7 +150,7 @@
             author,
             unit_price,
             teacher_book_number,
-            discount_id,
+            discount,
             award_Information,
             publication_date,
             subscriber,
@@ -172,7 +199,7 @@
         insert into book (id, plan_id, isbn,
                           text_book_name, text_book_category, press,
                           author, unit_price, teacher_book_number,
-                          discount_id, award_Information, publication_date,
+                          discount, award_Information, publication_date,
                           subscriber, subscriber_tel, is_book_purchase,
                           reason, login_user_id, is_buy_book,
                           course_id, status, gmt_modified,
@@ -180,7 +207,7 @@
         values (#{id,jdbcType=VARCHAR}, #{planId,jdbcType=VARCHAR}, #{isbn,jdbcType=VARCHAR},
                 #{textBookName,jdbcType=VARCHAR}, #{textBookCategory,jdbcType=BIT}, #{press,jdbcType=VARCHAR},
                 #{author,jdbcType=VARCHAR}, #{unitPrice,jdbcType=DECIMAL}, #{teacherBookNumber,jdbcType=INTEGER},
-                #{discountId,jdbcType=VARCHAR}, #{awardInformation,jdbcType=VARCHAR},
+                #{discount,jdbcType=DECIMAL}, #{awardInformation,jdbcType=VARCHAR},
                 #{publicationDate,jdbcType=TIMESTAMP},
                 #{subscriber,jdbcType=VARCHAR}, #{subscriberTel,jdbcType=VARCHAR}, #{isBookPurchase,jdbcType=BIT},
                 #{reason,jdbcType=VARCHAR}, #{loginUserId,jdbcType=VARCHAR}, #{isBuyBook,jdbcType=BIT},
@@ -217,8 +244,8 @@
             <if test="teacherBookNumber != null">
                 teacher_book_number,
             </if>
-            <if test="discountId != null">
-                discount_id,
+            <if test="discount != null">
+                discount,
             </if>
             <if test="awardInformation != null">
                 award_Information,
@@ -285,8 +312,8 @@
             <if test="teacherBookNumber != null">
                 #{teacherBookNumber,jdbcType=INTEGER},
             </if>
-            <if test="discountId != null">
-                #{discountId,jdbcType=VARCHAR},
+            <if test="discount != null">
+                #{discount,jdbcType=DECIMAL},
             </if>
             <if test="awardInformation != null">
                 #{awardInformation,jdbcType=VARCHAR},
@@ -362,8 +389,8 @@
             <if test="record.teacherBookNumber != null">
                 teacher_book_number = #{record.teacherBookNumber,jdbcType=INTEGER},
             </if>
-            <if test="record.discountId != null">
-                discount_id = #{record.discountId,jdbcType=VARCHAR},
+            <if test="record.discount != null">
+                discount = #{record.discount,jdbcType=DECIMAL},
             </if>
             <if test="record.awardInformation != null">
                 award_Information = #{record.awardInformation,jdbcType=VARCHAR},
@@ -417,7 +444,7 @@
         author = #{record.author,jdbcType=VARCHAR},
         unit_price = #{record.unitPrice,jdbcType=DECIMAL},
         teacher_book_number = #{record.teacherBookNumber,jdbcType=INTEGER},
-        discount_id = #{record.discountId,jdbcType=VARCHAR},
+        discount = #{record.discount,jdbcType=DECIMAL},
         award_Information = #{record.awardInformation,jdbcType=VARCHAR},
         publication_date = #{record.publicationDate,jdbcType=TIMESTAMP},
         subscriber = #{record.subscriber,jdbcType=VARCHAR},
@@ -461,8 +488,8 @@
             <if test="teacherBookNumber != null">
                 teacher_book_number = #{teacherBookNumber,jdbcType=INTEGER},
             </if>
-            <if test="discountId != null">
-                discount_id = #{discountId,jdbcType=VARCHAR},
+            <if test="discount != null">
+                discount = #{discount,jdbcType=DECIMAL},
             </if>
             <if test="awardInformation != null">
                 award_Information = #{awardInformation,jdbcType=VARCHAR},
@@ -513,7 +540,7 @@
             author              = #{author,jdbcType=VARCHAR},
             unit_price          = #{unitPrice,jdbcType=DECIMAL},
             teacher_book_number = #{teacherBookNumber,jdbcType=INTEGER},
-            discount_id         = #{discountId,jdbcType=VARCHAR},
+            discount            = #{discount,jdbcType=DECIMAL},
             award_Information   = #{awardInformation,jdbcType=VARCHAR},
             publication_date    = #{publicationDate,jdbcType=TIMESTAMP},
             subscriber          = #{subscriber,jdbcType=VARCHAR},
@@ -528,9 +555,8 @@
             gmt_create          = #{gmtCreate,jdbcType=TIMESTAMP}
         where id = #{id,jdbcType=VARCHAR}
     </update>
-    <select id="selectMyBook" resultMap="BaseResultMap">
+    <select id="selectMyBook" resultMap="TBookResultMap">
         SELECT book.id,
-               book.plan_id,
                book.isbn,
                book.text_book_name,
                book.text_book_category,
@@ -538,7 +564,7 @@
                book.author,
                book.unit_price,
                book.teacher_book_number,
-               book.discount_id,
+               book.discount,
                book.award_Information,
                book.publication_date,
                book.subscriber,
@@ -546,13 +572,14 @@
                book.is_book_purchase,
                book.reason,
                book.login_user_id,
-               book.is_buy_book,
-               book.course_id,
+               course.code,
+               course.name,
                book.status,
                book.gmt_modified,
                book.gmt_create
         FROM book
                  INNER JOIN plan ON book.plan_id = plan.id
+                 INNER JOIN course on course.id = book.course_id
         WHERE book.login_user_id = #{loginUserId,jdbcType=VARCHAR}
           AND plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
@@ -565,7 +592,7 @@
                book.author,
                book.unit_price,
                book.teacher_book_number,
-               book.discount_id,
+               book.discount,
                book.award_Information,
                book.publication_date,
                book.subscriber,
@@ -573,20 +600,22 @@
                book.is_book_purchase,
                book.reason,
                book.login_user_id,
-               book.course_id,
+               course.code,
+               course.name,
                book.status,
                book.gmt_modified,
                book.gmt_create
         FROM book
-                 INNER JOIN plan ON plan.id = book.plan_id
-        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+                 INNER JOIN plan ON book.plan_id = plan.id
+                 INNER JOIN course on course.id = book.course_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and status = 0
     </select>
     <select id="selectAllByExecutePlanId" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List"/>
         FROM book
         INNER JOIN plan ON plan.id = book.plan_id
-        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and status = 1
     </select>
     <select id="selectIdAndStatus" resultMap="BaseResultMap">
         SELECT book.id,

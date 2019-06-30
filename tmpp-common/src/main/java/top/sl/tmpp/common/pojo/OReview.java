@@ -26,7 +26,7 @@ public class OReview {
 
     private Integer teacherBookNumber;
 
-    private String discountId;
+    private BigDecimal discount;
 
     private String awardInformation;
 
@@ -42,13 +42,42 @@ public class OReview {
 
     private String loginUserId;
 
-    private String courseId;
+    private String courseCode;
+
+    private String courseName;
 
     private Integer status;
 
     private Date gmtModified;
 
     private Date gmtCreate;
+
+    public OReview() {
+    }
+
+    public OReview(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, String courseCode, String courseName, Integer status, Date gmtModified, Date gmtCreate) {
+        this.id = id;
+        this.isbn = isbn;
+        this.textBookName = textBookName;
+        this.textBookCategory = textBookCategory;
+        this.press = press;
+        this.author = author;
+        this.unitPrice = unitPrice;
+        this.teacherBookNumber = teacherBookNumber;
+        this.discount = discount;
+        this.awardInformation = awardInformation;
+        this.publicationDate = publicationDate;
+        this.subscriber = subscriber;
+        this.subscriberTel = subscriberTel;
+        this.isBookPurchase = isBookPurchase;
+        this.reason = reason;
+        this.loginUserId = loginUserId;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.status = status;
+        this.gmtModified = gmtModified;
+        this.gmtCreate = gmtCreate;
+    }
 
     public String getId() {
         return id;
@@ -114,12 +143,12 @@ public class OReview {
         this.teacherBookNumber = teacherBookNumber;
     }
 
-    public String getDiscountId() {
-        return discountId;
+    public BigDecimal getDiscount() {
+        return discount;
     }
 
-    public void setDiscountId(String discountId) {
-        this.discountId = discountId;
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     public String getAwardInformation() {
@@ -178,12 +207,20 @@ public class OReview {
         this.loginUserId = loginUserId;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId;
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public Integer getStatus() {
@@ -212,7 +249,7 @@ public class OReview {
 
     @Override
     public String toString() {
-        return "OReview{" +
+        return "TBook{" +
                 "id='" + id + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", textBookName='" + textBookName + '\'' +
@@ -221,7 +258,7 @@ public class OReview {
                 ", author='" + author + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", teacherBookNumber=" + teacherBookNumber +
-                ", discountId='" + discountId + '\'' +
+                ", discount=" + discount +
                 ", awardInformation='" + awardInformation + '\'' +
                 ", publicationDate=" + publicationDate +
                 ", subscriber='" + subscriber + '\'' +
@@ -229,7 +266,8 @@ public class OReview {
                 ", isBookPurchase=" + isBookPurchase +
                 ", reason='" + reason + '\'' +
                 ", loginUserId='" + loginUserId + '\'' +
-                ", courseId='" + courseId + '\'' +
+                ", courseCode='" + courseCode + '\'' +
+                ", courseName='" + courseName + '\'' +
                 ", status=" + status +
                 ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +

@@ -706,73 +706,63 @@ public class BookExample {
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdIsNull() {
-            addCriterion("discount_id is null");
+        public Criteria andDiscountIsNull() {
+            addCriterion("discount is null");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdIsNotNull() {
-            addCriterion("discount_id is not null");
+        public Criteria andDiscountIsNotNull() {
+            addCriterion("discount is not null");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdEqualTo(String value) {
-            addCriterion("discount_id =", value, "discountId");
+        public Criteria andDiscountEqualTo(BigDecimal value) {
+            addCriterion("discount =", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdNotEqualTo(String value) {
-            addCriterion("discount_id <>", value, "discountId");
+        public Criteria andDiscountNotEqualTo(BigDecimal value) {
+            addCriterion("discount <>", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdGreaterThan(String value) {
-            addCriterion("discount_id >", value, "discountId");
+        public Criteria andDiscountGreaterThan(BigDecimal value) {
+            addCriterion("discount >", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdGreaterThanOrEqualTo(String value) {
-            addCriterion("discount_id >=", value, "discountId");
+        public Criteria andDiscountGreaterThanOrEqualTo(BigDecimal value) {
+            addCriterion("discount >=", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdLessThan(String value) {
-            addCriterion("discount_id <", value, "discountId");
+        public Criteria andDiscountLessThan(BigDecimal value) {
+            addCriterion("discount <", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdLessThanOrEqualTo(String value) {
-            addCriterion("discount_id <=", value, "discountId");
+        public Criteria andDiscountLessThanOrEqualTo(BigDecimal value) {
+            addCriterion("discount <=", value, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdLike(String value) {
-            addCriterion("discount_id like", value, "discountId");
+        public Criteria andDiscountIn(List<BigDecimal> values) {
+            addCriterion("discount in", values, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdNotLike(String value) {
-            addCriterion("discount_id not like", value, "discountId");
+        public Criteria andDiscountNotIn(List<BigDecimal> values) {
+            addCriterion("discount not in", values, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdIn(List<String> values) {
-            addCriterion("discount_id in", values, "discountId");
+        public Criteria andDiscountBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("discount between", value1, value2, "discount");
             return (Criteria) this;
         }
 
-        public Criteria andDiscountIdNotIn(List<String> values) {
-            addCriterion("discount_id not in", values, "discountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDiscountIdBetween(String value1, String value2) {
-            addCriterion("discount_id between", value1, value2, "discountId");
-            return (Criteria) this;
-        }
-
-        public Criteria andDiscountIdNotBetween(String value1, String value2) {
-            addCriterion("discount_id not between", value1, value2, "discountId");
+        public Criteria andDiscountNotBetween(BigDecimal value1, BigDecimal value2) {
+            addCriterion("discount not between", value1, value2, "discount");
             return (Criteria) this;
         }
 

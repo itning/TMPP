@@ -6,10 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
+import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.exception.EmptyParameterException;
+import top.sl.tmpp.common.exception.IdNotFoundException;
+import top.sl.tmpp.common.exception.PermissionException;
 import top.sl.tmpp.common.mapper.BookMapper;
 import top.sl.tmpp.common.pojo.TBook;
 import top.sl.tmpp.common.util.ObjectUtils;
-import top.sl.tmpp.purchase.exception.EmptyParameterException;
 import top.sl.tmpp.purchase.service.PurchaseService;
 
 import java.util.Date;
@@ -61,7 +64,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     @Override
-    public void upTeacherBook(Book book) {
+    public void upTeacherBook(Book book, LoginUser loginUser) {
         if (book.getIsBookPurchase() == null) {
             throw new EmptyParameterException("是否购买为空");
         }
@@ -69,6 +72,14 @@ public class PurchaseServiceImpl implements PurchaseService {
             //教师不买
             if (StringUtils.isAnyBlank(book.getReason(), book.getCourseId(), book.getLoginUserId())) {
                 throw new EmptyParameterException("原因为空");
+            }
+        }
+        Book b = bookMapper.selectByPrimaryKey(book.getId());
+        if (b == null) {
+            throw new IdNotFoundException(book.getId());
+        } else {
+            if (!loginUser.getId().equals(b.getLoginUserId())) {
+                throw new PermissionException();
             }
         }
         bookMapper.updateByPrimaryKeySelective(book);
