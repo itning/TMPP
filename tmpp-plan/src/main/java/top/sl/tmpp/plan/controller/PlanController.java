@@ -77,9 +77,8 @@ public class PlanController {
         ExecutePlan executePlan = referPlanService.downloadExecutePlan(id);
         byte[] file = executePlan.getFile();
         String fileName = "执行计划." + executePlan.getFileType();
-        response.setHeader("Accept-Ranges", "bytes");
         response.setHeader("Content-Disposition", "attachment;filename=" + new String(fileName.getBytes(), StandardCharsets.ISO_8859_1));
-        response.setHeader("Content-Length", file.length + "");
+        response.setIntHeader("Content-Length", file.length);
         response.setContentType(FileUtil.getContentTypeByExtensionName(executePlan.getFileType()));
         try (ByteArrayInputStream bis = new ByteArrayInputStream(file)) {
             IOUtils.copy(bis, response.getOutputStream());
