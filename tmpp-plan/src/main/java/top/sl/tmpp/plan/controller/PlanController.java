@@ -6,9 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import top.sl.tmpp.common.entity.ExecutePlan;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.plan.exception.FileException;
+import top.sl.tmpp.plan.service.FileService;
 import top.sl.tmpp.plan.service.ReferPlanService;
 import top.sl.tmpp.plan.util.FileUtil;
 
@@ -22,12 +24,26 @@ import java.nio.charset.StandardCharsets;
  * @date 2019/6/17 13:46
  */
 @RestController
-public class ReferPlanController {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
-    private final ReferPlanService referPlanService;
+public class PlanController {
+    private static final Logger logger = LoggerFactory.getLogger(PlanController.class);
 
-    public ReferPlanController(ReferPlanService referPlanService) {
+    private final ReferPlanService referPlanService;
+    private final FileService fileService;
+
+    public PlanController(ReferPlanService referPlanService, FileService fileService) {
         this.referPlanService = referPlanService;
+        this.fileService = fileService;
+    }
+
+    /**
+     * 上传执行计划文件
+     *
+     * @param file 文件
+     * @return ResponseEntity
+     */
+    @PostMapping("/execute_plan_file")
+    public ResponseEntity<?> uploadFile(@RequestParam("planFile") MultipartFile file) {
+        return RestModel.created("上传成功", fileService.fileUpload(file));
     }
 
     /**
