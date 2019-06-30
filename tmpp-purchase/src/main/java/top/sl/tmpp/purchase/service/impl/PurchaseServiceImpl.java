@@ -37,7 +37,6 @@ public class PurchaseServiceImpl implements PurchaseService {
 
     @Override
     public void saveBook(String executePlanId, Book book) {
-        book.setId(UUID.randomUUID().toString().replace("-", ""));
         //重置教务处购买样书
         book.setIsBuyBook(false);
         book.setStatus(0);
@@ -49,7 +48,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
         if (book.getIsBookPurchase()) {
             //教师买书
-            ObjectUtils.checkObjectFieldsNotEmpty(book, "reason");
+            ObjectUtils.checkObjectFieldsNotEmpty(book, "reason", "planId", "id");
         } else {
             //教师不买
             if (StringUtils.isAnyBlank(book.getReason(), book.getCourseId(), book.getLoginUserId())) {
@@ -59,6 +58,7 @@ public class PurchaseServiceImpl implements PurchaseService {
         PlanExample planExample = new PlanExample();
         planExample.createCriteria().andExecutePlanIdEqualTo(executePlanId).andCourseIdEqualTo(book.getCourseId());
         planMapper.selectByExample(planExample).forEach(plan -> {
+            book.setId(UUID.randomUUID().toString().replace("-", ""));
             book.setPlanId(plan.getId());
             bookMapper.insert(book);
         });
