@@ -2,6 +2,7 @@ package top.sl.tmpp.purchase.service;
 
 import com.github.pagehelper.PageInfo;
 import top.sl.tmpp.common.entity.Book;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.pojo.TBook;
 
 /**
@@ -30,7 +31,8 @@ public interface PurchaseService {
     /**
      * 修改购书
      *
-     * @param book 购书
+     * @param book      购书
+     * @param loginUser 登录的用户
      */
-    void upTeacherBook(Book book);
+    void upTeacherBook(Book book, LoginUser loginUser);
 }

@@ -32,9 +32,9 @@ public class ExceptionResolver {
     public RestModel jsonErrorHandler(HttpServletResponse response, Exception e) {
         logger.error("jsonErrorHandler->{}:{} {}", e.getClass().getSimpleName(), e.getMessage(), e);
         RestModel restModel = new RestModel();
-        restModel.setCode(HttpStatus.SERVICE_UNAVAILABLE.value());
+        restModel.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
         restModel.setMsg(e.getMessage());
-        response.setStatus(HttpStatus.SERVICE_UNAVAILABLE.value());
+        response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         return restModel;
     }
 

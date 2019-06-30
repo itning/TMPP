@@ -25,7 +25,7 @@ public class Book {
 
     private Integer teacherBookNumber;
 
-    private String discountId;
+    private BigDecimal discount;
 
     private String awardInformation;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -52,7 +52,7 @@ public class Book {
 
     private Date gmtCreate;
 
-    public Book(String id, String planId, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String discountId, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
+    public Book(String id, String planId, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.planId = planId;
         this.isbn = isbn;
@@ -62,7 +62,7 @@ public class Book {
         this.author = author;
         this.unitPrice = unitPrice;
         this.teacherBookNumber = teacherBookNumber;
-        this.discountId = discountId;
+        this.discount = discount;
         this.awardInformation = awardInformation;
         this.publicationDate = publicationDate;
         this.subscriber = subscriber;
@@ -153,12 +153,12 @@ public class Book {
         this.teacherBookNumber = teacherBookNumber;
     }
 
-    public String getDiscountId() {
-        return discountId;
+    public BigDecimal getDiscount() {
+        return discount;
     }
 
-    public void setDiscountId(String discountId) {
-        this.discountId = discountId == null ? null : discountId.trim();
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
     }
 
     public String getAwardInformation() {

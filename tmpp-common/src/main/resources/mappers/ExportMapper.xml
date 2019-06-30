@@ -123,7 +123,7 @@
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
     <select id="selectStudentReceiveBooks" resultMap="StudentReceiveBookMap">
-        SELECT name,
+        SELECT NAME,
                clazz,
                isbn,
                text_book_name,
@@ -132,31 +132,18 @@
                clazz_number,
                discount
         FROM colleges
-                 INNER JOIN (
-            SELECT colleges_id,
-                   clazz,
-                   isbn,
-                   text_book_name,
-                   press,
-                   unit_price,
-                   clazz_number,
-                   discount
-            FROM discounts
-                     INNER JOIN (
-                SELECT colleges_id,
-                       clazz,
-                       isbn,
-                       text_book_name,
-                       press,
-                       unit_price,
-                       clazz_number,
-                       discount_id
-                FROM book
-                         INNER JOIN plan ON plan.id = book.plan_id
-                WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
-                GROUP BY book.id
-            ) AS b ON discounts.id = b.discount_id
-        ) AS c ON colleges.id = c.colleges_id
+                 INNER JOIN (SELECT colleges_id,
+                                    clazz,
+                                    isbn,
+                                    text_book_name,
+                                    press,
+                                    unit_price,
+                                    clazz_number,
+                                    discount
+                             FROM book
+                                      INNER JOIN plan ON plan.id = book.plan_id
+                             WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
+                             GROUP BY book.id) as a on colleges.id = a.colleges_id
 
     </select>
     <select id="selectPublishingHouseStatistics" resultMap="PublisherStatisticsMap">
@@ -268,11 +255,13 @@
         ) AS a ON course.id = a.course_id
     </select>
     <select id="selectSubscriptionBookPlan" resultMap="SubscriptionBookPlanMap">
-        SELECT code,
-               name,
+
+        SELECT CODE
+                ,
+               NAME,
                isbn,
                text_book_name,
-               if(text_book_category = 0, "出版", "自编") AS text_book_category,
+               text_book_category,
                press,
                author,
                unit_price,
@@ -282,12 +271,10 @@
                publication_date,
                subscriber,
                subscriber_tel,
-               if(is_book_purchase = 0, "否", "是")     AS is_book_purchase,
+               is_book_purchase,
                reason
         FROM (
-                 SELECT CODE
-                         ,
-                        NAME,
+                 SELECT book.course_id,
                         isbn,
                         text_book_name,
                         text_book_category,
@@ -295,36 +282,18 @@
                         author,
                         unit_price,
                         teacher_book_number,
-                        discount_id,
+                        discount,
                         award_Information,
                         publication_date,
                         subscriber,
                         subscriber_tel,
                         is_book_purchase,
                         reason
-                 FROM (
-                          SELECT book.course_id,
-                                 isbn,
-                                 text_book_name,
-                                 text_book_category,
-                                 press,
-                                 author,
-                                 unit_price,
-                                 teacher_book_number,
-                                 discount_id,
-                                 award_Information,
-                                 publication_date,
-                                 subscriber,
-                                 subscriber_tel,
-                                 is_book_purchase,
-                                 reason
-                          FROM book
-                                   INNER JOIN plan ON plan.id = book.plan_id
-                          WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-                      ) AS t
-                          INNER JOIN course ON course.id = t.course_id
-             ) AS a
-                 INNER JOIN discounts ON discounts.id = a.discount_id
+                 FROM book
+                          INNER JOIN plan ON plan.id = book.plan_id
+                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+             ) AS t
+                 INNER JOIN course ON course.id = t.course_id
     </select>
     <select id="selectTheTotalCourses" resultType="java.lang.String">
         SELECT course_id
