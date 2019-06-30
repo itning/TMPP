@@ -443,6 +443,6 @@
         from execute_plan
                  inner join level on level.id = execute_plan.level_id
                  inner join department on department.id = execute_plan.department_id
-        where execute_plan.status = ${status,jdbcType=BIT}
+        where execute_plan.status = ${status}
     </select>
 </mapper>
