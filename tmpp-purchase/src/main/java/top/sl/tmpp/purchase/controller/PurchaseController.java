@@ -32,16 +32,19 @@ public class PurchaseController {
     /**
      * 提交购书信息
      *
-     * @param loginUser 登录的用户
-     * @param book      购书信息
+     * @param loginUser     登录的用户
+     * @param executePlanId 执行计划ID
+     * @param book          购书信息
      * @return ResponseEntity
      */
     @PostMapping("/book_purchase_information")
-    public ResponseEntity<?> bookPurchaseInformation(LoginUser loginUser, Book book) {
+    public ResponseEntity<?> bookPurchaseInformation(LoginUser loginUser,
+                                                     @RequestParam String executePlanId,
+                                                     Book book) {
         logger.debug("login user: {}", loginUser);
         logger.debug("save book info: {}", book);
         book.setLoginUserId(loginUser.getId());
-        purchaseService.saveBook(book);
+        purchaseService.saveBook(executePlanId, book);
         return RestModel.created("操作购书计划成功", null);
     }
 

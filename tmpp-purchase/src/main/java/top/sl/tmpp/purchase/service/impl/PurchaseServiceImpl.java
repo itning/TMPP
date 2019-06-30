@@ -7,10 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.entity.PlanExample;
 import top.sl.tmpp.common.exception.EmptyParameterException;
 import top.sl.tmpp.common.exception.IdNotFoundException;
 import top.sl.tmpp.common.exception.PermissionException;
 import top.sl.tmpp.common.mapper.BookMapper;
+import top.sl.tmpp.common.mapper.PlanMapper;
 import top.sl.tmpp.common.pojo.TBook;
 import top.sl.tmpp.common.util.ObjectUtils;
 import top.sl.tmpp.purchase.service.PurchaseService;
@@ -25,14 +27,16 @@ import java.util.UUID;
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
     private final BookMapper bookMapper;
+    private final PlanMapper planMapper;
 
     @Autowired
-    public PurchaseServiceImpl(BookMapper bookMapper) {
+    public PurchaseServiceImpl(BookMapper bookMapper, PlanMapper planMapper) {
         this.bookMapper = bookMapper;
+        this.planMapper = planMapper;
     }
 
     @Override
-    public void saveBook(Book book) {
+    public void saveBook(String executePlanId, Book book) {
         book.setId(UUID.randomUUID().toString().replace("-", ""));
         //重置教务处购买样书
         book.setIsBuyBook(false);
@@ -52,7 +56,12 @@ public class PurchaseServiceImpl implements PurchaseService {
                 throw new EmptyParameterException("原因为空");
             }
         }
-        bookMapper.insert(book);
+        PlanExample planExample = new PlanExample();
+        planExample.createCriteria().andExecutePlanIdEqualTo(executePlanId).andCourseIdEqualTo(book.getCourseId());
+        planMapper.selectByExample(planExample).forEach(plan -> {
+            book.setPlanId(plan.getId());
+            bookMapper.insert(book);
+        });
     }
 
 

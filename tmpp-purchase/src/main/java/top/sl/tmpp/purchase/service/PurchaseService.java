@@ -13,9 +13,10 @@ public interface PurchaseService {
     /**
      * 保存购书计划
      *
-     * @param book 购书计划
+     * @param executePlanId 执行计划ID
+     * @param book          购书计划
      */
-    void saveBook(Book book);
+    void saveBook(String executePlanId, Book book);
 
     /**
      * 根据执行计划ID获取教师购书

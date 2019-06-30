@@ -32,7 +32,7 @@ public class PurchaseServiceTest {
         book.setReason("不想买");
         book.setLoginUserId("0002");
         book.setCourseId("1");
-        purchaseService.saveBook(book);
+        purchaseService.saveBook("", book);
     }
 
     @org.junit.Test
