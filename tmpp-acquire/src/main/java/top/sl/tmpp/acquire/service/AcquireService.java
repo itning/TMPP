@@ -54,7 +54,7 @@ public interface AcquireService {
      *
      * @return 未完成执行计划集合
      */
-    List<ExecutePlan> getAllUnDoneExecutePlan();
+    List<ExecutePlanDTO> getAllUnDoneExecutePlan();
 
     /**
      * 获取执行计划年
@@ -76,5 +76,5 @@ public interface AcquireService {
      *
      * @return 已完成执行计划集合
      */
-    List<ExecutePlan> getAllDoneExecutePlan();
+    List<ExecutePlanDTO> getAllDoneExecutePlan();
 }

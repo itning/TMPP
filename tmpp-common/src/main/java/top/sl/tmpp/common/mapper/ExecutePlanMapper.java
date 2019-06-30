@@ -43,4 +43,6 @@ public interface ExecutePlanMapper {
     List<Integer> selectTermByYear(@Param("year") String year);
 
     ExecutePlan selectFileById(@Param("id") String id);
+
+    List<ExecutePlanDTO> selectByStatus(@Param("status") Boolean status);
 }

@@ -430,4 +430,19 @@
         from execute_plan
         where id = #{id,jdbcType=VARCHAR}
     </select>
+    <select id="selectByStatus" resultMap="ExecutePlanDTOResultMap">
+        select execute_plan.id,
+               execute_plan.year,
+               execute_plan.term,
+               execute_plan.grade,
+               execute_plan.status,
+               level.educational_level   as level,
+               department.name           as department,
+               execute_plan.gmt_modified as gmt_finished,
+               execute_plan.gmt_create
+        from execute_plan
+                 inner join level on level.id = execute_plan.level_id
+                 inner join department on department.id = execute_plan.department_id
+        where execute_plan.status = ${status,jdbcType=BIT}
+    </select>
 </mapper>

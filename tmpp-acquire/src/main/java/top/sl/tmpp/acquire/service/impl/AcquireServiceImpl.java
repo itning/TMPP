@@ -7,7 +7,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.acquire.service.AcquireService;
-import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.entity.Colleges;
+import top.sl.tmpp.common.entity.Course;
+import top.sl.tmpp.common.entity.Department;
+import top.sl.tmpp.common.entity.Level;
 import top.sl.tmpp.common.mapper.*;
 import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
@@ -71,10 +74,8 @@ public class AcquireServiceImpl implements AcquireService {
     }
 
     @Override
-    public List<ExecutePlan> getAllUnDoneExecutePlan() {
-        ExecutePlanExample executePlanExample = new ExecutePlanExample();
-        executePlanExample.createCriteria().andStatusEqualTo(false);
-        return executePlanMapper.selectByExample(executePlanExample);
+    public List<ExecutePlanDTO> getAllUnDoneExecutePlan() {
+        return executePlanMapper.selectByStatus(false);
     }
 
     @Override
@@ -88,9 +89,7 @@ public class AcquireServiceImpl implements AcquireService {
     }
 
     @Override
-    public List<ExecutePlan> getAllDoneExecutePlan() {
-        ExecutePlanExample executePlanExample = new ExecutePlanExample();
-        executePlanExample.createCriteria().andStatusEqualTo(true);
-        return executePlanMapper.selectByExample(executePlanExample);
+    public List<ExecutePlanDTO> getAllDoneExecutePlan() {
+        return executePlanMapper.selectByStatus(true);
     }
 }
