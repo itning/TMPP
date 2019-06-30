@@ -1,11 +1,13 @@
 package top.sl.tmpp.export.controller;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.sl.tmpp.export.service.ExportService;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
@@ -32,6 +34,17 @@ public class ExportController {
         response.setContentType("application/octet-stream");
     }
 
+    /**
+     * 下载执行计划模板
+     *
+     * @param response {@link HttpServletResponse}
+     */
+    @GetMapping("/download_execute_plan_template")
+    public void downloadExecutePlanTemplate(HttpServletResponse response) throws IOException {
+        setDownloadExcelHeader(response, "执行计划模板.xlsx");
+        String file = this.getClass().getResource("/").getFile() + "execute_plan_template.xlsx";
+        FileUtils.copyFile(new File(file), response.getOutputStream());
+    }
 
     /**
      * 导出采购教材汇总表
