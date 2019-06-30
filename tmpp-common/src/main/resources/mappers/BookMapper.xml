@@ -30,7 +30,6 @@
     <resultMap id="TBookResultMap" type="top.sl.tmpp.common.pojo.TBook">
         <constructor>
             <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="plan_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="text_book_category" javaType="java.lang.Boolean" jdbcType="BIT"/>
@@ -582,6 +581,7 @@
                  INNER JOIN course on course.id = book.course_id
         WHERE book.login_user_id = #{loginUserId,jdbcType=VARCHAR}
           AND plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        GROUP BY book.isbn
     </select>
     <select id="selectOReviews" resultMap="OReviewResultMap">
         SELECT book.id,
@@ -608,7 +608,8 @@
         FROM book
                  INNER JOIN plan ON book.plan_id = plan.id
                  INNER JOIN course on course.id = book.course_id
-        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and status = 0
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          and status = 0
     </select>
     <select id="selectAllByExecutePlanId" resultMap="BaseResultMap">
         SELECT
