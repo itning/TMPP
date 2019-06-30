@@ -3,6 +3,7 @@ package top.sl.tmpp.core.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -19,6 +20,23 @@ import javax.servlet.http.HttpServletResponse;
 @ControllerAdvice
 public class ExceptionResolver {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionResolver.class);
+
+    /**
+     * 请求参数不匹配
+     *
+     * @param response HttpServletResponse
+     * @param m        MissingServletRequestParameterException
+     * @return RestModel
+     */
+    @ExceptionHandler(value = MissingServletRequestParameterException.class)
+    @ResponseBody
+    public RestModel missingServletRequestParameterException(HttpServletResponse response, MissingServletRequestParameterException m) {
+        RestModel restModel = new RestModel();
+        restModel.setCode(HttpStatus.BAD_REQUEST.value());
+        restModel.setMsg(m.getMessage());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        return restModel;
+    }
 
     /**
      * json 格式错误消息
