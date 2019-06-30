@@ -49,66 +49,6 @@
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
     <sql id="Base_Column_List">
             id,
             year,
@@ -124,37 +64,6 @@
     <sql id="Blob_Column_List">
             file
     </sql>
-    <select id="selectByExampleWithBLOBs" parameterType="top.sl.tmpp.common.entity.ExecutePlanExample"
-            resultMap="ResultMapWithBLOBs">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        <include refid="Base_Column_List"/>
-        ,
-        <include refid="Blob_Column_List"/>
-        from execute_plan
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
-    <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.ExecutePlanExample" resultMap="BaseResultMap">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        <include refid="Base_Column_List"/>
-        from execute_plan
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
         select
         <include refid="Base_Column_List"/>
@@ -167,12 +76,6 @@
         delete
         from execute_plan
         where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.ExecutePlanExample">
-        delete from execute_plan
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
     </delete>
     <insert id="insert" parameterType="top.sl.tmpp.common.entity.ExecutePlan">
         insert into execute_plan (id, year, term, grade,
@@ -257,87 +160,6 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="top.sl.tmpp.common.entity.ExecutePlanExample"
-            resultType="java.lang.Long">
-        select count(*) from execute_plan
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        update execute_plan
-        <set>
-            <if test="record.id != null">
-                id = #{record.id,jdbcType=VARCHAR},
-            </if>
-            <if test="record.year != null">
-                year = #{record.year,jdbcType=VARCHAR},
-            </if>
-            <if test="record.term != null">
-                term = #{record.term,jdbcType=BIT},
-            </if>
-            <if test="record.grade != null">
-                grade = #{record.grade,jdbcType=INTEGER},
-            </if>
-            <if test="record.status != null">
-                status = #{record.status,jdbcType=BIT},
-            </if>
-            <if test="record.fileType != null">
-                file_type = #{record.fileType,jdbcType=VARCHAR},
-            </if>
-            <if test="record.levelId != null">
-                level_id = #{record.levelId,jdbcType=VARCHAR},
-            </if>
-            <if test="record.departmentId != null">
-                department_id = #{record.departmentId,jdbcType=VARCHAR},
-            </if>
-            <if test="record.gmtModified != null">
-                gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.gmtCreate != null">
-                gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.file != null">
-                file = #{record.file,jdbcType=LONGVARBINARY},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExampleWithBLOBs" parameterType="map">
-        update execute_plan
-        set id = #{record.id,jdbcType=VARCHAR},
-        year = #{record.year,jdbcType=VARCHAR},
-        term = #{record.term,jdbcType=BIT},
-        grade = #{record.grade,jdbcType=INTEGER},
-        status = #{record.status,jdbcType=BIT},
-        file_type = #{record.fileType,jdbcType=VARCHAR},
-        level_id = #{record.levelId,jdbcType=VARCHAR},
-        department_id = #{record.departmentId,jdbcType=VARCHAR},
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-        file = #{record.file,jdbcType=LONGVARBINARY}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        update execute_plan
-        set id = #{record.id,jdbcType=VARCHAR},
-        year = #{record.year,jdbcType=VARCHAR},
-        term = #{record.term,jdbcType=BIT},
-        grade = #{record.grade,jdbcType=INTEGER},
-        status = #{record.status,jdbcType=BIT},
-        file_type = #{record.fileType,jdbcType=VARCHAR},
-        level_id = #{record.levelId,jdbcType=VARCHAR},
-        department_id = #{record.departmentId,jdbcType=VARCHAR},
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
     <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.ExecutePlan">
         update execute_plan
         <set>

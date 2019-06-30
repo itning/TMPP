@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.LoginUser;
-import top.sl.tmpp.common.entity.PlanExample;
 import top.sl.tmpp.common.exception.EmptyParameterException;
 import top.sl.tmpp.common.exception.IdNotFoundException;
 import top.sl.tmpp.common.exception.PermissionException;
@@ -55,9 +54,7 @@ public class PurchaseServiceImpl implements PurchaseService {
                 throw new EmptyParameterException("原因为空");
             }
         }
-        PlanExample planExample = new PlanExample();
-        planExample.createCriteria().andExecutePlanIdEqualTo(executePlanId).andCourseIdEqualTo(book.getCourseId());
-        planMapper.selectByExample(planExample).forEach(plan -> {
+        planMapper.selectByExecutePlanIdAndCourseId(executePlanId, book.getCourseId()).forEach(plan -> {
             book.setId(UUID.randomUUID().toString().replace("-", ""));
             book.setPlanId(plan.getId());
             bookMapper.insert(book);

@@ -141,9 +141,7 @@ public class ReferPlanServiceImpl implements ReferPlanService {
     @Override
     public void removeExecutePlan(String id) {
         logger.debug("删除执行计划相关计划");
-        PlanExample planExample = new PlanExample();
-        planExample.createCriteria().andExecutePlanIdEqualTo(id);
-        List<Plan> planList = planMapper.selectByExample(planExample);
+        List<Plan> planList = planMapper.selectByExecutePlanId(id);
         List<Book> bookList = planList
                 .parallelStream().map(plan -> bookMapper.selectByPlanId(plan.getId()))
                 .flatMap(Collection::stream).collect(Collectors.toList());

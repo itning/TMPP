@@ -12,66 +12,6 @@
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
-    <sql id="Example_Where_Clause">
-        <where>
-            <foreach collection="oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
-    <sql id="Update_By_Example_Where_Clause">
-        <where>
-            <foreach collection="example.oredCriteria" item="criteria" separator="or">
-                <if test="criteria.valid">
-                    <trim prefix="(" prefixOverrides="and" suffix=")">
-                        <foreach collection="criteria.criteria" item="criterion">
-                            <choose>
-                                <when test="criterion.noValue">
-                                    and ${criterion.condition}
-                                </when>
-                                <when test="criterion.singleValue">
-                                    and ${criterion.condition} #{criterion.value}
-                                </when>
-                                <when test="criterion.betweenValue">
-                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
-                                </when>
-                                <when test="criterion.listValue">
-                                    and ${criterion.condition}
-                                    <foreach close=")" collection="criterion.value" item="listItem" open="("
-                                             separator=",">
-                                        #{listItem}
-                                    </foreach>
-                                </when>
-                            </choose>
-                        </foreach>
-                    </trim>
-                </if>
-            </foreach>
-        </where>
-    </sql>
     <sql id="Base_Column_List">
             id,
             name,
@@ -81,20 +21,6 @@
             gmt_create,
             gmt_modified
     </sql>
-    <select id="selectByExample" parameterType="top.sl.tmpp.common.entity.AdminUserExample" resultMap="BaseResultMap">
-        select
-        <if test="distinct">
-            distinct
-        </if>
-        <include refid="Base_Column_List"/>
-        from admin_user
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-        <if test="orderByClause != null">
-            order by ${orderByClause}
-        </if>
-    </select>
     <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
@@ -105,12 +31,6 @@
         delete
         from admin_user
         where id = #{id,jdbcType=VARCHAR}
-    </delete>
-    <delete id="deleteByExample" parameterType="top.sl.tmpp.common.entity.AdminUserExample">
-        delete from admin_user
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
     </delete>
     <insert id="insert" parameterType="top.sl.tmpp.common.entity.AdminUser">
         insert into admin_user (id, name, username,
@@ -169,54 +89,6 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="top.sl.tmpp.common.entity.AdminUserExample" resultType="java.lang.Long">
-        select count(*) from admin_user
-        <if test="_parameter != null">
-            <include refid="Example_Where_Clause"/>
-        </if>
-    </select>
-    <update id="updateByExampleSelective" parameterType="map">
-        update admin_user
-        <set>
-            <if test="record.id != null">
-                id = #{record.id,jdbcType=VARCHAR},
-            </if>
-            <if test="record.name != null">
-                name = #{record.name,jdbcType=VARCHAR},
-            </if>
-            <if test="record.username != null">
-                username = #{record.username,jdbcType=VARCHAR},
-            </if>
-            <if test="record.password != null">
-                password = #{record.password,jdbcType=VARCHAR},
-            </if>
-            <if test="record.type != null">
-                type = #{record.type,jdbcType=VARCHAR},
-            </if>
-            <if test="record.gmtCreate != null">
-                gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-            </if>
-            <if test="record.gmtModified != null">
-                gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP},
-            </if>
-        </set>
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
-    <update id="updateByExample" parameterType="map">
-        update admin_user
-        set id = #{record.id,jdbcType=VARCHAR},
-        name = #{record.name,jdbcType=VARCHAR},
-        username = #{record.username,jdbcType=VARCHAR},
-        password = #{record.password,jdbcType=VARCHAR},
-        type = #{record.type,jdbcType=VARCHAR},
-        gmt_create = #{record.gmtCreate,jdbcType=TIMESTAMP},
-        gmt_modified = #{record.gmtModified,jdbcType=TIMESTAMP}
-        <if test="_parameter != null">
-            <include refid="Update_By_Example_Where_Clause"/>
-        </if>
-    </update>
     <update id="updateByPrimaryKeySelective" parameterType="top.sl.tmpp.common.entity.AdminUser">
         update admin_user
         <set>
