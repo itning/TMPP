@@ -95,7 +95,7 @@ public class ExportController {
      * @param executePlanId 执行计划id
      * @param response      {@link HttpServletResponse}
      */
-    @GetMapping("/textbook_plan_statistics")
+    @GetMapping("/textbook_execute_plan_statistics")
     public void textbookPlanStatistics(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "征订教材计划统计表.xlsx");
         exportService.subscriptionBookPlan(executePlanId, response.getOutputStream());
