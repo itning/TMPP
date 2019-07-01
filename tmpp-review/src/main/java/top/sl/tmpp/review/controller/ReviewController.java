@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.sl.tmpp.common.entity.Book;
-import top.sl.tmpp.common.pojo.OReview;
+import top.sl.tmpp.common.pojo.BookDTO;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.review.service.ReviewService;
 
@@ -105,7 +105,7 @@ public class ReviewController {
                                       @RequestParam(required = false, defaultValue = "1") int page,
                                       @RequestParam(required = false, defaultValue = "50") int size) {
         logger.debug("my_review params: {} {} {}", executePlanId, page, size);
-        PageInfo<Book> bookPageInfo = reviewService.getAReviews(executePlanId, page, size);
+        PageInfo<Book> bookPageInfo = reviewService.getMyReview(executePlanId, page, size);
         return RestModel.ok(bookPageInfo);
     }
 
@@ -122,7 +122,7 @@ public class ReviewController {
                                             @RequestParam(required = false, defaultValue = "1") int page,
                                             @RequestParam(required = false, defaultValue = "50") int size) {
         logger.debug("director_review params: {} {} {}", executePlanId, page, size);
-        PageInfo<OReview> oReviews = reviewService.getOReviews(executePlanId, page, size);
+        PageInfo<BookDTO> oReviews = reviewService.getDirectorReview(executePlanId, page, size);
         return RestModel.ok(oReviews);
     }
 }

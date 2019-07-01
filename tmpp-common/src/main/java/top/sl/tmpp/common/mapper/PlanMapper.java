@@ -2,6 +2,7 @@ package top.sl.tmpp.common.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Plan;
+import top.sl.tmpp.common.pojo.CourseDTO;
 
 import java.util.List;
 
@@ -22,5 +23,7 @@ public interface PlanMapper {
 
     List<Plan> selectByExecutePlanId(String id);
 
-    List<Plan> selectByExecutePlanIdAndCourseId(@Param("executePlanId") String executePlanId, @Param("courseId") String courseId);
+    List<Plan> selectByExecutePlanIdAndCourseCode(@Param("executePlanId") String executePlanId, @Param("courseCode") String courseCode);
+
+    List<CourseDTO> selectCourseByExecutePlanId(@Param("executePlanId") String executePlanId);
 }

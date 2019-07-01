@@ -31,8 +31,6 @@ public class PurchaseServiceTest {
         book.setIsBookPurchase(false);
         book.setReason("不想买");
         book.setLoginUserId("0002");
-        book.setCourseId("1");
-        purchaseService.saveBook("", book);
     }
 
     @org.junit.Test

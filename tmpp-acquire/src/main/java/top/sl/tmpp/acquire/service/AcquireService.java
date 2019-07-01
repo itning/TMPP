@@ -2,6 +2,7 @@ package top.sl.tmpp.acquire.service;
 
 import com.github.pagehelper.PageInfo;
 import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.pojo.CourseDTO;
 import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public interface AcquireService {
      * @param executePlanId 执行计划ID
      * @return 所有课程集合
      */
-    List<Course> getAllCourse(String executePlanId);
+    List<CourseDTO> getAllCourse(String executePlanId);
 
     /**
      * 获取所有授课部门

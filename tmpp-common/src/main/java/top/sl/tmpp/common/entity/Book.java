@@ -9,8 +9,6 @@ import java.util.Date;
 public class Book {
     private String id;
 
-    private String planId;
-
     private String isbn;
 
     private String textBookName;
@@ -44,7 +42,7 @@ public class Book {
 
     private Boolean isBuyBook;
 
-    private String courseId;
+    private String executePlanId;
 
     private Integer status;
 
@@ -52,9 +50,14 @@ public class Book {
 
     private Date gmtCreate;
 
-    public Book(String id, String planId, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String courseId, Integer status, Date gmtModified, Date gmtCreate) {
+
+    public Book(String id, Integer status) {
         this.id = id;
-        this.planId = planId;
+        this.status = status;
+    }
+
+    public Book(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String executePlanId, Integer status, Date gmtModified, Date gmtCreate) {
+        this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
         this.textBookCategory = textBookCategory;
@@ -71,7 +74,7 @@ public class Book {
         this.reason = reason;
         this.loginUserId = loginUserId;
         this.isBuyBook = isBuyBook;
-        this.courseId = courseId;
+        this.executePlanId = executePlanId;
         this.status = status;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
@@ -87,14 +90,6 @@ public class Book {
 
     public void setId(String id) {
         this.id = id == null ? null : id.trim();
-    }
-
-    public String getPlanId() {
-        return planId;
-    }
-
-    public void setPlanId(String planId) {
-        this.planId = planId == null ? null : planId.trim();
     }
 
     public String getIsbn() {
@@ -225,12 +220,12 @@ public class Book {
         this.isBuyBook = isBuyBook;
     }
 
-    public String getCourseId() {
-        return courseId;
+    public String getExecutePlanId() {
+        return executePlanId;
     }
 
-    public void setCourseId(String courseId) {
-        this.courseId = courseId == null ? null : courseId.trim();
+    public void setExecutePlanId(String executePlanId) {
+        this.executePlanId = executePlanId == null ? null : executePlanId.trim();
     }
 
     public Integer getStatus() {

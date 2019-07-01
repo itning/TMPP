@@ -2,7 +2,7 @@ package top.sl.tmpp.review.service;
 
 import com.github.pagehelper.PageInfo;
 import top.sl.tmpp.common.entity.Book;
-import top.sl.tmpp.common.pojo.OReview;
+import top.sl.tmpp.common.pojo.BookDTO;
 
 
 /**
@@ -18,7 +18,7 @@ public interface ReviewService {
      * @param size          每页大小
      * @return {@link PageInfo}
      */
-    PageInfo<OReview> getOReviews(String executePlanId, int page, int size);
+    PageInfo<BookDTO> getDirectorReview(String executePlanId, int page, int size);
 
     /**
      * 教务处我的审核
@@ -28,7 +28,7 @@ public interface ReviewService {
      * @param size          每页大小
      * @return {@link PageInfo}
      */
-    PageInfo<Book> getAReviews(String executePlanId, int page, int size);
+    PageInfo<Book> getMyReview(String executePlanId, int page, int size);
 
     /**
      * 教务处是否购买样书

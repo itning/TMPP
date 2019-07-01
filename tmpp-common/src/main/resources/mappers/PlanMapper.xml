@@ -5,8 +5,9 @@
         <constructor>
             <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="colleges_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="start_pro" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="course_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="type" javaType="java.lang.Boolean" jdbcType="BIT"/>
             <arg column="clazz" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="clazz_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
@@ -17,11 +18,18 @@
             <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="CourseDTOResultMap" type="top.sl.tmpp.common.pojo.CourseDTO">
+        <constructor>
+            <arg column="course_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
     <sql id="Base_Column_List">
             id,
             colleges_id,
+            course_code,
+            course_name,
             start_pro,
-            course_id,
             type,
             clazz,
             clazz_number,
@@ -43,14 +51,16 @@
         where id = #{id,jdbcType=VARCHAR}
     </delete>
     <insert id="insert" parameterType="top.sl.tmpp.common.entity.Plan">
-        insert into plan (id, colleges_id, start_pro,
-                          course_id, type, clazz,
-                          clazz_number, teacher, remark,
-                          execute_plan_id, gmt_create, gmt_modified)
-        values (#{id,jdbcType=VARCHAR}, #{collegesId,jdbcType=VARCHAR}, #{startPro,jdbcType=VARCHAR},
-                #{courseId,jdbcType=VARCHAR}, #{type,jdbcType=BIT}, #{clazz,jdbcType=VARCHAR},
-                #{clazzNumber,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR},
-                #{executePlanId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP}, #{gmtModified,jdbcType=TIMESTAMP})
+        insert into plan (id, colleges_id, course_code,
+                          course_name, start_pro, type,
+                          clazz, clazz_number, teacher,
+                          remark, execute_plan_id, gmt_create,
+                          gmt_modified)
+        values (#{id,jdbcType=VARCHAR}, #{collegesId,jdbcType=VARCHAR}, #{courseCode,jdbcType=VARCHAR},
+                #{courseName,jdbcType=VARCHAR}, #{startPro,jdbcType=VARCHAR}, #{type,jdbcType=BIT},
+                #{clazz,jdbcType=VARCHAR}, #{clazzNumber,jdbcType=INTEGER}, #{teacher,jdbcType=VARCHAR},
+                #{remark,jdbcType=VARCHAR}, #{executePlanId,jdbcType=VARCHAR}, #{gmtCreate,jdbcType=TIMESTAMP},
+                #{gmtModified,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.Plan">
         insert into plan
@@ -61,11 +71,14 @@
             <if test="collegesId != null">
                 colleges_id,
             </if>
+            <if test="courseCode != null">
+                course_code,
+            </if>
+            <if test="courseName != null">
+                course_name,
+            </if>
             <if test="startPro != null">
                 start_pro,
-            </if>
-            <if test="courseId != null">
-                course_id,
             </if>
             <if test="type != null">
                 type,
@@ -99,11 +112,14 @@
             <if test="collegesId != null">
                 #{collegesId,jdbcType=VARCHAR},
             </if>
+            <if test="courseCode != null">
+                #{courseCode,jdbcType=VARCHAR},
+            </if>
+            <if test="courseName != null">
+                #{courseName,jdbcType=VARCHAR},
+            </if>
             <if test="startPro != null">
                 #{startPro,jdbcType=VARCHAR},
-            </if>
-            <if test="courseId != null">
-                #{courseId,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
                 #{type,jdbcType=BIT},
@@ -137,11 +153,14 @@
             <if test="collegesId != null">
                 colleges_id = #{collegesId,jdbcType=VARCHAR},
             </if>
+            <if test="courseCode != null">
+                course_code = #{courseCode,jdbcType=VARCHAR},
+            </if>
+            <if test="courseName != null">
+                course_name = #{courseName,jdbcType=VARCHAR},
+            </if>
             <if test="startPro != null">
                 start_pro = #{startPro,jdbcType=VARCHAR},
-            </if>
-            <if test="courseId != null">
-                course_id = #{courseId,jdbcType=VARCHAR},
             </if>
             <if test="type != null">
                 type = #{type,jdbcType=BIT},
@@ -173,8 +192,9 @@
     <update id="updateByPrimaryKey" parameterType="top.sl.tmpp.common.entity.Plan">
         update plan
         set colleges_id     = #{collegesId,jdbcType=VARCHAR},
+            course_code     = #{courseCode,jdbcType=VARCHAR},
+            course_name     = #{courseName,jdbcType=VARCHAR},
             start_pro       = #{startPro,jdbcType=VARCHAR},
-            course_id       = #{courseId,jdbcType=VARCHAR},
             type            = #{type,jdbcType=BIT},
             clazz           = #{clazz,jdbcType=VARCHAR},
             clazz_number    = #{clazzNumber,jdbcType=INTEGER},
@@ -188,16 +208,23 @@
     <select id="countByCourseId" resultType="long">
         select count(*)
         from plan
-        where course_id = #{courseId,jdbcType=VARCHAR}
+        where course_code = #{courseId,jdbcType=VARCHAR}
     </select>
     <select id="selectByExecutePlanId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from plan where execute_plan_id = #{id,jdbcType=VARCHAR}
     </select>
-    <select id="selectByExecutePlanIdAndCourseId" resultMap="BaseResultMap">
+    <select id="selectByExecutePlanIdAndCourseCode" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from plan where execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and course_id = #{courseId,jdbcType=VARCHAR}
+        from plan where execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and course_code =
+        #{courseCode,jdbcType=VARCHAR}
+    </select>
+    <select id="selectCourseByExecutePlanId" resultMap="CourseDTOResultMap">
+        SELECT DISTINCT course_code,
+                        course_name
+        FROM plan
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
 </mapper>

@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.mapper.BookMapper;
-import top.sl.tmpp.common.pojo.OReview;
+import top.sl.tmpp.common.pojo.BookDTO;
 import top.sl.tmpp.review.service.ReviewService;
 
 import java.util.Date;
@@ -25,14 +25,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public PageInfo<OReview> getOReviews(String executePlanId, int page, int size) {
+    public PageInfo<BookDTO> getDirectorReview(String executePlanId, int page, int size) {
         return PageHelper
                 .startPage(page, size)
-                .doSelectPageInfo(() -> bookMapper.selectOReviews(executePlanId));
+                .doSelectPageInfo(() -> bookMapper.selectReviews(executePlanId));
     }
 
     @Override
-    public PageInfo<Book> getAReviews(String executePlanId, int page, int size) {
+    public PageInfo<Book> getMyReview(String executePlanId, int page, int size) {
         return PageHelper
                 .startPage(page, size)
                 .doSelectPageInfo(() -> bookMapper.selectAllByExecutePlanId(executePlanId));

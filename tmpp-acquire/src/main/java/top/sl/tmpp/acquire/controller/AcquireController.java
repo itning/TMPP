@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.sl.tmpp.acquire.service.AcquireService;
 import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.pojo.CourseDTO;
 import top.sl.tmpp.common.util.RestModel;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class AcquireController {
      */
     @GetMapping("/courseTitles")
     public ResponseEntity<?> getAllCourse(@RequestParam("execute_plan_id") String executePlanId) {
-        List<Course> courses = acquireService.getAllCourse(executePlanId);
+        List<CourseDTO> courses = acquireService.getAllCourse(executePlanId);
         logger.debug("查询成功");
         return RestModel.ok(courses);
     }

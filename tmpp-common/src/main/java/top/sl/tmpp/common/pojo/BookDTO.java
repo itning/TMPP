@@ -4,13 +4,18 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 /**
- * 教师我的购书
+ * 教师我的购书、办公室主任我的审核
+ * 没有教务处是否购买样书
  *
  * @author itning
  * @date 2019/6/23 11:40
  */
-public class TBook {
+public class BookDTO {
     private String id;
+
+    private String courseCode;
+
+    private String courseName;
 
     private String isbn;
 
@@ -42,21 +47,19 @@ public class TBook {
 
     private String loginUserId;
 
-    private String courseCode;
-
-    private String courseName;
-
     private Integer status;
 
     private Date gmtModified;
 
     private Date gmtCreate;
 
-    public TBook() {
+    public BookDTO() {
     }
 
-    public TBook(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, String courseCode, String courseName, Integer status, Date gmtModified, Date gmtCreate) {
+    public BookDTO(String id, String courseCode, String courseName, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
         this.isbn = isbn;
         this.textBookName = textBookName;
         this.textBookCategory = textBookCategory;
@@ -72,8 +75,6 @@ public class TBook {
         this.isBookPurchase = isBookPurchase;
         this.reason = reason;
         this.loginUserId = loginUserId;
-        this.courseCode = courseCode;
-        this.courseName = courseName;
         this.status = status;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
@@ -85,6 +86,22 @@ public class TBook {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public String getIsbn() {
@@ -207,22 +224,6 @@ public class TBook {
         this.loginUserId = loginUserId;
     }
 
-    public String getCourseCode() {
-        return courseCode;
-    }
-
-    public void setCourseCode(String courseCode) {
-        this.courseCode = courseCode;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
     public Integer getStatus() {
         return status;
     }
@@ -249,8 +250,10 @@ public class TBook {
 
     @Override
     public String toString() {
-        return "TBook{" +
+        return "BookDTO{" +
                 "id='" + id + '\'' +
+                ", courseCode='" + courseCode + '\'' +
+                ", courseName='" + courseName + '\'' +
                 ", isbn='" + isbn + '\'' +
                 ", textBookName='" + textBookName + '\'' +
                 ", textBookCategory=" + textBookCategory +
@@ -266,8 +269,6 @@ public class TBook {
                 ", isBookPurchase=" + isBookPurchase +
                 ", reason='" + reason + '\'' +
                 ", loginUserId='" + loginUserId + '\'' +
-                ", courseCode='" + courseCode + '\'' +
-                ", courseName='" + courseName + '\'' +
                 ", status=" + status +
                 ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +

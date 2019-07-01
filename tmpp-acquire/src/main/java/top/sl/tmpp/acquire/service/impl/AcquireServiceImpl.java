@@ -8,10 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.acquire.service.AcquireService;
 import top.sl.tmpp.common.entity.Colleges;
-import top.sl.tmpp.common.entity.Course;
 import top.sl.tmpp.common.entity.Department;
 import top.sl.tmpp.common.entity.Level;
 import top.sl.tmpp.common.mapper.*;
+import top.sl.tmpp.common.pojo.CourseDTO;
 import top.sl.tmpp.common.pojo.ExecutePlanDTO;
 
 import java.util.List;
@@ -25,18 +25,18 @@ public class AcquireServiceImpl implements AcquireService {
     private static final Logger logger = LoggerFactory.getLogger(AcquireServiceImpl.class);
 
     private final CollegesMapper collegesMapper;
-    private final CourseMapper courseMapper;
     private final DepartmentMapper departmentMapper;
     private final ExecutePlanMapper executePlanMapper;
     private final LevelMapper levelMapper;
+    private final PlanMapper planMapper;
 
     @Autowired
-    public AcquireServiceImpl(CollegesMapper collegesMapper, CourseMapper courseMapper, DepartmentMapper departmentMapper, ExecutePlanMapper executePlanMapper, LevelMapper levelMapper) {
+    public AcquireServiceImpl(CollegesMapper collegesMapper, DepartmentMapper departmentMapper, ExecutePlanMapper executePlanMapper, LevelMapper levelMapper, PlanMapper planMapper) {
         this.collegesMapper = collegesMapper;
-        this.courseMapper = courseMapper;
         this.departmentMapper = departmentMapper;
         this.executePlanMapper = executePlanMapper;
         this.levelMapper = levelMapper;
+        this.planMapper = planMapper;
     }
 
     @Override
@@ -47,10 +47,8 @@ public class AcquireServiceImpl implements AcquireService {
     }
 
     @Override
-    public List<Course> getAllCourse(String executePlanId) {
-        List<Course> courses = courseMapper.selectAllFromExecutePlanId(executePlanId);
-        logger.debug("获取所有课程信息");
-        return courses;
+    public List<CourseDTO> getAllCourse(String executePlanId) {
+        return planMapper.selectCourseByExecutePlanId(executePlanId);
     }
 
     @Override

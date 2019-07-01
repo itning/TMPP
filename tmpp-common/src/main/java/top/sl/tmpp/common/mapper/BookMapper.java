@@ -2,8 +2,7 @@ package top.sl.tmpp.common.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
-import top.sl.tmpp.common.pojo.OReview;
-import top.sl.tmpp.common.pojo.TBook;
+import top.sl.tmpp.common.pojo.BookDTO;
 
 import java.util.List;
 
@@ -20,9 +19,9 @@ public interface BookMapper {
 
     int updateByPrimaryKey(Book record);
 
-    List<TBook> selectMyBook(@Param("loginUserId") String loginUserId, @Param("executePlanId") String executePlanId);
+    List<BookDTO> selectMyBook(@Param("loginUserId") String loginUserId, @Param("executePlanId") String executePlanId);
 
-    List<OReview> selectOReviews(@Param("executePlanId") String executePlanId);
+    List<BookDTO> selectReviews(@Param("executePlanId") String executePlanId);
 
     List<Book> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
 

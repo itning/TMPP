@@ -7,9 +7,11 @@ public class Plan {
 
     private String collegesId;
 
-    private String startPro;
+    private String courseCode;
 
-    private String courseId;
+    private String courseName;
+
+    private String startPro;
 
     private Boolean type;
 
@@ -27,11 +29,12 @@ public class Plan {
 
     private Date gmtModified;
 
-    public Plan(String id, String collegesId, String startPro, String courseId, Boolean type, String clazz, Integer clazzNumber, String teacher, String remark, String executePlanId, Date gmtCreate, Date gmtModified) {
+    public Plan(String id, String collegesId, String courseCode, String courseName, String startPro, Boolean type, String clazz, Integer clazzNumber, String teacher, String remark, String executePlanId, Date gmtCreate, Date gmtModified) {
         this.id = id;
         this.collegesId = collegesId;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
         this.startPro = startPro;
-        this.courseId = courseId;
         this.type = type;
         this.clazz = clazz;
         this.clazzNumber = clazzNumber;
@@ -62,20 +65,28 @@ public class Plan {
         this.collegesId = collegesId == null ? null : collegesId.trim();
     }
 
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode == null ? null : courseCode.trim();
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName == null ? null : courseName.trim();
+    }
+
     public String getStartPro() {
         return startPro;
     }
 
     public void setStartPro(String startPro) {
         this.startPro = startPro == null ? null : startPro.trim();
-    }
-
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId == null ? null : courseId.trim();
     }
 
     public Boolean getType() {

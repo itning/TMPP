@@ -21,14 +21,14 @@ public class ExecutePlanDTO {
 
     private String department;
 
-    private Date gmtFinished;
+    private Date gmtModified;
 
     private Date gmtCreate;
 
     public ExecutePlanDTO() {
     }
 
-    public ExecutePlanDTO(String id, String year, Boolean term, Integer grade, Boolean status, String level, String department, Date gmtFinished, Date gmtCreate) {
+    public ExecutePlanDTO(String id, String year, Boolean term, Integer grade, Boolean status, String level, String department, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.year = year;
         this.term = term;
@@ -36,7 +36,7 @@ public class ExecutePlanDTO {
         this.status = status;
         this.level = level;
         this.department = department;
-        this.gmtFinished = gmtFinished;
+        this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
     }
 
@@ -96,12 +96,12 @@ public class ExecutePlanDTO {
         this.department = department;
     }
 
-    public Date getGmtFinished() {
-        return gmtFinished;
+    public Date getGmtModified() {
+        return gmtModified;
     }
 
-    public void setGmtFinished(Date gmtFinished) {
-        this.gmtFinished = gmtFinished;
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 
     public Date getGmtCreate() {
@@ -122,7 +122,7 @@ public class ExecutePlanDTO {
                 ", status=" + status +
                 ", level='" + level + '\'' +
                 ", department='" + department + '\'' +
-                ", gmtFinished=" + gmtFinished +
+                ", gmtModified=" + gmtModified +
                 ", gmtCreate=" + gmtCreate +
                 '}';
     }

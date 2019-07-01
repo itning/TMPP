@@ -10,7 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.entity.ExecutePlan;
+import top.sl.tmpp.common.entity.Plan;
 import top.sl.tmpp.common.mapper.*;
 import top.sl.tmpp.common.util.ObjectUtils;
 import top.sl.tmpp.plan.exception.ExcelReadException;
@@ -23,7 +24,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static top.sl.tmpp.common.util.ObjectUtils.checkNotNull;
 
@@ -40,14 +40,14 @@ public class ReferPlanServiceImpl implements ReferPlanService {
     private final ExecutePlanMapper executePlanMapper;
     private final CollegesMapper collegesMapper;
     private final BookMapper bookMapper;
-    private final CourseMapper courseMapper;
+    private final PlanBookMapper planBookMapper;
 
-    public ReferPlanServiceImpl(PlanMapper planMapper, ExecutePlanMapper executePlanMapper, CollegesMapper collegesMapper, BookMapper bookMapper, CourseMapper courseMapper) {
+    public ReferPlanServiceImpl(PlanMapper planMapper, ExecutePlanMapper executePlanMapper, CollegesMapper collegesMapper, BookMapper bookMapper, PlanBookMapper planBookMapper) {
         this.planMapper = planMapper;
         this.executePlanMapper = executePlanMapper;
         this.collegesMapper = collegesMapper;
         this.bookMapper = bookMapper;
-        this.courseMapper = courseMapper;
+        this.planBookMapper = planBookMapper;
     }
 
     @Override
@@ -102,14 +102,15 @@ public class ReferPlanServiceImpl implements ReferPlanService {
                 String collegeId = checkNotNull(collegesMapper.selectIdByName(collegeName), () -> new ExcelReadException(tempRowIndex + 1, 2, "学院不存在"));
                 //人数
                 int clazzNum = ObjectUtils.toInt(clazzNumber, () -> new ExcelReadException(tempRowIndex + 1, 8, "人数错误"));
-                //课程ID
-                String courseId = getIdOrInsertCourseByCode(courseCode, courseName);
+                //检查课程代码
+                checkCourseCode(courseCode, courseName);
 
                 Plan plan = new Plan();
                 plan.setId(UUID.randomUUID().toString().replace("-", ""));
                 plan.setCollegesId(collegeId);
                 plan.setStartPro(startPro);
-                plan.setCourseId(courseId);
+                plan.setCourseCode(courseCode);
+                plan.setCourseName(courseName);
                 plan.setType(false);
                 plan.setClazz(clazz);
                 plan.setClazzNumber(clazzNum);
@@ -141,25 +142,14 @@ public class ReferPlanServiceImpl implements ReferPlanService {
     @Override
     public void removeExecutePlan(String id) {
         logger.debug("删除执行计划相关计划");
-        List<Plan> planList = planMapper.selectByExecutePlanId(id);
-        List<Book> bookList = planList
-                .parallelStream().map(plan -> bookMapper.selectByPlanId(plan.getId()))
-                .flatMap(Collection::stream).collect(Collectors.toList());
-        List<Course> courseList = planList
-                .parallelStream().map(plan -> courseMapper.selectAllByCourseId(plan.getCourseId()))
-                .flatMap(Collection::stream).collect(Collectors.toList());
-
-        //删除Book
-        bookList.forEach(book -> bookMapper.deleteByPrimaryKey(book.getId()));
+        List<Plan> plans = planMapper.selectByExecutePlanId(id);
+        //删除plan_book
+        plans.forEach(plan -> planBookMapper.deleteByPlanId(plan.getId()));
+        //删除book
+        bookMapper.selectIdAndStatus(id).forEach(book -> bookMapper.deleteByPrimaryKey(book.getId()));
         //删除plan
-        planList.forEach(plan -> planMapper.deleteByPrimaryKey(plan.getId()));
-        //删除course
-        courseList
-                .stream()
-                //判断plan是否有course
-                .filter(course -> planMapper.countByCourseId(course.getId()) == 0L)
-                .forEach(course -> courseMapper.deleteByPrimaryKey(course.getId()));
-        //删除executePlan
+        plans.forEach(plan -> planMapper.deleteByPrimaryKey(plan.getId()));
+        //删除执行计划
         executePlanMapper.deleteByPrimaryKey(id);
     }
 
@@ -204,27 +194,13 @@ public class ReferPlanServiceImpl implements ReferPlanService {
     }
 
     /**
-     * 根据课程代码获取课程ID，不存在则新增
+     * 使用API接口检查课程代码
      *
      * @param courseCode 课程代码
      * @param courseName 课程名
-     * @return 课程ID
      */
-    private String getIdOrInsertCourseByCode(String courseCode, String courseName) {
-        String id = courseMapper.selectIdByCourseCode(courseCode);
-        if (id == null) {
-            String courseId = UUID.randomUUID().toString().replace("-", "");
-            Course course = new Course();
-            course.setId(courseId);
-            course.setName(courseName);
-            course.setCode(courseCode);
-            Date date = new Date();
-            course.setGmtModified(date);
-            course.setGmtCreate(date);
-            courseMapper.insert(course);
-            return courseId;
-        }
-        return id;
+    private void checkCourseCode(String courseCode, String courseName) {
+        //TODO 使用API接口检查课程代码
     }
 
     /**

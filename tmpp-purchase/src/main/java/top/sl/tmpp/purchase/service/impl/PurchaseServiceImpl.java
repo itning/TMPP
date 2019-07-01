@@ -6,16 +6,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
-import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.entity.Plan;
+import top.sl.tmpp.common.entity.PlanBook;
 import top.sl.tmpp.common.exception.EmptyParameterException;
-import top.sl.tmpp.common.exception.IdNotFoundException;
-import top.sl.tmpp.common.exception.PermissionException;
 import top.sl.tmpp.common.mapper.BookMapper;
+import top.sl.tmpp.common.mapper.PlanBookMapper;
 import top.sl.tmpp.common.mapper.PlanMapper;
-import top.sl.tmpp.common.pojo.TBook;
+import top.sl.tmpp.common.pojo.BookDTO;
 import top.sl.tmpp.common.util.ObjectUtils;
 import top.sl.tmpp.purchase.service.PurchaseService;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
 
@@ -27,67 +28,102 @@ import java.util.UUID;
 public class PurchaseServiceImpl implements PurchaseService {
     private final BookMapper bookMapper;
     private final PlanMapper planMapper;
+    private final PlanBookMapper planBookMapper;
 
     @Autowired
-    public PurchaseServiceImpl(BookMapper bookMapper, PlanMapper planMapper) {
+    public PurchaseServiceImpl(BookMapper bookMapper, PlanMapper planMapper, PlanBookMapper planBookMapper) {
         this.bookMapper = bookMapper;
         this.planMapper = planMapper;
+        this.planBookMapper = planBookMapper;
     }
 
     @Override
-    public void saveBook(String executePlanId, Book book) {
-        //重置教务处购买样书
-        book.setIsBuyBook(false);
+    public void buyBook(String loginUserId, String executePlanId, String courseCode, String isbn, String textBookName, Boolean textBookCategory,
+                        String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount,
+                        String awardInformation, Date publicationDate, String subscriber, String subscriberTel, String bookId) {
+        Book book = new Book();
+        book.setId(bookId);
+        book.setIsbn(isbn);
+        book.setTextBookName(textBookName);
+        book.setTextBookCategory(textBookCategory);
+        book.setPress(press);
+        book.setAuthor(author);
+        book.setUnitPrice(unitPrice);
+        book.setTeacherBookNumber(teacherBookNumber);
+        book.setDiscount(discount);
+        book.setAwardInformation(awardInformation);
+        book.setPublicationDate(publicationDate);
+        book.setSubscriber(subscriber);
+        book.setSubscriberTel(subscriberTel);
+        book.setIsBookPurchase(true);
+        book.setLoginUserId(loginUserId);
+        book.setExecutePlanId(executePlanId);
         book.setStatus(0);
+        //教务处购买样书默认false
+        book.setIsBuyBook(false);
         Date date = new Date();
-        book.setGmtCreate(date);
         book.setGmtModified(date);
-        if (book.getIsBookPurchase() == null) {
-            throw new EmptyParameterException("是否购买为空");
-        }
-        if (book.getIsBookPurchase()) {
-            //教师买书
-            ObjectUtils.checkObjectFieldsNotEmpty(book, "reason", "planId", "id");
-        } else {
-            //教师不买
-            if (StringUtils.isAnyBlank(book.getReason(), book.getCourseId(), book.getLoginUserId())) {
-                throw new EmptyParameterException("原因为空");
-            }
-        }
-        planMapper.selectByExecutePlanIdAndCourseId(executePlanId, book.getCourseId()).forEach(plan -> {
+        book.setGmtCreate(date);
+        if (bookId == null) {
+            //新增图书
             book.setId(UUID.randomUUID().toString().replace("-", ""));
-            book.setPlanId(plan.getId());
-            bookMapper.insert(book);
-        });
+            ObjectUtils.checkObjectFieldsNotEmpty(book, "reason", "isBuyBook");
+            saveBookInfo(executePlanId, courseCode, book.getId(), book);
+        } else {
+            //修改图书
+            ObjectUtils.checkObjectFieldsNotEmpty(book, "reason", "isBuyBook");
+            bookMapper.updateByPrimaryKeySelective(book);
+        }
+
+    }
+
+    @Override
+    public void notBuyBook(String loginUserId, String executePlanId, String courseCode, String reason, String bookId) {
+        if (StringUtils.isAnyBlank(reason, courseCode, executePlanId)) {
+            throw new EmptyParameterException("原因或课程代码或执行计划ID为空");
+        }
+        Book book = new Book();
+        book.setId(bookId);
+        book.setIsBookPurchase(false);
+        book.setReason(reason);
+        book.setLoginUserId(loginUserId);
+        book.setExecutePlanId(executePlanId);
+        //0: 未审核
+        book.setStatus(0);
+        //教务处购买样书默认false
+        book.setIsBuyBook(false);
+        Date date = new Date();
+        book.setGmtModified(date);
+        book.setGmtCreate(date);
+        if (bookId == null) {
+            book.setId(UUID.randomUUID().toString().replace("-", ""));
+            saveBookInfo(executePlanId, courseCode, book.getId(), book);
+        } else {
+            bookMapper.updateByPrimaryKeySelective(book);
+        }
+    }
+
+    /**
+     * 新增图书
+     *
+     * @param executePlanId 执行计划ID
+     * @param courseCode    课程代码
+     * @param newBookId     图书ID
+     * @param book          {@link Book}
+     */
+    private void saveBookInfo(String executePlanId, String courseCode, String newBookId, Book book) {
+        bookMapper.insertSelective(book);
+        planMapper.selectByExecutePlanIdAndCourseCode(executePlanId, courseCode)
+                .stream()
+                .map(Plan::getId)
+                .forEach(planId -> planBookMapper.insert(new PlanBook(planId, newBookId)));
     }
 
 
     @Override
-    public PageInfo<TBook> getAllTeacherBooks(String loginUserId, String executePlanId, int page, int size) {
+    public PageInfo<BookDTO> getAllTeacherBooks(String loginUserId, String executePlanId, int page, int size) {
         return PageHelper
                 .startPage(page, size)
                 .doSelectPageInfo(() -> bookMapper.selectMyBook(loginUserId, executePlanId));
-    }
-
-    @Override
-    public void upTeacherBook(Book book, LoginUser loginUser) {
-        if (book.getIsBookPurchase() == null) {
-            throw new EmptyParameterException("是否购买为空");
-        }
-        if (!book.getIsBookPurchase()) {
-            //教师不买
-            if (StringUtils.isAnyBlank(book.getReason(), book.getCourseId(), book.getLoginUserId())) {
-                throw new EmptyParameterException("原因为空");
-            }
-        }
-        Book b = bookMapper.selectByPrimaryKey(book.getId());
-        if (b == null) {
-            throw new IdNotFoundException(book.getId());
-        } else {
-            if (!loginUser.getId().equals(b.getLoginUserId())) {
-                throw new PermissionException();
-            }
-        }
-        bookMapper.updateByPrimaryKeySelective(book);
     }
 }
