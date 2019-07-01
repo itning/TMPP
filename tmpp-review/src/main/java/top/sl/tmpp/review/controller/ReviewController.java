@@ -82,13 +82,13 @@ public class ReviewController {
     /**
      * 教务处是否购买样书
      *
-     * @param id        购书计划id
+     * @param bookId        购书计划id
      * @param isBuyBook 是否购买样书（是：1，否：0）
      * @return ResponseEntity
      */
     @PostMapping("/buy_sample_book")
-    public ResponseEntity<?> buySampleBook(@RequestParam String id, @RequestParam boolean isBuyBook) {
-        reviewService.isByBook(id, isBuyBook);
+    public ResponseEntity<?> buySampleBook(@RequestParam String bookId, @RequestParam boolean isBuyBook) {
+        reviewService.isByBook(bookId, isBuyBook);
         return RestModel.created("操作成功", null);
     }
 
@@ -105,7 +105,7 @@ public class ReviewController {
                                       @RequestParam(required = false, defaultValue = "1") int page,
                                       @RequestParam(required = false, defaultValue = "50") int size) {
         logger.debug("my_review params: {} {} {}", executePlanId, page, size);
-        PageInfo<Book> bookPageInfo = reviewService.getMyReview(executePlanId, page, size);
+        PageInfo<BookDTO> bookPageInfo = reviewService.getMyReview(executePlanId, page, size);
         return RestModel.ok(bookPageInfo);
     }
 

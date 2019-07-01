@@ -57,6 +57,32 @@
             <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
         </constructor>
     </resultMap>
+    <resultMap id="BookReviewDTOResultMap" type="top.sl.tmpp.common.pojo.BookReviewDTO">
+        <constructor>
+            <idArg column="id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_code" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="text_book_category" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+            <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_book_purchase" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="reason" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="login_user_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="is_buy_book" javaType="java.lang.Boolean" jdbcType="BIT"/>
+            <arg column="status" javaType="java.lang.Integer" jdbcType="INTEGER"/>
+            <arg column="gmt_modified" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+            <arg column="gmt_create" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
+        </constructor>
+    </resultMap>
 
     <sql id="Base_Column_List">
             id,
@@ -362,7 +388,7 @@
         GROUP BY book.isbn, book.reason,
                  plan.course_code
     </select>
-    <select id="selectReviews" resultMap="BookDTOResultMap">
+    <select id="selectReviews" resultMap="BookDTOResultMap" parameterType="java.lang.String">
         SELECT book.id,
                plan.course_code,
                plan.course_name,
@@ -387,15 +413,41 @@
         FROM book
                  INNER JOIN plan_book ON plan_book.book_id = book.id
                  INNER JOIN plan ON plan_book.plan_id = plan.id
-        WHERE book.execute_plan_id = ${executePlanId,jdbcType=VARCHAR}
-          AND book.`status` = 0
+        WHERE book.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
         GROUP BY book.isbn, book.reason,
                  plan.course_code
     </select>
-    <select id="selectAllByExecutePlanId" resultMap="BaseResultMap">
-        SELECT
-        <include refid="Base_Column_List"/>
-        FROM book WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR} and status = 1
+    <select id="selectAllByExecutePlanId" resultMap="BookReviewDTOResultMap">
+
+        SELECT book.id,
+               plan.course_code,
+               plan.course_name,
+               book.isbn,
+               book.text_book_name,
+               book.text_book_category,
+               book.press,
+               book.author,
+               book.unit_price,
+               book.teacher_book_number,
+               book.discount,
+               book.award_Information,
+               book.publication_date,
+               book.subscriber,
+               book.subscriber_tel,
+               book.is_book_purchase,
+               book.reason,
+               book.login_user_id,
+               book.is_buy_book,
+               book.status,
+               book.gmt_modified,
+               book.gmt_create
+        FROM book
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan_book.plan_id = plan.id
+        WHERE book.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+
+        GROUP BY book.isbn, book.reason,
+                 plan.course_code
     </select>
     <select id="selectIdAndStatus" resultMap="IdAndStatusResultMap">
         SELECT book.id,

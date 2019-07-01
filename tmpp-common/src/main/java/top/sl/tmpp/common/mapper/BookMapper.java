@@ -3,6 +3,7 @@ package top.sl.tmpp.common.mapper;
 import org.apache.ibatis.annotations.Param;
 import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.pojo.BookDTO;
+import top.sl.tmpp.common.pojo.BookReviewDTO;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface BookMapper {
 
     List<BookDTO> selectReviews(@Param("executePlanId") String executePlanId);
 
-    List<Book> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
+    List<BookReviewDTO> selectAllByExecutePlanId(@Param("executePlanId") String executePlanId);
 
     List<Book> selectIdAndStatus(@Param("executePlanId") String executePlanId);
 

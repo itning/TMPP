@@ -28,7 +28,7 @@ public interface ReviewService {
      * @param size          每页大小
      * @return {@link PageInfo}
      */
-    PageInfo<Book> getMyReview(String executePlanId, int page, int size);
+    PageInfo<BookDTO> getMyReview(String executePlanId, int page, int size);
 
     /**
      * 教务处是否购买样书

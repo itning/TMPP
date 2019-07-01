@@ -32,7 +32,7 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public PageInfo<Book> getMyReview(String executePlanId, int page, int size) {
+    public PageInfo<BookDTO> getMyReview(String executePlanId, int page, int size) {
         return PageHelper
                 .startPage(page, size)
                 .doSelectPageInfo(() -> bookMapper.selectAllByExecutePlanId(executePlanId));
@@ -51,7 +51,7 @@ public class ReviewServiceImpl implements ReviewService {
     public void oAllPassed(String executePlanId) {
         bookMapper.selectIdAndStatus(executePlanId)
                 .stream()
-                //只要没审核的
+                //办公室主任全部审核通过 只要没审核的
                 .filter(book -> book.getStatus() == 0)
                 .map(book -> {
                     Book b = new Book();
@@ -67,8 +67,8 @@ public class ReviewServiceImpl implements ReviewService {
     public void aAllPassed(String executePlanId) {
         bookMapper.selectIdAndStatus(executePlanId)
                 .stream()
-                //只要没审核的
-                .filter(book -> book.getStatus() == 0)
+                //教务处全部审核通过 办公室主任审核通过的
+                .filter(book -> book.getStatus() == 1)
                 .map(book -> {
                     Book b = new Book();
                     b.setId(book.getId());
