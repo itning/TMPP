@@ -5,6 +5,8 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
+import top.sl.tmpp.common.exception.IdNotFoundException;
+import top.sl.tmpp.common.exception.IllegalParameterException;
 import top.sl.tmpp.common.mapper.BookMapper;
 import top.sl.tmpp.common.pojo.BookDTO;
 import top.sl.tmpp.review.service.ReviewService;
@@ -40,6 +42,13 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public void isByBook(String id, boolean is) {
+        Book b = bookMapper.selectByPrimaryKey(id);
+        if (b == null) {
+            throw new IdNotFoundException(id);
+        }
+        if (!b.getIsBookPurchase()) {
+            throw new IllegalParameterException("教师未购书，教务处无法购买样书");
+        }
         Book book = new Book();
         book.setId(id);
         book.setIsBuyBook(is);

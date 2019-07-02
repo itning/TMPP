@@ -1,6 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 征订教材计划统计表
@@ -56,11 +57,15 @@ public class SubscriptionBookPlan {
     /**
      * 出版日期
      */
-    private String publicationDate;
+    private Date publicationDate;
     /**
      * 征订人
      */
     private String subscriber;
+    /**
+     * 联系电话
+     */
+    private String subscriberTel;
     /**
      * 是否购书
      */
@@ -70,12 +75,10 @@ public class SubscriptionBookPlan {
      */
     private String reason;
 
-    private String subscriberTel;
-
     public SubscriptionBookPlan() {
     }
 
-    public SubscriptionBookPlan(String code, String name, String isbn, String textBookName, String textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, String publicationDate, String subscriber, String isBookPurchase, String reason, String subscriberTel) {
+    public SubscriptionBookPlan(String code, String name, String isbn, String textBookName, String textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, String isBookPurchase, String reason) {
         this.code = code;
         this.name = name;
         this.isbn = isbn;
@@ -89,9 +92,9 @@ public class SubscriptionBookPlan {
         this.awardInformation = awardInformation;
         this.publicationDate = publicationDate;
         this.subscriber = subscriber;
+        this.subscriberTel = subscriberTel;
         this.isBookPurchase = isBookPurchase;
         this.reason = reason;
-        this.subscriberTel = subscriberTel;
     }
 
     public String getCode() {
@@ -182,11 +185,11 @@ public class SubscriptionBookPlan {
         this.awardInformation = awardInformation;
     }
 
-    public String getPublicationDate() {
+    public Date getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -196,6 +199,14 @@ public class SubscriptionBookPlan {
 
     public void setSubscriber(String subscriber) {
         this.subscriber = subscriber;
+    }
+
+    public String getSubscriberTel() {
+        return subscriberTel;
+    }
+
+    public void setSubscriberTel(String subscriberTel) {
+        this.subscriberTel = subscriberTel;
     }
 
     public String getIsBookPurchase() {
@@ -212,13 +223,5 @@ public class SubscriptionBookPlan {
 
     public void setReason(String reason) {
         this.reason = reason;
-    }
-
-    public String getSubscriberTel() {
-        return subscriberTel;
-    }
-
-    public void setSubscriberTel(String subscriberTel) {
-        this.subscriberTel = subscriberTel;
     }
 }

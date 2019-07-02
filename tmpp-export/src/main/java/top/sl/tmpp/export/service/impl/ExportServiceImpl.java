@@ -16,10 +16,8 @@ import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -28,6 +26,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ExportServiceImpl implements ExportService {
+    private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy年MM月");
     private final ExportMapper exportMapper;
 
     public ExportServiceImpl(ExportMapper exportMapper) {
@@ -362,7 +361,15 @@ public class ExportServiceImpl implements ExportService {
         int index = 0;
         for (Field field : fields) {
             field.setAccessible(true);
-            String o = field.get(t).toString();
+            Object oo = field.get(t);
+            String o = null;
+            if (oo != null) {
+                if (oo instanceof Date) {
+                    o = SIMPLE_DATE_FORMAT.format((Date) oo);
+                } else {
+                    o = field.get(t).toString();
+                }
+            }
             s[index] = o;
             index++;
         }

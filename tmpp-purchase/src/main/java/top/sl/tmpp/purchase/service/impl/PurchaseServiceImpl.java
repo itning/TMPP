@@ -10,6 +10,7 @@ import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.entity.Plan;
 import top.sl.tmpp.common.entity.PlanBook;
 import top.sl.tmpp.common.exception.EmptyParameterException;
+import top.sl.tmpp.common.exception.IllegalParameterException;
 import top.sl.tmpp.common.mapper.BookMapper;
 import top.sl.tmpp.common.mapper.PlanBookMapper;
 import top.sl.tmpp.common.mapper.PlanMapper;
@@ -87,13 +88,13 @@ public class PurchaseServiceImpl implements PurchaseService {
     private void checkTel(String tel) {
         long telLong = NumberUtils.toLong(tel);
         if (telLong == 0L) {
-            throw new EmptyParameterException("手机号不正确");
+            throw new IllegalParameterException("手机号不正确");
         }
         if (tel.length() != 11) {
-            throw new EmptyParameterException("手机号长度不正确，输入了" + tel.length() + "位");
+            throw new IllegalParameterException("手机号长度不正确，输入了" + tel.length() + "位");
         }
         if (!tel.startsWith("1")) {
-            throw new EmptyParameterException("手机号不正确");
+            throw new IllegalParameterException("手机号不正确");
         }
     }
 

@@ -85,7 +85,7 @@
             <arg column="teacher_book_number" javaType="java.lang.Integer" jdbcType="INTEGER"/>
             <arg column="discount" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="publication_date" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="subscriber" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="subscriber_tel" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="is_book_purchase" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -224,8 +224,8 @@
         GROUP BY book.id
     </select>
     <select id="selectSubscriptionBookPlan" resultMap="SubscriptionBookPlanMap">
-        SELECT course_code,
-               course_name,
+        SELECT course_code as code,
+               course_name as name,
                isbn,
                text_book_name,
                text_book_category,
@@ -238,7 +238,6 @@
                publication_date,
                subscriber,
                subscriber_tel,
-               `status`,
                is_book_purchase,
                reason
         FROM book
