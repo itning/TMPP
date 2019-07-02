@@ -188,7 +188,7 @@ public class ExportServiceImpl implements ExportService {
 
         XSSFCell cell = getCellWithStyle(wb, row);
         cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
-                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "教师领取教材汇总表");
+                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "学期教师领取教材汇总表");
         row = sheet.createRow(1);
         information(headerStrArray, row, 0);
         getSheetByList(teacherReceiveBooks, sheet);
@@ -287,7 +287,7 @@ public class ExportServiceImpl implements ExportService {
         mergeCells(sheet, headerStrArray.length - 1);
         XSSFRow row0 = sheet.createRow(0);
         XSSFCell cell = getCellWithStyle(wb, row0);
-        cell.setCellValue(year + "学年第" + (term ? "一" : "二") + "征订教材汇总表");
+        cell.setCellValue(year + "学年第" + (term ? "一" : "二") + "学期征订教材汇总表");
         XSSFRow row = sheet.createRow(1);
         information(headerStrArray, row, 0);
 
