@@ -1,10 +1,12 @@
 package top.sl.tmpp.export.controller;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.exception.EmptyParameterException;
 import top.sl.tmpp.export.service.ExportService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -75,6 +77,15 @@ public class ExportController {
                                   @RequestParam String teachingDepartment,
                                   @RequestParam Boolean term,
                                   HttpServletResponse response) throws IOException {
+        if (StringUtils.isBlank(college)) {
+            college = null;
+        }
+        if (StringUtils.isBlank(teachingDepartment)) {
+            teachingDepartment = null;
+        }
+        if (college == null && teachingDepartment == null) {
+            throw new EmptyParameterException("学院和开设院系部必须要选择一个");
+        }
         setDownloadExcelHeader(response, "征订教材汇总表.xlsx");
         exportService.downBookMaterials(year, college, teachingDepartment, term, response.getOutputStream());
     }
