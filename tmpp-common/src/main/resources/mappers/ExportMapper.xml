@@ -244,6 +244,8 @@
                  INNER JOIN plan_book ON plan_book.book_id = book.id
                  INNER JOIN plan ON plan.id = plan_book.plan_id
         WHERE book.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        GROUP BY book.isbn, book.reason,
+                 plan.course_code
     </select>
     <select id="selectTheTotalCourses" resultType="java.lang.String">
         SELECT course_name

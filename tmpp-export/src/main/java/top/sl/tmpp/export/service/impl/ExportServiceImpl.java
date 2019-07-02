@@ -198,13 +198,13 @@ public class ExportServiceImpl implements ExportService {
         final String[] headerStrArray = {"序号", "课程代码", "课程名称", "书号isbn"
                 , "教材名称", "教材类别", "出版社", "作者", "单价"
                 , "教师样书数量", "折扣", "获奖信息", "出版日期"
-                , "征订人", "征订人电话", "是否购书", "备注"};
+                , "征订人", "征订人电话", "是否购书", "未购书原因"};
 
         mergeCells(sheet, headerStrArray.length - 1);
 
         XSSFCell cell = getCellWithStyle(wb, row);
         cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
-                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "征订教材计划统计表");
+                ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "学期征订教材计划统计表");
         row = sheet.createRow(1);
         information(headerStrArray, row, 0);
         getSheetByList(subscriptionBookPlans, sheet);
