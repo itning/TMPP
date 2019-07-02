@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import top.sl.tmpp.common.entity.Book;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.pojo.BookDTO;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.review.service.ReviewService;
@@ -38,7 +38,7 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/all_passed")
-    public ResponseEntity<?> allPassed(@RequestParam String executePlanId) {
+    public ResponseEntity<?> allPassed(LoginUser loginUser, @RequestParam String executePlanId) {
         reviewService.oAllPassed(executePlanId);
         return RestModel.created("办公室主任全部审核通过", null);
     }
@@ -50,7 +50,7 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/examination_passed")
-    public ResponseEntity<?> examinationPassed(@RequestParam String executePlanId) {
+    public ResponseEntity<?> examinationPassed(LoginUser loginUser, @RequestParam String executePlanId) {
         reviewService.aAllPassed(executePlanId);
         return RestModel.created("全部审核通过", null);
     }
@@ -62,7 +62,7 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/turn_down")
-    public ResponseEntity<?> turnDown(@RequestParam String id) {
+    public ResponseEntity<?> turnDown(LoginUser loginUser, @RequestParam String id) {
         reviewService.aTurnDown(id);
         return RestModel.created("驳回操作成功", null);
     }
@@ -74,7 +74,7 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @PostMapping("/office_turn_down")
-    public ResponseEntity<?> officeTurnDown(@RequestParam String id) {
+    public ResponseEntity<?> officeTurnDown(LoginUser loginUser, @RequestParam String id) {
         reviewService.oTurnDown(id);
         return RestModel.created("驳回操作成功", null);
     }
@@ -82,12 +82,12 @@ public class ReviewController {
     /**
      * 教务处是否购买样书
      *
-     * @param bookId        购书计划id
+     * @param bookId    购书计划id
      * @param isBuyBook 是否购买样书（是：1，否：0）
      * @return ResponseEntity
      */
     @PostMapping("/buy_sample_book")
-    public ResponseEntity<?> buySampleBook(@RequestParam String bookId, @RequestParam boolean isBuyBook) {
+    public ResponseEntity<?> buySampleBook(LoginUser loginUser, @RequestParam String bookId, @RequestParam boolean isBuyBook) {
         reviewService.isByBook(bookId, isBuyBook);
         return RestModel.created("操作成功", null);
     }
@@ -101,7 +101,8 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @GetMapping("/my_review")
-    public ResponseEntity<?> myReview(@RequestParam String executePlanId,
+    public ResponseEntity<?> myReview(LoginUser loginUser,
+                                      @RequestParam String executePlanId,
                                       @RequestParam(required = false, defaultValue = "1") int page,
                                       @RequestParam(required = false, defaultValue = "50") int size) {
         logger.debug("my_review params: {} {} {}", executePlanId, page, size);
@@ -118,7 +119,8 @@ public class ReviewController {
      * @return ResponseEntity
      */
     @GetMapping("/director_review")
-    public ResponseEntity<?> directorReview(@RequestParam String executePlanId,
+    public ResponseEntity<?> directorReview(LoginUser loginUser,
+                                            @RequestParam String executePlanId,
                                             @RequestParam(required = false, defaultValue = "1") int page,
                                             @RequestParam(required = false, defaultValue = "50") int size) {
         logger.debug("director_review params: {} {} {}", executePlanId, page, size);

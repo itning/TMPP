@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import top.sl.tmpp.acquire.service.AcquireService;
-import top.sl.tmpp.common.entity.*;
+import top.sl.tmpp.common.entity.Colleges;
+import top.sl.tmpp.common.entity.Department;
+import top.sl.tmpp.common.entity.Level;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.pojo.CourseDTO;
 import top.sl.tmpp.common.util.RestModel;
 
@@ -37,7 +40,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/colleges")
-    public ResponseEntity<?> getAllCollege() {
+    public ResponseEntity<?> getAllCollege(LoginUser loginUser) {
         List<Colleges> colleges = acquireService.getAllCollege();
         logger.debug("查询所有学院成功");
         return RestModel.ok(colleges);
@@ -50,7 +53,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/courseTitles")
-    public ResponseEntity<?> getAllCourse(@RequestParam("execute_plan_id") String executePlanId) {
+    public ResponseEntity<?> getAllCourse(@RequestParam("execute_plan_id") String executePlanId, LoginUser loginUser) {
         List<CourseDTO> courses = acquireService.getAllCourse(executePlanId);
         logger.debug("查询成功");
         return RestModel.ok(courses);
@@ -62,7 +65,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/teaching_departments")
-    public ResponseEntity<?> getAllDepartment() {
+    public ResponseEntity<?> getAllDepartment(LoginUser loginUser) {
         List<Department> departments = acquireService.getAllDepartment();
         logger.debug("获取所有授课部门成功");
         return RestModel.ok(departments);
@@ -88,7 +91,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/educational_levels")
-    public ResponseEntity<?> getAllLevel() {
+    public ResponseEntity<?> getAllLevel(LoginUser loginUser) {
         List<Level> levels = acquireService.getAllLevel();
         logger.debug("获取所有层次成功");
         return RestModel.ok(levels);
@@ -100,7 +103,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/undone_execute_plan")
-    public ResponseEntity<?> undoneExecutePlan() {
+    public ResponseEntity<?> undoneExecutePlan(LoginUser loginUser) {
         return RestModel.ok(acquireService.getAllUnDoneExecutePlan());
     }
 
@@ -110,7 +113,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/year")
-    public ResponseEntity<?> year() {
+    public ResponseEntity<?> year(LoginUser loginUser) {
         return RestModel.ok(acquireService.getYears());
     }
 
@@ -121,7 +124,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/term")
-    public ResponseEntity<?> term(@RequestParam String year) {
+    public ResponseEntity<?> term(@RequestParam String year, LoginUser loginUser) {
         return RestModel.ok(acquireService.getTerms(year));
     }
 
@@ -131,7 +134,7 @@ public class AcquireController {
      * @return ResponseEntity
      */
     @GetMapping("/done_execute_plan")
-    public ResponseEntity<?> doneExecutePlan() {
+    public ResponseEntity<?> doneExecutePlan(LoginUser loginUser) {
         return RestModel.ok(acquireService.getAllDoneExecutePlan());
     }
 }

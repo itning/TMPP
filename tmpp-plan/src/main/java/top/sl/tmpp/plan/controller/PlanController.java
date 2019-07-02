@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.sl.tmpp.common.entity.ExecutePlan;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.plan.exception.FileException;
 import top.sl.tmpp.plan.service.FileService;
@@ -42,7 +43,7 @@ public class PlanController {
      * @return ResponseEntity
      */
     @PostMapping("/execute_plan_file")
-    public ResponseEntity<?> uploadFile(@RequestParam("planFile") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(LoginUser loginUser, @RequestParam("planFile") MultipartFile file) {
         return RestModel.created("上传成功", fileService.fileUpload(file));
     }
 
@@ -57,7 +58,8 @@ public class PlanController {
      * @return ResponseEntity
      */
     @PostMapping("/execute_plan")
-    public ResponseEntity<?> plan(@RequestParam String year,
+    public ResponseEntity<?> plan(LoginUser loginUser,
+                                  @RequestParam String year,
                                   @RequestParam boolean term,
                                   @RequestParam String teachingDepartment,
                                   @RequestParam String educationalLevel,
@@ -73,7 +75,7 @@ public class PlanController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/down_execute_plan")
-    public void downPlan(@RequestParam String executePlanId, HttpServletResponse response) {
+    public void downPlan(LoginUser loginUser, @RequestParam String executePlanId, HttpServletResponse response) {
         ExecutePlan executePlan = referPlanService.downloadExecutePlan(executePlanId);
         byte[] file = executePlan.getFile();
         String fileName = "执行计划." + executePlan.getFileType();
@@ -96,7 +98,7 @@ public class PlanController {
      * @return ResponseEntity
      */
     @DeleteMapping("/execute_plan")
-    public ResponseEntity<?> removeExecutePlan(@RequestParam String id) {
+    public ResponseEntity<?> removeExecutePlan(LoginUser loginUser, @RequestParam String id) {
         referPlanService.removeExecutePlan(id);
         return RestModel.noContent();
     }

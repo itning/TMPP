@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.export.service.ExportService;
 
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,7 @@ public class ExportController {
      * @param response {@link HttpServletResponse}
      */
     @GetMapping("/download_execute_plan_template")
-    public void downloadExecutePlanTemplate(HttpServletResponse response) throws IOException {
+    public void downloadExecutePlanTemplate(LoginUser loginUser, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "执行计划模板.xlsx");
         String file = this.getClass().getResource("/").getFile() + "execute_plan_template.xlsx";
         FileUtils.copyFile(new File(file), response.getOutputStream());
@@ -53,7 +54,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/procurement_table")
-    public void procurementTable(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void procurementTable(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "采购教材汇总表.xlsx");
         exportService.procurementTable(executePlanId, response.getOutputStream());
     }
@@ -68,7 +69,8 @@ public class ExportController {
      * @param response           {@link HttpServletResponse}
      */
     @GetMapping("/down_book_materials")
-    public void downBookMaterials(@RequestParam String year,
+    public void downBookMaterials(LoginUser loginUser,
+                                  @RequestParam String year,
                                   @RequestParam String college,
                                   @RequestParam String teachingDepartment,
                                   @RequestParam Boolean term,
@@ -84,7 +86,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/summary_table")
-    public void summaryTable(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void summaryTable(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "考试-考察-总体订书率表.xlsx");
         exportService.summaryTable(executePlanId, response.getOutputStream());
     }
@@ -96,7 +98,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/textbook_execute_plan_statistics")
-    public void textbookPlanStatistics(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void textbookPlanStatistics(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "征订教材计划统计表.xlsx");
         exportService.subscriptionBookPlan(executePlanId, response.getOutputStream());
     }
@@ -108,7 +110,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/publishing_house_statistics")
-    public void publishingHouseStatistics(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void publishingHouseStatistics(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "出版社统计数量表.xlsx");
         exportService.publishingHouseStatistics(executePlanId, response.getOutputStream());
     }
@@ -120,7 +122,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/subscription_book")
-    public void subscriptionBook(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void subscriptionBook(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "征订教材样书统计表.xlsx");
         exportService.subscriptionBook(executePlanId, response.getOutputStream());
     }
@@ -132,7 +134,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/teacher_receiving_textbook")
-    public void teacherReceivingTextbook(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void teacherReceivingTextbook(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "教师领取教材汇总表.xlsx");
         exportService.teacherReceiveBook(executePlanId, response.getOutputStream());
     }
@@ -144,7 +146,7 @@ public class ExportController {
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/student_textbook")
-    public void studentTextbook(@RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
+    public void studentTextbook(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
         setDownloadExcelHeader(response, "班级领取教材反馈表.xlsx");
         exportService.studentClassBookTable(executePlanId, response.getOutputStream());
     }
