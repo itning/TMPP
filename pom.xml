@@ -5,7 +5,7 @@
 
     <groupId>top.sl.tmpp</groupId>
     <artifactId>tmpp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0-RC</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -45,47 +45,47 @@
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-security</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-discounts</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-review</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-export</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-purchase</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-plan</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-acquire</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-common</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-core</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.0.0-RC</version>
             </dependency>
 
             <dependency>

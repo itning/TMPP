@@ -5,7 +5,7 @@
     <parent>
         <artifactId>tmpp</artifactId>
         <groupId>top.sl.tmpp</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0.0-RC</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -76,7 +76,7 @@
                             <!--jar包不包含唯一版本标识-->
                             <useUniqueVersions>false</useUniqueVersions>
                             <!--指定入口类-->
-                            <mainClass>top.itning.yunshuvideo.core.YunShuVideoApplication</mainClass>
+                            <mainClass>top.sl.tmpp.core.TMPPApplication</mainClass>
                         </manifest>
                         <manifestEntries>
                             <!--MANIFEST.MF 中 Class-Path 加入资源文件目录-->
