@@ -26,4 +26,6 @@ public interface PlanMapper {
     List<Plan> selectByExecutePlanIdAndCourseCode(@Param("executePlanId") String executePlanId, @Param("courseCode") String courseCode);
 
     List<CourseDTO> selectCourseByExecutePlanId(@Param("executePlanId") String executePlanId);
+
+    List<String> selectAllByExecutePlanGroupByBookId(@Param("executePlanId") String executePlanId);
 }

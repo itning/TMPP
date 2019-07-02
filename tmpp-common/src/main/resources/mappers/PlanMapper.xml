@@ -227,4 +227,11 @@
         FROM plan
         WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
+    <select id="selectAllByExecutePlanGroupByBookId" resultType="java.lang.String">
+        SELECT plan_book.book_id
+        FROM plan
+                 LEFT JOIN plan_book ON plan_book.plan_id = plan.id
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+        GROUP BY plan_book.book_id;
+    </select>
 </mapper>

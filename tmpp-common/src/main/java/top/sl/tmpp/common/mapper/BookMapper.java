@@ -29,4 +29,6 @@ public interface BookMapper {
     List<Book> selectIdAndStatus(@Param("executePlanId") String executePlanId);
 
     List<Book> selectByPlanId(@Param("planId") String planId);
+
+    long countByExecutePlanAndStatusNot2(@Param("executePlanId") String executePlanId);
 }

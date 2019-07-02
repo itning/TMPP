@@ -461,4 +461,10 @@
         <include refid="Base_Column_List"/>
         from book inner join plan_book on plan_book.book_id=book.id where plan_book.plan_id = #{planId,jdbcType=VARCHAR}
     </select>
+    <select id="countByExecutePlanAndStatusNot2" resultType="long">
+        SELECT count(*)
+        FROM book
+        WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND STATUS != 2;
+    </select>
 </mapper>

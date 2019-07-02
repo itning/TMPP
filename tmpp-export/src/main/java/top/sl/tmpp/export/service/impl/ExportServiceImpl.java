@@ -5,6 +5,8 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.mapper.ExportMapper;
 import top.sl.tmpp.common.pojo.*;
@@ -26,7 +28,10 @@ import java.util.stream.Collectors;
  */
 @Service
 public class ExportServiceImpl implements ExportService {
+    private static final Logger logger = LoggerFactory.getLogger(ExportServiceImpl.class);
+
     private static final SimpleDateFormat SIMPLE_DATE_FORMAT = new SimpleDateFormat("yyyy年MM月");
+
     private final ExportMapper exportMapper;
 
     public ExportServiceImpl(ExportMapper exportMapper) {
@@ -215,9 +220,10 @@ public class ExportServiceImpl implements ExportService {
     public void summaryTable(String executePlanId, OutputStream outputStream) throws IOException {
         String s = exportMapper.selectLevel(executePlanId);
         int examinationClass = exportMapper.selectExaminationCourse(executePlanId).size();
-        int totalCourses = exportMapper.selectTheStudyCourses(executePlanId).size();
+        int totalCourses = exportMapper.selectTheTotalCourses(executePlanId).size();
         int studyCourses = exportMapper.selectTheStudyCourses(executePlanId).size();
         int studyClass = exportMapper.selectStudyClass(executePlanId).size();
+        logger.debug("{} {} {} {}", examinationClass, totalCourses, studyCourses, studyClass);
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet sheet = wb.createSheet("考试-考察-总体订书率表");
 
@@ -245,20 +251,26 @@ public class ExportServiceImpl implements ExportService {
         row.createCell(0).setCellValue(s);
         row.createCell(1).setCellValue(examinationClass);
         row.createCell(2).setCellValue(totalCourses);
-        String i3 = decimalFormat.format((double) examinationClass / (double) totalCourses);
+        String i3 = "0%";
+        if (totalCourses != 0) {
+            i3 = decimalFormat.format((double) examinationClass / (double) totalCourses);
+        }
         row.createCell(3).setCellValue(i3);
         row.createCell(4).setCellValue(studyClass);
         row.createCell(5).setCellValue(studyCourses);
-        String i6 = decimalFormat.format((double) studyClass / (double) studyCourses);
+        String i6 = "0%";
+        if (studyCourses != 0) {
+            i6 = decimalFormat.format((double) studyClass / (double) studyCourses);
+        }
         row.createCell(6).setCellValue(i6);
         row.createCell(7).setCellValue(studyClass + examinationClass);
         row.createCell(8).setCellValue(studyCourses + totalCourses);
-        String i9 = decimalFormat.format(((double) studyClass + examinationClass) / ((double) studyCourses + totalCourses));
+        String i9 = "0%";
+        if ((totalCourses + studyCourses) != 0) {
+            i9 = decimalFormat.format(((double) studyClass + examinationClass) / ((double) studyCourses + totalCourses));
+        }
         row.createCell(9).setCellValue(i9);
-
         wb.write(outputStream);
-
-
     }
 
     @Override

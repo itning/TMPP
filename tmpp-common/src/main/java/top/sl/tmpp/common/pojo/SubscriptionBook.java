@@ -1,6 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 征订教材样书统计表
@@ -44,7 +45,7 @@ public class SubscriptionBook {
     /**
      * 出版日期
      */
-    private String publicationDate;
+    private Date publicationDate;
     /**
      * 获奖信息
      */
@@ -60,7 +61,7 @@ public class SubscriptionBook {
     /**
      * 教务处样书
      */
-    private Byte is_buy_book;
+    private Integer isBuyBook;
     /**
      * 征订人
      */
@@ -77,7 +78,7 @@ public class SubscriptionBook {
     public SubscriptionBook() {
     }
 
-    public SubscriptionBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, BigDecimal unitPrice, String grade, Byte is_buy_book, String subscriber, String subscriberTel, String remark) {
+    public SubscriptionBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, Date publicationDate, String awardInformation, BigDecimal unitPrice, String grade, Integer isBuyBook, String subscriber, String subscriberTel, String remark) {
         this.departmentName = departmentName;
         this.courseName = courseName;
         this.type = type;
@@ -90,18 +91,10 @@ public class SubscriptionBook {
         this.awardInformation = awardInformation;
         this.unitPrice = unitPrice;
         this.grade = grade;
-        this.is_buy_book = is_buy_book;
+        this.isBuyBook = isBuyBook;
         this.subscriber = subscriber;
         this.subscriberTel = subscriberTel;
         this.remark = remark;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getDepartmentName() {
@@ -118,6 +111,14 @@ public class SubscriptionBook {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getStartPro() {
@@ -160,11 +161,11 @@ public class SubscriptionBook {
         this.isbn = isbn;
     }
 
-    public String getPublicationDate() {
+    public Date getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -192,6 +193,14 @@ public class SubscriptionBook {
         this.grade = grade;
     }
 
+    public Integer getIsBuyBook() {
+        return isBuyBook;
+    }
+
+    public void setIsBuyBook(Integer isBuyBook) {
+        this.isBuyBook = isBuyBook;
+    }
+
     public String getSubscriber() {
         return subscriber;
     }
@@ -214,13 +223,5 @@ public class SubscriptionBook {
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    public Byte getIs_buy_book() {
-        return is_buy_book;
-    }
-
-    public void setIs_buy_book(Byte is_buy_book) {
-        this.is_buy_book = is_buy_book;
     }
 }
