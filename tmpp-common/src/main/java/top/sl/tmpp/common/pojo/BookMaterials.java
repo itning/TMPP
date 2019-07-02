@@ -1,5 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
+import java.util.Date;
+
 /**
  * 征订教材汇总表格
  *
@@ -58,7 +60,7 @@ public class BookMaterials {
     /**
      * 出版日期
      */
-    private String publicationDate;
+    private Date publicationDate;
     /**
      * 使用年级
      */
@@ -107,7 +109,7 @@ public class BookMaterials {
     public BookMaterials() {
     }
 
-    public BookMaterials(String departmentName, String collegesName, String startPro, String courseCode, String courseName, String textBookName, String isbn, String textBookCategory, String press, String author, String unitPrice, String awardInformation, String publicationDate, String grade, String clazz, String clazzNumber, String teacherBookNumber, Integer isBuyBook, String subscriber, String subscriberTel, String status, String isBookPurchase, String reason, String remark) {
+    public BookMaterials(String departmentName, String collegesName, String startPro, String courseCode, String courseName, String textBookName, String isbn, String textBookCategory, String press, String author, String unitPrice, String awardInformation, Date publicationDate, String grade, String clazz, String clazzNumber, String teacherBookNumber, Integer isBuyBook, String subscriber, String subscriberTel, String status, String isBookPurchase, String reason, String remark) {
         this.departmentName = departmentName;
         this.collegesName = collegesName;
         this.startPro = startPro;
@@ -230,11 +232,11 @@ public class BookMaterials {
         this.awardInformation = awardInformation;
     }
 
-    public String getPublicationDate() {
+    public Date getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 
@@ -270,12 +272,12 @@ public class BookMaterials {
         this.teacherBookNumber = teacherBookNumber;
     }
 
-    public Integer isBuyBook() {
+    public Integer getIsBuyBook() {
         return isBuyBook;
     }
 
-    public void setBuyBook(Integer buyBook) {
-        isBuyBook = buyBook;
+    public void setIsBuyBook(Integer isBuyBook) {
+        this.isBuyBook = isBuyBook;
     }
 
     public String getSubscriber() {
