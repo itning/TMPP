@@ -98,14 +98,15 @@
                author,
                isbn,
                unit_price,
-               clazz_number,
+               SUM(clazz_number)                                                    AS number,
                teacher_book_number,
                is_buy_book,
-               SUM(plan.clazz_number + book.teacher_book_number + book.is_buy_book) AS clazzNumber
+               SUM(plan.clazz_number) + book.teacher_book_number + book.is_buy_book AS total
         FROM book
-                 INNER JOIN plan ON plan.id = book.plan_id
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan_book.plan_id = plan.id
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-        GROUP BY book.id
+        GROUP BY isbn
     </select>
     <select id="selectYear" resultType="java.lang.String">
         select year
@@ -123,7 +124,8 @@
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
     <select id="selectStudentReceiveBooks" resultMap="StudentReceiveBookMap">
-        SELECT NAME,
+        SELECT `name`
+                ,
                clazz,
                isbn,
                text_book_name,
@@ -132,44 +134,47 @@
                clazz_number,
                discount
         FROM colleges
-                 INNER JOIN (SELECT colleges_id,
-                                    clazz,
-                                    isbn,
-                                    text_book_name,
-                                    press,
-                                    unit_price,
-                                    clazz_number,
-                                    discount
-                             FROM book
-                                      INNER JOIN plan ON plan.id = book.plan_id
-                             WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
-                             GROUP BY book.id) as a on colleges.id = a.colleges_id
+                 INNER JOIN (
+            SELECT colleges_id,
+                   clazz,
+                   isbn,
+                   text_book_name,
+                   press,
+                   unit_price,
+                   clazz_number,
+                   discount
+            FROM book
+                     INNER JOIN plan_book ON plan_book.book_id = book.id
+                     INNER JOIN plan ON plan.id = plan_book.plan_id
+            WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
+            GROUP BY book.id
+        ) AS a ON colleges.id = a.colleges_id
 
     </select>
     <select id="selectPublishingHouseStatistics" resultMap="PublisherStatisticsMap">
-        SELECT name,
+        SELECT NAME
+                ,
                press,
                SUM(clazz_number + teacher_book_number + is_buy_book) AS total
         FROM colleges
-
-                 INNER JOIN
-             (
-                 SELECT colleges_id,
-                        plan.clazz_number,
-                        book.press,
-                        is_buy_book,
-                        teacher_book_number
-                 FROM book
-                          INNER JOIN plan ON plan.id = book.plan_id
-                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-                 GROUP BY book.id
-             ) AS a ON colleges.id = a.colleges_id
+                 INNER JOIN (
+            SELECT colleges_id,
+                   plan.clazz_number,
+                   book.press,
+                   is_buy_book,
+                   teacher_book_number
+            FROM book
+                     INNER JOIN plan_book ON plan_book.book_id = book.id
+                     INNER JOIN plan ON plan.id = plan_book.plan_id
+            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+            GROUP BY book.id
+        ) AS a ON colleges.id = a.colleges_id
         GROUP BY press
     </select>
     <select id="selectSubscriptionBook" resultMap="SubscriptionBookMap">
-        SELECT department_name,
-               name,
-               if(type = 0, "考试", "考察") AS type,
+        SELECT department.`name`,
+               course_name,
+               IF(type = 0, "考试", "考察") AS type,
                start_pro,
                text_book_name,
                author,
@@ -183,38 +188,20 @@
                subscriber,
                subscriber_tel,
                reason
-        FROM course
-                 INNER JOIN (
-            SELECT plan.course_id,
-                   plan.clazz_number,
-                   plan.type,
-                   plan.start_pro,
-                   book.text_book_name,
-                   book.author,
-                   book.press,
-                   book.isbn,
-                   book.publication_date,
-                   book.award_Information,
-                   book.unit_price,
-                   book.is_buy_book,
-                   book.subscriber,
-                   book.subscriber_tel,
-                   book.reason,
-                   department.NAME AS department_name,
-                   execute_plan.grade
-            FROM execute_plan,
-                 department,
-                 book
-                     INNER JOIN plan ON plan.id = book.plan_id
-            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-              AND book.is_buy_book = "1"
-            GROUP BY book.id
-        ) AS a ON course.id = a.course_id
+        FROM execute_plan,
+             department,
+             book
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan.id = plan_book.plan_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND book.is_buy_book = true
+        GROUP BY book.id
     </select>
     <select id="selectTeacherReceiveBook" resultMap="TeacherReceiveBookMap">
-        SELECT department_name,
-               name,
-               if(type = 0, "考试", "考察") AS type,
+        SELECT department.`name`,
+               course_name,
+               IF
+                   (type = 0, "考试", "考察") AS type,
                start_pro,
                text_book_name,
                author,
@@ -227,38 +214,18 @@
                teacher_book_number,
                clazz,
                subscriber
-        FROM course
-                 INNER JOIN (
-            SELECT plan.course_id,
-                   plan.clazz_number,
-                   book.teacher_book_number,
-                   plan.type,
-                   plan.start_pro,
-                   plan.clazz,
-                   book.text_book_name,
-                   book.author,
-                   book.press,
-                   book.isbn,
-                   book.publication_date,
-                   book.award_Information,
-                   book.unit_price,
-                   book.subscriber,
-                   department.NAME AS department_name,
-                   execute_plan.grade
-            FROM execute_plan,
-                 department,
-                 book
-                     INNER JOIN plan ON plan.id = book.plan_id
-            WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-              AND book.teacher_book_number > 0
-            GROUP BY book.id
-        ) AS a ON course.id = a.course_id
+        FROM execute_plan,
+             department,
+             book
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan.id = plan_book.plan_id
+        WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+          AND book.teacher_book_number > 0
+        GROUP BY book.id
     </select>
     <select id="selectSubscriptionBookPlan" resultMap="SubscriptionBookPlanMap">
-
-        SELECT CODE
-                ,
-               NAME,
+        SELECT course_code,
+               course_name,
                isbn,
                text_book_name,
                text_book_category,
@@ -271,61 +238,49 @@
                publication_date,
                subscriber,
                subscriber_tel,
+               `status`,
                is_book_purchase,
                reason
-        FROM (
-                 SELECT book.course_id,
-                        isbn,
-                        text_book_name,
-                        text_book_category,
-                        press,
-                        author,
-                        unit_price,
-                        teacher_book_number,
-                        discount,
-                        award_Information,
-                        publication_date,
-                        subscriber,
-                        subscriber_tel,
-                        is_book_purchase,
-                        reason
-                 FROM book
-                          INNER JOIN plan ON plan.id = book.plan_id
-                 WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-             ) AS t
-                 INNER JOIN course ON course.id = t.course_id
+        FROM book
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan.id = plan_book.plan_id
+        WHERE book.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
     </select>
     <select id="selectTheTotalCourses" resultType="java.lang.String">
-        SELECT course_id
+        SELECT course_name
         FROM plan
         WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
           AND type = 0
-        GROUP BY course_id;
+        GROUP BY course_name;
     </select>
     <select id="selectTheStudyCourses" resultType="java.lang.String">
-        SELECT course_id
+        SELECT course_name
         FROM plan
         WHERE execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
           AND type = 1
-        GROUP BY course_id;
+        GROUP BY course_name;
     </select>
     <select id="selectExaminationCourse" resultType="java.lang.String">
-        SELECT book.course_id
+        SELECT course_code
         FROM book
-                 INNER JOIN plan ON plan.id = book.plan_id
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan.id = plan_book.plan_id
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+
           AND book.is_book_purchase = 1
           AND plan.type = 0
-        GROUP BY book.course_id
+        GROUP BY course_code
     </select>
     <select id="selectStudyClass" resultType="java.lang.String">
-        SELECT book.course_id
+        SELECT course_code
         FROM book
-                 INNER JOIN plan ON plan.id = book.plan_id
+                 INNER JOIN plan_book ON plan_book.book_id = book.id
+                 INNER JOIN plan ON plan.id = plan_book.plan_id
         WHERE plan.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
+
           AND book.is_book_purchase = 1
           AND plan.type = 1
-        GROUP BY book.course_id;
+        GROUP BY course_code
     </select>
     <select id="selectLevel" resultType="java.lang.String">
         SELECT educational_level
@@ -338,8 +293,8 @@
         department.NAME AS departmentName,
         colleges.NAME AS collegesName,
         plan.start_pro AS startPro,
-        course.`code` AS courseCode,
-        course.`name` AS courseName,
+        course_code AS courseCode,
+        course_name AS courseName,
         book.text_book_name AS textBookName,
         book.isbn AS isbn,
         book.text_book_category AS textBookCategory,
@@ -355,17 +310,17 @@
         book.is_buy_book AS isBuyBook,
         book.subscriber AS subscriber,
         book.subscriber_tel AS subscriberTel,
-        book.status AS status,
+        book.STATUS AS STATUS,
         book.is_book_purchase AS isBookPurchase,
         book.reason AS reason,
         plan.remark AS remark
         FROM
-        plan
-        INNER JOIN book ON plan.id = book.plan_id
+        book
+        INNER JOIN plan_book ON plan_book.book_id = book.id
+        INNER JOIN plan ON plan.id = plan_book.plan_id
         INNER JOIN execute_plan ON execute_plan.id = plan.execute_plan_id
         INNER JOIN department ON department.id = execute_plan.department_id
         INNER JOIN colleges ON plan.colleges_id = colleges.id
-        INNER JOIN course ON course.id = plan.course_id
         <where>
             <if test="college != null">
                 plan.colleges_id = #{college,jdbcType=VARCHAR}

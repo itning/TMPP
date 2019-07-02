@@ -1,7 +1,6 @@
 package top.sl.tmpp.review.service;
 
 import com.github.pagehelper.PageInfo;
-import top.sl.tmpp.common.entity.Book;
 import top.sl.tmpp.common.pojo.BookDTO;
 
 

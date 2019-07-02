@@ -3,6 +3,7 @@ package top.sl.tmpp.purchase.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.sl.tmpp.common.entity.Book;
@@ -41,6 +42,7 @@ public class PurchaseServiceImpl implements PurchaseService {
     public void buyBook(String loginUserId, String executePlanId, String courseCode, String isbn, String textBookName, Boolean textBookCategory,
                         String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount,
                         String awardInformation, Date publicationDate, String subscriber, String subscriberTel, String bookId) {
+        checkTel(subscriberTel);
         Book book = new Book();
         book.setId(bookId);
         book.setIsbn(isbn);
@@ -72,9 +74,27 @@ public class PurchaseServiceImpl implements PurchaseService {
         } else {
             //修改图书
             ObjectUtils.checkObjectFieldsNotEmpty(book, "reason", "isBuyBook");
-            bookMapper.updateByPrimaryKeySelective(book);
+            bookMapper.updateByPrimaryKey(book);
         }
 
+    }
+
+    /**
+     * 检查电话号码正确性
+     *
+     * @param tel 电话号
+     */
+    private void checkTel(String tel) {
+        long telLong = NumberUtils.toLong(tel);
+        if (telLong == 0L) {
+            throw new EmptyParameterException("手机号不正确");
+        }
+        if (tel.length() != 11) {
+            throw new EmptyParameterException("手机号长度不正确，输入了" + tel.length() + "位");
+        }
+        if (!tel.startsWith("1")) {
+            throw new EmptyParameterException("手机号不正确");
+        }
     }
 
     @Override
@@ -99,7 +119,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             book.setId(UUID.randomUUID().toString().replace("-", ""));
             saveBookInfo(executePlanId, courseCode, book.getId(), book);
         } else {
-            bookMapper.updateByPrimaryKeySelective(book);
+            bookMapper.updateByPrimaryKey(book);
         }
     }
 

@@ -418,7 +418,6 @@
                  plan.course_code
     </select>
     <select id="selectAllByExecutePlanId" resultMap="BookReviewDTOResultMap">
-
         SELECT book.id,
                plan.course_code,
                plan.course_name,
@@ -445,7 +444,9 @@
                  INNER JOIN plan_book ON plan_book.book_id = book.id
                  INNER JOIN plan ON plan_book.plan_id = plan.id
         WHERE book.execute_plan_id = #{executePlanId,jdbcType=VARCHAR}
-
+          AND (book.`status` = 1
+            OR book.`status` = 2
+            OR book.`status` = 4)
         GROUP BY book.isbn, book.reason,
                  plan.course_code
     </select>

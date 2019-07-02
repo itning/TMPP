@@ -7,6 +7,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import top.sl.tmpp.common.exception.BaseException;
 import top.sl.tmpp.common.util.RestModel;
 
@@ -34,6 +35,23 @@ public class ExceptionResolver {
         RestModel restModel = new RestModel();
         restModel.setCode(HttpStatus.BAD_REQUEST.value());
         restModel.setMsg(m.getMessage());
+        response.setStatus(HttpStatus.BAD_REQUEST.value());
+        return restModel;
+    }
+
+    /**
+     * 用户传参错误
+     *
+     * @param response HttpServletResponse
+     * @param m        MethodArgumentTypeMismatchException
+     * @return RestModel
+     */
+    @ExceptionHandler(value = MethodArgumentTypeMismatchException.class)
+    @ResponseBody
+    public RestModel methodArgumentTypeMismatchException(HttpServletResponse response, MethodArgumentTypeMismatchException m) {
+        RestModel restModel = new RestModel();
+        restModel.setCode(HttpStatus.BAD_REQUEST.value());
+        restModel.setMsg("参数：" + m.getName() + "的值无法转换成" + m.getRequiredType());
         response.setStatus(HttpStatus.BAD_REQUEST.value());
         return restModel;
     }
