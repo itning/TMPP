@@ -1,6 +1,7 @@
 package top.sl.tmpp.common.pojo;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * 教师领取教材汇总表
@@ -44,7 +45,7 @@ public class TeacherReceiveBook {
     /**
      * 出版日期
      */
-    private String publicationDate;
+    private Date publicationDate;
     /**
      * 获奖信息
      */
@@ -73,7 +74,7 @@ public class TeacherReceiveBook {
     public TeacherReceiveBook() {
     }
 
-    public TeacherReceiveBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, String publicationDate, String awardInformation, BigDecimal unitPrice, String grade, String clazz, Integer teacherBookNumber, String subscriber) {
+    public TeacherReceiveBook(String departmentName, String courseName, String type, String startPro, String textBookName, String author, String press, String isbn, Date publicationDate, String awardInformation, BigDecimal unitPrice, String grade, String clazz, Integer teacherBookNumber, String subscriber) {
         this.departmentName = departmentName;
         this.courseName = courseName;
         this.type = type;
@@ -155,11 +156,11 @@ public class TeacherReceiveBook {
         this.isbn = isbn;
     }
 
-    public String getPublicationDate() {
+    public Date getPublicationDate() {
         return publicationDate;
     }
 
-    public void setPublicationDate(String publicationDate) {
+    public void setPublicationDate(Date publicationDate) {
         this.publicationDate = publicationDate;
     }
 

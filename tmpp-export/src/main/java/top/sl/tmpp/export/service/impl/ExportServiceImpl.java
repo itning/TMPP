@@ -63,42 +63,45 @@ public class ExportServiceImpl implements ExportService {
     public void studentClassBookTable(String executePlanId, OutputStream outputStream) throws IOException {
         XSSFWorkbook wb = new XSSFWorkbook();
         exportMapper.selectClazz(executePlanId)
-                .stream().map(c -> {
-            List<StudentReceiveBook> studentReceiveBooks = exportMapper.selectStudentReceiveBooks(c);
-            return new Tuple<>(c, studentReceiveBooks);
-        }).filter(t -> !t.getT2().isEmpty()).forEach(t -> {
-            XSSFSheet sheet = wb.createSheet(t.getT1());
-            CellRangeAddress region1 = new CellRangeAddress(0, 0, (short) 0, (short) 10);
-            sheet.addMergedRegion(region1);
+                .stream()
+                .map(c -> {
+                    List<StudentReceiveBook> studentReceiveBooks = exportMapper.selectStudentReceiveBooks(c);
+                    return new Tuple<>(c, studentReceiveBooks);
+                })
+                .filter(t -> !t.getT2().isEmpty())
+                .forEach(t -> {
+                    XSSFSheet sheet = wb.createSheet(t.getT1());
+                    CellRangeAddress region1 = new CellRangeAddress(0, 0, (short) 0, (short) 10);
+                    sheet.addMergedRegion(region1);
 
-            XSSFRow row = sheet.createRow(0);
-            final String[] strs = {"序号", "开课院系", "使用班级"
-                    , "书号isbn", "教材名称", "出版社"
-                    , "单价", "数量", "购书总折扣数", "码洋", "实样"};
-            XSSFCell cell = getCellWithStyle(wb, row);
-            cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
-                    ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "学期班级领取教材发书单");
-            row = sheet.createRow(1);
-            information(strs, row, 0);
+                    XSSFRow row = sheet.createRow(0);
+                    final String[] strs = {"序号", "开课院系", "使用班级"
+                            , "书号isbn", "教材名称", "出版社"
+                            , "单价", "数量", "购书总折扣数", "码洋", "实样"};
+                    XSSFCell cell = getCellWithStyle(wb, row);
+                    cell.setCellValue(exportMapper.selectYear(executePlanId) + "学年第" +
+                            ("0".equals(exportMapper.selectTerm(executePlanId)) ? "一" : "二") + "学期班级领取教材发书单");
+                    row = sheet.createRow(1);
+                    information(strs, row, 0);
 
-            for (int r = 0; r < t.getT2().size(); r++) {
-                XSSFRow xssfRow = sheet.createRow(r + 2);
-                xssfRow.createCell(0).setCellValue(r + 1);
+                    for (int r = 0; r < t.getT2().size(); r++) {
+                        XSSFRow xssfRow = sheet.createRow(r + 2);
+                        xssfRow.createCell(0).setCellValue(r + 1);
 
-                StudentReceiveBook book = t.getT2().get(r);
-                BigDecimal s = book.getUnitPrice().multiply(BigDecimal.valueOf(book.getClazzNumber()));
-                xssfRow.createCell(1).setCellValue(book.getCollegesName());
-                xssfRow.createCell(2).setCellValue(book.getClazz());
-                xssfRow.createCell(3).setCellValue(book.getIsbn());
-                xssfRow.createCell(4).setCellValue(book.getTextBookName());
-                xssfRow.createCell(5).setCellValue(book.getPress());
-                xssfRow.createCell(6).setCellValue(book.getUnitPrice().toString());
-                xssfRow.createCell(7).setCellValue(book.getClazzNumber());
-                xssfRow.createCell(8).setCellValue(book.getDiscounts().toString());
-                xssfRow.createCell(9).setCellValue(s.doubleValue());
-                xssfRow.createCell(10).setCellValue(s.multiply(book.getDiscounts()).doubleValue());
-            }
-        });
+                        StudentReceiveBook book = t.getT2().get(r);
+                        BigDecimal s = book.getUnitPrice().multiply(BigDecimal.valueOf(book.getClazzNumber()));
+                        xssfRow.createCell(1).setCellValue(book.getCollegesName());
+                        xssfRow.createCell(2).setCellValue(book.getClazz());
+                        xssfRow.createCell(3).setCellValue(book.getIsbn());
+                        xssfRow.createCell(4).setCellValue(book.getTextBookName());
+                        xssfRow.createCell(5).setCellValue(book.getPress());
+                        xssfRow.createCell(6).setCellValue(book.getUnitPrice().toString());
+                        xssfRow.createCell(7).setCellValue(book.getClazzNumber());
+                        xssfRow.createCell(8).setCellValue(book.getDiscounts().toString());
+                        xssfRow.createCell(9).setCellValue(s.doubleValue());
+                        xssfRow.createCell(10).setCellValue(s.multiply(book.getDiscounts()).doubleValue());
+                    }
+                });
         wb.write(outputStream);
     }
 

@@ -56,14 +56,14 @@
     <resultMap id="TeacherReceiveBookMap" type="top.sl.tmpp.common.pojo.TeacherReceiveBook">
         <constructor>
             <arg column="department_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="course_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="type" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="start_pro" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="text_book_name" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="author" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="press" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="isbn" javaType="java.lang.String" jdbcType="VARCHAR"/>
-            <arg column="publication_date" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="publication_date" javaType="java.util.Date" jdbcType="TIMESTAMP"/>
             <arg column="award_Information" javaType="java.lang.String" jdbcType="VARCHAR"/>
             <arg column="unit_price" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
             <arg column="grade" javaType="java.lang.String" jdbcType="VARCHAR"/>
@@ -148,9 +148,9 @@
                      INNER JOIN plan_book ON plan_book.book_id = book.id
                      INNER JOIN plan ON plan.id = plan_book.plan_id
             WHERE plan.clazz = #{clazz,jdbcType=VARCHAR}
+              AND book.is_book_purchase = true
             GROUP BY book.id
         ) AS a ON colleges.id = a.colleges_id
-
     </select>
     <select id="selectPublishingHouseStatistics" resultMap="PublisherStatisticsMap">
         SELECT name,
@@ -198,7 +198,7 @@
         GROUP BY book.id
     </select>
     <select id="selectTeacherReceiveBook" resultMap="TeacherReceiveBookMap">
-        SELECT department.`name`,
+        SELECT department.`name`          as department_name,
                course_name,
                IF
                    (type = 0, "考试", "考察") AS type,
@@ -211,8 +211,8 @@
                award_Information,
                unit_price,
                grade,
-               teacher_book_number,
                clazz,
+               teacher_book_number,
                subscriber
         FROM execute_plan,
              department,
