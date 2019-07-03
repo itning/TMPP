@@ -14,6 +14,7 @@ import top.sl.tmpp.common.entity.ExecutePlan;
 import top.sl.tmpp.common.entity.Plan;
 import top.sl.tmpp.common.mapper.*;
 import top.sl.tmpp.common.util.ObjectUtils;
+import top.sl.tmpp.plan.entity.CourseEducationalCache;
 import top.sl.tmpp.plan.exception.ExcelReadException;
 import top.sl.tmpp.plan.exception.FileException;
 import top.sl.tmpp.plan.service.ReferPlanService;
@@ -35,7 +36,7 @@ import static top.sl.tmpp.common.util.ObjectUtils.checkNotNull;
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class ReferPlanServiceImpl implements ReferPlanService {
-    private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReferPlanServiceImpl.class);
     private final PlanMapper planMapper;
     private final ExecutePlanMapper executePlanMapper;
     private final CollegesMapper collegesMapper;
@@ -103,7 +104,7 @@ public class ReferPlanServiceImpl implements ReferPlanService {
                 //人数
                 int clazzNum = ObjectUtils.toInt(clazzNumber, () -> new ExcelReadException(tempRowIndex + 1, 8, "人数错误"));
                 //检查课程代码
-                checkCourseCode(courseCode, courseName);
+                checkCourseCode(courseCode, courseName, tempRowIndex + 1, 4);
 
                 Plan plan = new Plan();
                 plan.setId(UUID.randomUUID().toString().replace("-", ""));
@@ -199,8 +200,16 @@ public class ReferPlanServiceImpl implements ReferPlanService {
      * @param courseCode 课程代码
      * @param courseName 课程名
      */
-    private void checkCourseCode(String courseCode, String courseName) {
-        //TODO 使用API接口检查课程代码
+    @SuppressWarnings("SameParameterValue")
+    private void checkCourseCode(String courseCode, String courseName, int row, int cell) {
+        Optional<String> optional = CourseEducationalCache.getCourseName(courseCode);
+        if (!optional.isPresent()) {
+            throw new ExcelReadException(row, cell, "课程代码不存在");
+        }
+        String courseNameFromApi = optional.get();
+        if (!courseNameFromApi.equals(courseName)) {
+            throw new ExcelReadException(row, cell + 1, "课程名不正确，应为：[" + courseNameFromApi + "]，但是输入了：[" + courseName + "]");
+        }
     }
 
     /**

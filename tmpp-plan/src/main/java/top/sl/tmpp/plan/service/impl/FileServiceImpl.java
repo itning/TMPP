@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import top.sl.tmpp.plan.entity.CourseEducationalCache;
 import top.sl.tmpp.plan.exception.FileIsNullException;
 import top.sl.tmpp.plan.exception.FileTypeException;
 import top.sl.tmpp.plan.service.FileService;
@@ -35,6 +36,7 @@ public class FileServiceImpl implements FileService {
             String fileName = FileUtil.getFileMd5(bytes) + FileUtil.getExtensionName(multipartFile);
             File newFile = new File(System.getProperty("java.io.tmpdir") + File.separator + fileName);
             multipartFile.transferTo(newFile);
+            CourseEducationalCache.refreshCourseMap();
             logger.debug("You successfully uploaded");
             return fileName;
         } catch (IOException e) {
