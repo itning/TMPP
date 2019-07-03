@@ -1,8 +1,5 @@
 package top.sl.tmpp.security.cas;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.MethodParameter;
@@ -20,10 +17,8 @@ import top.sl.tmpp.security.exception.RoleException;
 import top.sl.tmpp.security.util.JwtUtils;
 
 import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author itning
@@ -32,23 +27,10 @@ import java.util.concurrent.ExecutionException;
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
     private static final Logger logger = LoggerFactory.getLogger(LoginUserArgumentResolver.class);
 
-    private static final String STUDENT_USER = "99";
-    private final LoadingCache<String, List<AdminResource>> loadingCache;
     private final CasMapper casMapper;
 
     public LoginUserArgumentResolver(CasMapper casMapper) {
         this.casMapper = casMapper;
-        loadingCache = CacheBuilder.newBuilder()
-                //软引用
-                .softValues()
-                .maximumSize(1000)
-                .build(new CacheLoader<String, List<AdminResource>>() {
-                    @Override
-                    @ParametersAreNonnullByDefault
-                    public List<AdminResource> load(String key) {
-                        return casMapper.getResourcesByUserName(key);
-                    }
-                });
     }
 
     @Override
@@ -57,29 +39,15 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
     }
 
     @Override
-    public Object resolveArgument(@Nonnull MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(@Nonnull MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         String authorization = webRequest.getHeader(HttpHeaders.AUTHORIZATION);
         LoginUser loginUser = JwtUtils.getLoginUser(authorization);
         logger.debug("get login user: {}", loginUser);
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
         String requestUri = request.getRequestURI();
         String method = request.getMethod();
-        checkRole(loginUser);
         checkPermission(loginUser, requestUri, method.toUpperCase());
         return loginUser;
-    }
-
-    /**
-     * 检查角色
-     * 根据{@link LoginUser#getId()}检查admin_user表中角色(type)，没有的话检查是否是学生，是学生禁止
-     *
-     * @param loginUser 登录用户
-     */
-    private void checkRole(LoginUser loginUser) {
-        if (loginUser.getUserType().equals(STUDENT_USER)) {
-            logger.debug("CheckRole FORBIDDEN And LoginUser Type:{}", loginUser.getUserType());
-            throw new RoleException("FORBIDDEN", HttpStatus.FORBIDDEN);
-        }
     }
 
     /**
@@ -89,7 +57,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
      * @param requestUri 请求URI
      * @param method     请求方法
      */
-    private void checkPermission(LoginUser loginUser, String requestUri, String method) throws ExecutionException {
+    private void checkPermission(LoginUser loginUser, String requestUri, String method) {
         String loginId = loginUser.getId();
         AdminUser adminUser = casMapper.selectByUserName(loginId);
         if (adminUser == null) {
@@ -106,8 +74,7 @@ public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver 
             }
             return;
         }
-        List<AdminResource> adminResourceList //= loadingCache.get(loginId);
-                = casMapper.getResourcesByUserName(loginId);
+        List<AdminResource> adminResourceList = casMapper.getResourcesByUserName(loginId);
         long admin = adminResourceList
                 .stream()
                 .filter(adminResource -> requestUri.startsWith(adminResource.getUrl()))

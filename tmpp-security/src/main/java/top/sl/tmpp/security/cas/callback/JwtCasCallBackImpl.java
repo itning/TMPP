@@ -37,6 +37,7 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
     private final Logger logger = LoggerFactory.getLogger(JwtCasCallBackImpl.class);
 
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final String STUDENT_USER = "99";
 
     private final CasProperties casProperties;
     private final LoginUserMapper loginUserMapper;
@@ -55,7 +56,16 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
             return;
         }
         LoginUser loginUser = map2userLoginEntity(attributesMap);
-
+        if (loginUser.getUserType().equals(STUDENT_USER)) {
+            logger.debug("CheckRole FORBIDDEN And LoginUser Type Is Student. {}", loginUser);
+            resp.setCharacterEncoding("utf-8");
+            PrintWriter writer = resp.getWriter();
+            writer.write("<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>身份信息认证失败</title></head>" +
+                    "<body>学生用户无法访问该系统 学号：" + loginUser.getId() + " 姓名：" + loginUser.getName() + " <a href='" + casProperties.getLogoutUrl() + "'>注销</a></body></html>");
+            writer.flush();
+            writer.close();
+            return;
+        }
         AdminUser adminUser = casMapper.selectByUserName(loginUser.getId());
         if (adminUser != null) {
             loginUser.setUserType(adminUser.getType());
