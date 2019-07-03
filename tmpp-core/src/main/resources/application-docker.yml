@@ -1,0 +1,13 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${MYSQL_URL}/tmpp?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&connectTimeout=0&serverTimezone=UTC&allowPublicKeyRetrieval=true
+logging:
+  level: warn
+  level.top: warn
+cas:
+  login-success-url: ${LOGIN_SUCCESS_URL}
+  local-server-url: ${LOCAL_SERVER_URL}
