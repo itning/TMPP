@@ -54,10 +54,10 @@
 
     <build>
         <plugins>
-             <plugin>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-maven-plugin</artifactId>
-             </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
             <!--分离打包jar-->
             <!--<plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -159,43 +159,43 @@
                     </execution>
                 </executions>
             </plugin>-->
-
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>1.2.0</version>
-                <configuration>
-                    <from>
-                        <!--base image-->
-                        <image>rggb8uln.mirror.aliyuncs.com/library/openjdk:alpine</image>
-                    </from>
-                    <to>
-                        <image>registry.cn-beijing.aliyuncs.com/itning/tmpp_server</image>
-                        <auth>
-                            <username>${env.DOCKER_USERNAME}</username>
-                            <password>${env.DOCKER_PASSWORD}</password>
-                        </auth>
-                        <tags>
-                            <tag>${project.version}</tag>
-                            <tag>latest</tag>
-                        </tags>
-                    </to>
-                    <container>
-                        <jvmFlags>
-                            <jvmFlag>-XX:+UseG1GC</jvmFlag>
-                            <jvmFlag>-XX:+UseTLAB</jvmFlag>
-                        </jvmFlags>
-                    </container>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--docker镜像打包插件-->
+            <!--  <plugin>
+                  <groupId>com.google.cloud.tools</groupId>
+                  <artifactId>jib-maven-plugin</artifactId>
+                  <version>1.2.0</version>
+                  <configuration>
+                      <from>
+                          &lt;!&ndash;base image&ndash;&gt;
+                          <image>rggb8uln.mirror.aliyuncs.com/library/openjdk:alpine</image>
+                      </from>
+                      <to>
+                          <image>registry.cn-beijing.aliyuncs.com/itning/tmpp_server</image>
+                          <auth>
+                              <username>${env.DOCKER_USERNAME}</username>
+                              <password>${env.DOCKER_PASSWORD}</password>
+                          </auth>
+                          <tags>
+                              <tag>${project.version}</tag>
+                              <tag>latest</tag>
+                          </tags>
+                      </to>
+                      <container>
+                          <jvmFlags>
+                              <jvmFlag>-XX:+UseG1GC</jvmFlag>
+                              <jvmFlag>-XX:+UseTLAB</jvmFlag>
+                          </jvmFlags>
+                      </container>
+                  </configuration>
+                  <executions>
+                      <execution>
+                          <phase>package</phase>
+                          <goals>
+                              <goal>build</goal>
+                          </goals>
+                      </execution>
+                  </executions>
+              </plugin>-->
         </plugins>
     </build>
 </project>
