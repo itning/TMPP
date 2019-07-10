@@ -228,7 +228,7 @@ public class ExportServiceImpl implements ExportService {
         int studyClass = exportMapper.selectStudyClass(executePlanId).size();
         logger.debug("{} {} {} {}", examinationClass, totalCourses, studyCourses, studyClass);
         XSSFWorkbook wb = new XSSFWorkbook();
-        XSSFSheet sheet = wb.createSheet("考试-考察-总体订书率表");
+        XSSFSheet sheet = wb.createSheet("考试-考查-总体订书率表");
 
         CellRangeAddress r1 = new CellRangeAddress(0, 0, 1, 3);
         CellRangeAddress r2 = new CellRangeAddress(0, 0, 4, 6);
@@ -240,7 +240,7 @@ public class ExportServiceImpl implements ExportService {
         XSSFRow row = sheet.createRow(0);
         row.createCell(0).setCellValue("");
         row.createCell(1).setCellValue("考试课");
-        row.createCell(4).setCellValue("考察课");
+        row.createCell(4).setCellValue("考查课");
         row.createCell(7).setCellValue("合计");
         getCellWithStyle(wb, row);
 

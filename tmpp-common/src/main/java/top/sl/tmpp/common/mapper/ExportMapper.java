@@ -45,7 +45,7 @@ public interface ExportMapper {
     List<String> selectTheTotalCourses(String executePlanId);
 
     /**
-     * 考察课 课程总门数
+     * 考查课 课程总门数
      *
      * @param executePlanId 执行计划ID
      * @return list

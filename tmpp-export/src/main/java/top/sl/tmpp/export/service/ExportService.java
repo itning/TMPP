@@ -63,7 +63,7 @@ public interface ExportService {
     void subscriptionBookPlan(String executePlanId, OutputStream outputStream) throws IOException;
 
     /**
-     * 考试/考察/总体订书率表
+     * 考试/考查/总体订书率表
      *
      * @param executePlanId 执行计划ID
      * @param outputStream  输出流

@@ -173,7 +173,7 @@
     <select id="selectSubscriptionBook" resultMap="SubscriptionBookMap">
         SELECT department.`name`        as department_name,
                course_name              as name,
-               IF(type = 0, "考试", "考察") AS type,
+               IF(type = 0, "考试", "考查") AS type,
                start_pro,
                text_book_name,
                author,
@@ -201,7 +201,7 @@
         SELECT department.`name`          as department_name,
                course_name,
                IF
-                   (type = 0, "考试", "考察") AS type,
+                   (type = 0, "考试", "考查") AS type,
                start_pro,
                text_book_name,
                author,

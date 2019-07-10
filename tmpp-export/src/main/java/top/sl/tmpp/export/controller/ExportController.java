@@ -91,14 +91,14 @@ public class ExportController {
     }
 
     /**
-     * 考试/考察/总体订书率表
+     * 考试/考查/总体订书率表
      *
      * @param executePlanId 执行计划id
      * @param response      {@link HttpServletResponse}
      */
     @GetMapping("/summary_table")
     public void summaryTable(LoginUser loginUser, @RequestParam("execute_plan_id") String executePlanId, HttpServletResponse response) throws IOException {
-        setDownloadExcelHeader(response, "考试-考察-总体订书率表.xlsx");
+        setDownloadExcelHeader(response, "考试-考查-总体订书率表.xlsx");
         exportService.summaryTable(executePlanId, response.getOutputStream());
     }
 
