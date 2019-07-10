@@ -224,8 +224,8 @@
         GROUP BY book.id
     </select>
     <select id="selectSubscriptionBookPlan" resultMap="SubscriptionBookPlanMap">
-        SELECT course_code as code,
-               course_name as name,
+        SELECT course_code                          as code,
+               course_name                          as name,
                isbn,
                text_book_name,
                text_book_category,
@@ -238,7 +238,8 @@
                publication_date,
                subscriber,
                subscriber_tel,
-               is_book_purchase,
+               IF
+                   (is_book_purchase = 0, "否", "是") AS is_book_purchase,
                reason
         FROM book
                  INNER JOIN plan_book ON plan_book.book_id = book.id
