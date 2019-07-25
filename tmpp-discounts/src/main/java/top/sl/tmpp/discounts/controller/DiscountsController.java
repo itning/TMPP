@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import top.sl.tmpp.common.entity.Discounts;
+import top.sl.tmpp.common.entity.LoginUser;
 import top.sl.tmpp.common.util.RestModel;
 import top.sl.tmpp.discounts.service.DiscountsService;
 
@@ -33,7 +34,7 @@ public class DiscountsController {
      * @return {@link ResponseEntity} {@link RestModel}
      */
     @PostMapping("/discount")
-    public ResponseEntity<?> saveDiscount(@RequestParam("discount") BigDecimal discount) {
+    public ResponseEntity<?> saveDiscount(@RequestParam("discount") BigDecimal discount, LoginUser loginUser) {
         discountsService.save(discount);
         logger.debug("添加折扣成功");
         return RestModel.created("添加折扣成功", null);
@@ -45,7 +46,7 @@ public class DiscountsController {
      * @return {@link ResponseEntity} {@link RestModel}
      */
     @GetMapping("/discounts")
-    public ResponseEntity<?> getAllDiscount() {
+    public ResponseEntity<?> getAllDiscount(LoginUser loginUser) {
         List<Discounts> discounts = discountsService.getAllDiscount();
         logger.debug("查找所有折扣成功");
         return RestModel.ok(discounts);
@@ -58,7 +59,7 @@ public class DiscountsController {
      * @return {@link ResponseEntity} {@link RestModel}
      */
     @DeleteMapping("/discount")
-    public ResponseEntity<?> remove(@RequestParam("id") String id) {
+    public ResponseEntity<?> remove(@RequestParam("id") String id, LoginUser loginUser) {
         discountsService.remove(id);
         logger.debug("删除成功");
         return RestModel.noContent();
@@ -72,7 +73,7 @@ public class DiscountsController {
      * @return {@link ResponseEntity} {@link RestModel}
      */
     @PatchMapping("/discount")
-    public ResponseEntity<?> modify(@RequestParam("id") String id, @RequestParam("discount") BigDecimal discount) {
+    public ResponseEntity<?> modify(@RequestParam("id") String id, @RequestParam("discount") BigDecimal discount, LoginUser loginUser) {
         discountsService.modify(id, discount);
         logger.debug("修改折扣成功");
         return RestModel.noContent();

@@ -3,9 +3,6 @@ package top.sl.tmpp.common.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 
-/**
- * @author 11578
- */
 public class Discounts {
     private String id;
 

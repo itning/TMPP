@@ -5,21 +5,15 @@ import java.util.Date;
 public class Plan {
     private String id;
 
-    private String year;
+    private String collegesId;
 
-    private Integer term;
+    private String courseCode;
 
-    private String levelId;
+    private String courseName;
 
-    private String collegeId;
+    private String startPro;
 
-    private String departmentId;
-
-    private String courseMajor;
-
-    private Integer courseType;
-
-    private String useSchoolYear;
+    private Boolean type;
 
     private String clazz;
 
@@ -27,25 +21,28 @@ public class Plan {
 
     private String teacher;
 
-    private Date gmtModified;
+    private String remark;
+
+    private String executePlanId;
 
     private Date gmtCreate;
 
-    public Plan(String id, String year, Integer term, String levelId, String collegeId, String departmentId, String courseMajor, Integer courseType, String useSchoolYear, String clazz, Integer clazzNumber, String teacher, Date gmtModified, Date gmtCreate) {
+    private Date gmtModified;
+
+    public Plan(String id, String collegesId, String courseCode, String courseName, String startPro, Boolean type, String clazz, Integer clazzNumber, String teacher, String remark, String executePlanId, Date gmtCreate, Date gmtModified) {
         this.id = id;
-        this.year = year;
-        this.term = term;
-        this.levelId = levelId;
-        this.collegeId = collegeId;
-        this.departmentId = departmentId;
-        this.courseMajor = courseMajor;
-        this.courseType = courseType;
-        this.useSchoolYear = useSchoolYear;
+        this.collegesId = collegesId;
+        this.courseCode = courseCode;
+        this.courseName = courseName;
+        this.startPro = startPro;
+        this.type = type;
         this.clazz = clazz;
         this.clazzNumber = clazzNumber;
         this.teacher = teacher;
-        this.gmtModified = gmtModified;
+        this.remark = remark;
+        this.executePlanId = executePlanId;
         this.gmtCreate = gmtCreate;
+        this.gmtModified = gmtModified;
     }
 
     public Plan() {
@@ -60,68 +57,44 @@ public class Plan {
         this.id = id == null ? null : id.trim();
     }
 
-    public String getYear() {
-        return year;
+    public String getCollegesId() {
+        return collegesId;
     }
 
-    public void setYear(String year) {
-        this.year = year == null ? null : year.trim();
+    public void setCollegesId(String collegesId) {
+        this.collegesId = collegesId == null ? null : collegesId.trim();
     }
 
-    public Integer getTerm() {
-        return term;
+    public String getCourseCode() {
+        return courseCode;
     }
 
-    public void setTerm(Integer term) {
-        this.term = term;
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode == null ? null : courseCode.trim();
     }
 
-    public String getLevelId() {
-        return levelId;
+    public String getCourseName() {
+        return courseName;
     }
 
-    public void setLevelId(String levelId) {
-        this.levelId = levelId == null ? null : levelId.trim();
+    public void setCourseName(String courseName) {
+        this.courseName = courseName == null ? null : courseName.trim();
     }
 
-    public String getCollegeId() {
-        return collegeId;
+    public String getStartPro() {
+        return startPro;
     }
 
-    public void setCollegeId(String collegeId) {
-        this.collegeId = collegeId == null ? null : collegeId.trim();
+    public void setStartPro(String startPro) {
+        this.startPro = startPro == null ? null : startPro.trim();
     }
 
-    public String getDepartmentId() {
-        return departmentId;
+    public Boolean getType() {
+        return type;
     }
 
-    public void setDepartmentId(String departmentId) {
-        this.departmentId = departmentId == null ? null : departmentId.trim();
-    }
-
-    public String getCourseMajor() {
-        return courseMajor;
-    }
-
-    public void setCourseMajor(String courseMajor) {
-        this.courseMajor = courseMajor == null ? null : courseMajor.trim();
-    }
-
-    public Integer getCourseType() {
-        return courseType;
-    }
-
-    public void setCourseType(Integer courseType) {
-        this.courseType = courseType;
-    }
-
-    public String getUseSchoolYear() {
-        return useSchoolYear;
-    }
-
-    public void setUseSchoolYear(String useSchoolYear) {
-        this.useSchoolYear = useSchoolYear == null ? null : useSchoolYear.trim();
+    public void setType(Boolean type) {
+        this.type = type;
     }
 
     public String getClazz() {
@@ -148,12 +121,20 @@ public class Plan {
         this.teacher = teacher == null ? null : teacher.trim();
     }
 
-    public Date getGmtModified() {
-        return gmtModified;
+    public String getRemark() {
+        return remark;
     }
 
-    public void setGmtModified(Date gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
+
+    public String getExecutePlanId() {
+        return executePlanId;
+    }
+
+    public void setExecutePlanId(String executePlanId) {
+        this.executePlanId = executePlanId == null ? null : executePlanId.trim();
     }
 
     public Date getGmtCreate() {
@@ -162,5 +143,13 @@ public class Plan {
 
     public void setGmtCreate(Date gmtCreate) {
         this.gmtCreate = gmtCreate;
+    }
+
+    public Date getGmtModified() {
+        return gmtModified;
+    }
+
+    public void setGmtModified(Date gmtModified) {
+        this.gmtModified = gmtModified;
     }
 }

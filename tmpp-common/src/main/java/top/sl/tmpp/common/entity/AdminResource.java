@@ -64,4 +64,15 @@ public class AdminResource {
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+    @Override
+    public String toString() {
+        return "AdminResource{" +
+                "id='" + id + '\'' +
+                ", url='" + url + '\'' +
+                ", method='" + method + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                '}';
+    }
 }

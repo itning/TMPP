@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="top.sl.tmpp.common.mapper.PlanBookMapper">
+    <resultMap id="BaseResultMap" type="top.sl.tmpp.common.entity.PlanBook">
+        <constructor>
+            <arg column="plan_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+            <arg column="book_id" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        </constructor>
+    </resultMap>
+    <insert id="insert" parameterType="top.sl.tmpp.common.entity.PlanBook">
+        insert into plan_book (plan_id, book_id)
+        values (#{planId,jdbcType=VARCHAR}, #{bookId,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="top.sl.tmpp.common.entity.PlanBook">
+        insert into plan_book
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="planId != null">
+                plan_id,
+            </if>
+            <if test="bookId != null">
+                book_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="planId != null">
+                #{planId,jdbcType=VARCHAR},
+            </if>
+            <if test="bookId != null">
+                #{bookId,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <delete id="deleteByPlanId" parameterType="java.lang.String">
+        delete
+        from plan_book
+        where plan_id = #{planId,jdbcType=VARCHAR}
+    </delete>
+</mapper>

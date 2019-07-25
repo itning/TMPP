@@ -2,7 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
+    <groupId>top.sl.tmpp</groupId>
+    <artifactId>tmpp</artifactId>
+    <version>1.0.0-RC</version>
     <packaging>pom</packaging>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.1.6.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <modules>
         <module>tmpp-security</module>
         <module>tmpp-discounts</module>
@@ -14,17 +26,6 @@
         <module>tmpp-common</module>
         <module>tmpp-core</module>
     </modules>
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.5.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-    <groupId>top.sl.tmpp</groupId>
-    <artifactId>tmpp</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>tmpp</name>
-    <description>Demo project for Spring Boot</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,18 +44,48 @@
         <dependencies>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
-                <artifactId>tmpp-common</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-security</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.0-RC</version>
             </dependency>
             <dependency>
                 <groupId>top.sl.tmpp</groupId>
                 <artifactId>tmpp-discounts</artifactId>
-                <version>${project.version}</version>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-review</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-export</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-purchase</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-plan</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-acquire</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-common</artifactId>
+                <version>1.0.0-RC</version>
+            </dependency>
+            <dependency>
+                <groupId>top.sl.tmpp</groupId>
+                <artifactId>tmpp-core</artifactId>
+                <version>1.0.0-RC</version>
             </dependency>
 
             <dependency>
@@ -100,6 +131,11 @@
                 <artifactId>commons-codec</artifactId>
                 <version>1.11</version>
             </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.4</version>
+            </dependency>
             <!-- https://mvnrepository.com/artifact/org.modelmapper/modelmapper -->
             <dependency>
                 <groupId>org.modelmapper</groupId>
@@ -117,22 +153,54 @@
                 <artifactId>pagehelper-spring-boot-starter</artifactId>
                 <version>1.2.10</version>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>28.0-jre</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.itning</groupId>
+                <artifactId>cas-spring-boot-starter</artifactId>
+                <version>1.2.0-RELEASE</version>
+            </dependency>
 
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-test</artifactId>
                 <version>${spring-boot-version}</version>
+                <scope>test</scope>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>4.0.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>4.0.0</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

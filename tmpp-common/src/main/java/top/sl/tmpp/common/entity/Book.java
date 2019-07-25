@@ -1,5 +1,8 @@
 package top.sl.tmpp.common.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -10,9 +13,9 @@ public class Book {
 
     private String textBookName;
 
-    private Integer textBookCategory;
+    private Boolean textBookCategory;
 
-    private Integer press;
+    private String press;
 
     private String author;
 
@@ -20,33 +23,40 @@ public class Book {
 
     private Integer teacherBookNumber;
 
-    private String awardInformation;
+    private BigDecimal discount;
 
+    private String awardInformation;
+    @DateTimeFormat(pattern = "yyyy-MM")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "UTC")
     private Date publicationDate;
 
     private String subscriber;
 
-    private Integer subscriberTel;
+    private String subscriberTel;
 
-    private Integer isBookPurchase;
+    private Boolean isBookPurchase;
 
     private String reason;
 
-    private String courseId;
-
-    private String discountId;
-
-    private Integer affairsNumber;
-
     private String loginUserId;
 
-    private String isBuyBook;
+    private Boolean isBuyBook;
+
+    private String executePlanId;
+
+    private Integer status;
 
     private Date gmtModified;
 
     private Date gmtCreate;
 
-    public Book(String id, String isbn, String textBookName, Integer textBookCategory, Integer press, String author, BigDecimal unitPrice, Integer teacherBookNumber, String awardInformation, Date publicationDate, String subscriber, Integer subscriberTel, Integer isBookPurchase, String reason, String courseId, String discountId, Integer affairsNumber, String loginUserId, String isBuyBook, Date gmtModified, Date gmtCreate) {
+
+    public Book(String id, Integer status) {
+        this.id = id;
+        this.status = status;
+    }
+
+    public Book(String id, String isbn, String textBookName, Boolean textBookCategory, String press, String author, BigDecimal unitPrice, Integer teacherBookNumber, BigDecimal discount, String awardInformation, Date publicationDate, String subscriber, String subscriberTel, Boolean isBookPurchase, String reason, String loginUserId, Boolean isBuyBook, String executePlanId, Integer status, Date gmtModified, Date gmtCreate) {
         this.id = id;
         this.isbn = isbn;
         this.textBookName = textBookName;
@@ -55,17 +65,17 @@ public class Book {
         this.author = author;
         this.unitPrice = unitPrice;
         this.teacherBookNumber = teacherBookNumber;
+        this.discount = discount;
         this.awardInformation = awardInformation;
         this.publicationDate = publicationDate;
         this.subscriber = subscriber;
         this.subscriberTel = subscriberTel;
         this.isBookPurchase = isBookPurchase;
         this.reason = reason;
-        this.courseId = courseId;
-        this.discountId = discountId;
-        this.affairsNumber = affairsNumber;
         this.loginUserId = loginUserId;
         this.isBuyBook = isBuyBook;
+        this.executePlanId = executePlanId;
+        this.status = status;
         this.gmtModified = gmtModified;
         this.gmtCreate = gmtCreate;
     }
@@ -98,20 +108,20 @@ public class Book {
         this.textBookName = textBookName == null ? null : textBookName.trim();
     }
 
-    public Integer getTextBookCategory() {
+    public Boolean getTextBookCategory() {
         return textBookCategory;
     }
 
-    public void setTextBookCategory(Integer textBookCategory) {
+    public void setTextBookCategory(Boolean textBookCategory) {
         this.textBookCategory = textBookCategory;
     }
 
-    public Integer getPress() {
+    public String getPress() {
         return press;
     }
 
-    public void setPress(Integer press) {
-        this.press = press;
+    public void setPress(String press) {
+        this.press = press == null ? null : press.trim();
     }
 
     public String getAuthor() {
@@ -138,6 +148,14 @@ public class Book {
         this.teacherBookNumber = teacherBookNumber;
     }
 
+    public BigDecimal getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(BigDecimal discount) {
+        this.discount = discount;
+    }
+
     public String getAwardInformation() {
         return awardInformation;
     }
@@ -162,19 +180,19 @@ public class Book {
         this.subscriber = subscriber == null ? null : subscriber.trim();
     }
 
-    public Integer getSubscriberTel() {
+    public String getSubscriberTel() {
         return subscriberTel;
     }
 
-    public void setSubscriberTel(Integer subscriberTel) {
-        this.subscriberTel = subscriberTel;
+    public void setSubscriberTel(String subscriberTel) {
+        this.subscriberTel = subscriberTel == null ? null : subscriberTel.trim();
     }
 
-    public Integer getIsBookPurchase() {
+    public Boolean getIsBookPurchase() {
         return isBookPurchase;
     }
 
-    public void setIsBookPurchase(Integer isBookPurchase) {
+    public void setIsBookPurchase(Boolean isBookPurchase) {
         this.isBookPurchase = isBookPurchase;
     }
 
@@ -186,30 +204,6 @@ public class Book {
         this.reason = reason == null ? null : reason.trim();
     }
 
-    public String getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(String courseId) {
-        this.courseId = courseId == null ? null : courseId.trim();
-    }
-
-    public String getDiscountId() {
-        return discountId;
-    }
-
-    public void setDiscountId(String discountId) {
-        this.discountId = discountId == null ? null : discountId.trim();
-    }
-
-    public Integer getAffairsNumber() {
-        return affairsNumber;
-    }
-
-    public void setAffairsNumber(Integer affairsNumber) {
-        this.affairsNumber = affairsNumber;
-    }
-
     public String getLoginUserId() {
         return loginUserId;
     }
@@ -218,12 +212,28 @@ public class Book {
         this.loginUserId = loginUserId == null ? null : loginUserId.trim();
     }
 
-    public String getIsBuyBook() {
+    public Boolean getIsBuyBook() {
         return isBuyBook;
     }
 
-    public void setIsBuyBook(String isBuyBook) {
-        this.isBuyBook = isBuyBook == null ? null : isBuyBook.trim();
+    public void setIsBuyBook(Boolean isBuyBook) {
+        this.isBuyBook = isBuyBook;
+    }
+
+    public String getExecutePlanId() {
+        return executePlanId;
+    }
+
+    public void setExecutePlanId(String executePlanId) {
+        this.executePlanId = executePlanId == null ? null : executePlanId.trim();
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public Date getGmtModified() {

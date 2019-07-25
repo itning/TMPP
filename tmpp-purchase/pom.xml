@@ -5,28 +5,26 @@
     <parent>
         <artifactId>tmpp</artifactId>
         <groupId>top.sl.tmpp</groupId>
-        <version>0.0.1-SNAPSHOT</version>
+        <version>1.0.0-RC</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>tmpp-purchase</artifactId>
-<dependencies>
-    <dependency>
-        <groupId>top.sl.tmpp</groupId>
-        <artifactId>tmpp-common</artifactId>
-        <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
-    <dependency>
-        <groupId>commons-codec</groupId>
-        <artifactId>commons-codec</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>commons-fileupload</groupId>
-        <artifactId>commons-fileupload</artifactId>
-        <version>1.4</version>
-    </dependency>
 
-</dependencies>
+    <dependencies>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>top.sl.tmpp</groupId>
+            <artifactId>tmpp-common</artifactId>
+        </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
 </project>

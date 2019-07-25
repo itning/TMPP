@@ -11,15 +11,18 @@ import top.itning.cas.RestModel;
 import top.itning.cas.callback.login.ILoginFailureCallBack;
 import top.itning.cas.callback.login.ILoginNeverCallBack;
 import top.itning.cas.callback.login.ILoginSuccessCallBack;
+import top.sl.tmpp.common.entity.AdminUser;
 import top.sl.tmpp.common.entity.LoginUser;
+import top.sl.tmpp.common.mapper.CasMapper;
+import top.sl.tmpp.common.mapper.LoginUserMapper;
 import top.sl.tmpp.security.util.JwtUtils;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URLEncoder;
+import java.util.Date;
 import java.util.Map;
 
 import static org.springframework.http.HttpHeaders.*;
@@ -31,36 +34,63 @@ import static org.springframework.http.HttpHeaders.*;
  */
 @Component
 public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureCallBack, ILoginNeverCallBack {
-    private static final Logger logger = LoggerFactory.getLogger(JwtCasCallBackImpl.class);
-    private static final String LOGIN_NAME = "loginName";
-    private static final String STUDENT_USER_TYPE = "99";
+    private final Logger logger = LoggerFactory.getLogger(JwtCasCallBackImpl.class);
+
     private static final ObjectMapper MAPPER = new ObjectMapper();
+    private static final String STUDENT_USER = "99";
 
     private final CasProperties casProperties;
+    private final LoginUserMapper loginUserMapper;
+    private final CasMapper casMapper;
 
-    public JwtCasCallBackImpl(CasProperties casProperties) {
+    public JwtCasCallBackImpl(CasProperties casProperties, LoginUserMapper loginUserMapper, CasMapper casMapper) {
         this.casProperties = casProperties;
+        this.loginUserMapper = loginUserMapper;
+        this.casMapper = casMapper;
     }
 
     @Override
-    public void onLoginSuccess(HttpServletResponse resp, HttpServletRequest req, Map<String, String> attributesMap) throws IOException, ServletException {
+    public void onLoginSuccess(HttpServletResponse resp, HttpServletRequest req, Map<String, String> attributesMap) throws IOException {
         if (attributesMap.isEmpty()) {
             sendRefresh2Response(resp);
             return;
         }
         LoginUser loginUser = map2userLoginEntity(attributesMap);
+        if (loginUser.getUserType().equals(STUDENT_USER)) {
+            logger.debug("CheckRole FORBIDDEN And LoginUser Type Is Student. {}", loginUser);
+            resp.setCharacterEncoding("utf-8");
+            PrintWriter writer = resp.getWriter();
+            writer.write("<!DOCTYPE html><html><head><meta charset=\"UTF-8\"><title>身份信息认证失败</title></head>" +
+                    "<body>学生用户无法访问该系统 学号：" + loginUser.getId() + " 姓名：" + loginUser.getName() + " <a href='" + casProperties.getLogoutUrl() + "'>注销</a></body></html>");
+            writer.flush();
+            writer.close();
+            return;
+        }
+        AdminUser adminUser = casMapper.selectByUserName(loginUser.getId());
+        if (adminUser != null) {
+            loginUser.setUserType(adminUser.getType());
+        } else {
+            loginUser.setUserType("T");
+            logger.debug("username {} is teacher", loginUser.getId());
+        }
         String jwt = JwtUtils.buildJwt(loginUser);
+        if (loginUserMapper.selectByPrimaryKey(loginUser.getId()) == null) {
+            Date date = new Date();
+            loginUser.setGmtCreate(date);
+            loginUser.setGmtModified(date);
+            loginUserMapper.insert(loginUser);
+        }
         //重定向到登陆成功需要跳转的地址
         resp.sendRedirect(casProperties.getLoginSuccessUrl().toString() + "/token/" + jwt);
     }
 
     @Override
-    public void onLoginFailure(HttpServletResponse resp, HttpServletRequest req, Exception e) throws IOException, ServletException {
+    public void onLoginFailure(HttpServletResponse resp, HttpServletRequest req, Exception e) throws IOException {
         sendRefresh2Response(resp);
     }
 
     @Override
-    public void onNeverLogin(HttpServletResponse resp, HttpServletRequest req) throws IOException, ServletException {
+    public void onNeverLogin(HttpServletResponse resp, HttpServletRequest req) throws IOException {
         allowCors(resp, req);
         writeJson2Response(resp, HttpStatus.UNAUTHORIZED, "请先登录");
     }
@@ -121,6 +151,7 @@ public class JwtCasCallBackImpl implements ILoginSuccessCallBack, ILoginFailureC
      * @param msg        消息
      * @throws IOException IOException
      */
+    @SuppressWarnings("SameParameterValue")
     private void writeJson2Response(HttpServletResponse resp, HttpStatus httpStatus, String msg) throws IOException {
         resp.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         resp.setStatus(httpStatus.value());

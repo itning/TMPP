@@ -68,6 +68,7 @@
             <!-- enableSubPackages:是否让schema作为包的后缀 -->
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
-        <table tableName="%"/>
+        <table tableName="%" enableUpdateByExample="false" enableDeleteByExample="false" enableCountByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false"/>
     </context>
 </generatorConfiguration>
