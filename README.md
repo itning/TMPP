@@ -12,3 +12,5 @@
 [![GitHub repo size in bytes](https://img.shields.io/github/repo-size/itning/TMPP.svg)](https://github.com/itning/TMPP)
 [![HitCount](http://hits.dwyl.io/itning/TMPP.svg)](http://hits.dwyl.io/itning/TMPP)
 [![language](https://img.shields.io/badge/language-JAVA-green.svg)](https://github.com/itning/TMPP)
+
+[README](https://github.com/HXCI-Studio/TMPP-Info)
